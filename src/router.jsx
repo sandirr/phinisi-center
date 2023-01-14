@@ -7,12 +7,12 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route index element={<Pages.Beranda />} />
-          <Route path="/beranda" element={<Pages.Beranda />} />
+          <Route index element={<Pages.Home />} />
+          <Route path="/beranda" element={<Pages.Home />} />
         </Route>
         <Route path="/article">
           <Route index element={<div>list articles</div>} />
-          <Route path="create" element={<div>test read articles</div>} />
+          <Route path="create" element={<Pages.CreateArticle />} />
           <Route path="read/:id" element={<div>test read articles</div>} />
         </Route>
 

@@ -1,5 +1,7 @@
-import Beranda from './Beranda';
+import Home from './Home';
+import CreateArticle from './CreateArticle';
 
 export default {
-  Beranda,
+  Home,
+  CreateArticle,
 };

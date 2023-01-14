@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCGP2HiH6U8cmoHxOMSruXaTi2crrrYSIs',
@@ -15,7 +16,10 @@ const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app, 'asia-southeast1');
 const callFunc = (funcName) => httpsCallable(functions, funcName);
 
+const storage = getStorage();
+
 export {
   callFunc,
   functions,
+  storage,
 };
