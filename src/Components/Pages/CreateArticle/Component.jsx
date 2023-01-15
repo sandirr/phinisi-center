@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Box, Button, Container, TextField, Typography,
+  Box, Button, Container, MenuItem, Stack, TextField, Typography,
 } from '@mui/material';
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -42,6 +42,7 @@ export default function Component() {
     const callable = callFunc('createArticle');
     const res = await callable({
       ...fields,
+      content,
       createdAt: new Date().toISOString(),
     });
 
@@ -63,16 +64,18 @@ export default function Component() {
   console.log(fields);
 
   return (
-    <Container>
-      <Typography variant="h2">Phinisi Center</Typography>
+    <Container sx={{ py: 2 }}>
+      <Typography variant="h2">Phinisi Center (Add Content)</Typography>
       <form onSubmit={pushData}>
-        <TextField name="title" placeholder="Title" value={fields.title} onChange={handleChangeField} />
-        <TextField name="author" placeholder="Author" value={fields.author} onChange={handleChangeField} />
-        <select name="type" placeholder="Type" value={fields.type} onChange={handleChangeField}>
-          <option value="-" disabled>Choose type</option>
-          <option value="Sejarah">Sejarah</option>
-          <option value="Filosofi">Filosofi</option>
-        </select>
+        <Stack gap={2} mt={2}>
+          <TextField label="Title" name="title" placeholder="Title" value={fields.title} onChange={handleChangeField} />
+          <TextField label="Author" name="author" placeholder="Author" value={fields.author} onChange={handleChangeField} />
+          <TextField label="Type" select name="type" placeholder="Type" value={fields.type} onChange={handleChangeField}>
+            <MenuItem value="-" disabled>Choose type</MenuItem>
+            <MenuItem value="Sejarah">Sejarah</MenuItem>
+            <MenuItem value="Filosofi">Filosofi</MenuItem>
+          </TextField>
+        </Stack>
         <Box my={2}>
           <CKEditor
             editor={ClassicEditor}
@@ -92,9 +95,24 @@ export default function Component() {
             onFocus={(event, editor) => {
               console.log('Focus.', editor);
             }}
+            onInit={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              // console.log("Editor is ready to use!", editor);
+              editor.editing.view.change((writer) => {
+                writer.setStyle(
+                  'height',
+                  '200px',
+                  editor.editing.view.document.getRoot(),
+                );
+              });
+            }}
           />
         </Box>
-        <TextField name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
+
+        <label>Cover</label>
+        <div>
+          <TextField name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
+        </div>
         <Box py={2}>
           {!!cover && <img src={cover} alt="cover" height="100" />}
         </Box>
