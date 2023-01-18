@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
+// import { ThemeProvider } from '@mui/material/styles';
+import { ChakraProvider } from '@chakra-ui/react';
 import './App.css';
 import { callFunc } from './Configs/firebase';
 import Router from './router';
-import muiTheme from './muiTheme';
+// import muiTheme from './muiTheme';
 
 function App() {
   const getData = async () => {
@@ -22,12 +23,14 @@ function App() {
     getData();
   });
 
-  const theme = React.useMemo(() => muiTheme);
+  // const theme = React.useMemo(() => muiTheme);
 
   return (
-    <ThemeProvider theme={theme}>
+  // <ThemeProvider theme={theme}>
+    <ChakraProvider>
       <Router />
-    </ThemeProvider>
+    </ChakraProvider>
+  // </ThemeProvider>
   );
 }
 

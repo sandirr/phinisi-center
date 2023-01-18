@@ -1,1 +1,5 @@
-.ck-editor__editable {min-height: 240px;}
+.ql-editor {min-height: 240px;}
+
+.special-swiper .swiper-slide-active {
+    transform: scale(1.1) !important;
+}

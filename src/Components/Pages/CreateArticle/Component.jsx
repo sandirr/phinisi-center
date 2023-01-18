@@ -3,8 +3,8 @@ import {
   Box, Button, Container, MenuItem, Stack, TextField, Typography,
 } from '@mui/material';
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { callFunc, storage } from '../../../Configs/firebase';
 
 export default function Component() {
@@ -61,7 +61,34 @@ export default function Component() {
   };
 
   const cover = img || fields.cover;
-  console.log(fields);
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+      [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+      [{ direction: 'rtl' }], // text direction
+
+      [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ font: [] }],
+      [{ align: [] }],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image',
+  ];
 
   return (
     <Container sx={{ py: 2 }}>
@@ -77,35 +104,12 @@ export default function Component() {
           </TextField>
         </Stack>
         <Box my={2}>
-          <CKEditor
-            editor={ClassicEditor}
-            data={content}
-            onReady={(editor) => {
-            // You can store the "editor" and use when it is needed.
-              console.log('Editor is ready to use!', editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log({ event, editor, data });
-              setContent(data);
-            }}
-            onBlur={(event, editor) => {
-              console.log('Blur.', editor);
-            }}
-            onFocus={(event, editor) => {
-              console.log('Focus.', editor);
-            }}
-            onInit={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              // console.log("Editor is ready to use!", editor);
-              editor.editing.view.change((writer) => {
-                writer.setStyle(
-                  'height',
-                  '200px',
-                  editor.editing.view.document.getRoot(),
-                );
-              });
-            }}
+          <ReactQuill
+            theme="snow"
+            modules={modules}
+            formats={formats}
+            value={content}
+            onChange={setContent}
           />
         </Box>
 
