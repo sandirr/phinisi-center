@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Box, Button, Container, MenuItem, Stack, TextField, Typography,
-} from '@mui/material';
+  Button, Container, Text, Stack, Input, Box, Select,
+} from '@chakra-ui/react';
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -12,11 +12,13 @@ export default function Component() {
     title: '',
     author: '',
     cover: '',
-    type: '-',
+    type: '',
+    category: '',
   };
   const [fields, setFields] = useState(() => initialState);
   const [img, setImg] = useState('');
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeField = ({ target }) => {
     setFields({ ...fields, [target.name]: target.value });
@@ -31,7 +33,7 @@ export default function Component() {
       await uploadBytes(coverRef, file)
         .then(async () => {
           const cover = await getDownloadURL(coverRef);
-          console.log(cover);
+          // console.log(cover);
           setFields({ ...fields, cover });
         });
     }
@@ -39,25 +41,26 @@ export default function Component() {
 
   const pushData = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const callable = callFunc('createArticle');
-    const res = await callable({
+    await callable({
       ...fields,
       content,
       createdAt: new Date().toISOString(),
-    });
-
-    console.log('success', res);
-    if (res.data) {
+    }).then(() => {
       setFields(() => ({
         title: '',
         author: '',
         cover: '',
         type: '-',
+        category: '-',
       }));
       setImg('');
       setContent('');
-      alert('Data tersimpan ke database');
-    }
+      alert('Data berhasil masuk ke databse');
+    }).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const cover = img || fields.cover;
@@ -92,16 +95,24 @@ export default function Component() {
 
   return (
     <Container sx={{ py: 2 }}>
-      <Typography variant="h2">Phinisi Center (Add Content)</Typography>
+      <Text variant="h2">Phinisi Center (Add Content)</Text>
       <form onSubmit={pushData}>
         <Stack gap={2} mt={2}>
-          <TextField label="Title" name="title" placeholder="Title" value={fields.title} onChange={handleChangeField} />
-          <TextField label="Author" name="author" placeholder="Author" value={fields.author} onChange={handleChangeField} />
-          <TextField label="Type" select name="type" placeholder="Type" value={fields.type} onChange={handleChangeField}>
-            <MenuItem value="-" disabled>Choose type</MenuItem>
-            <MenuItem value="Sejarah">Sejarah</MenuItem>
-            <MenuItem value="Filosofi">Filosofi</MenuItem>
-          </TextField>
+          <Input label="Title" name="title" placeholder="Title" value={fields.title} onChange={handleChangeField} />
+          <Input label="Author" name="author" placeholder="Author" value={fields.author} onChange={handleChangeField} />
+          <Select name="type" placeholder="Type" value={fields.type} onChange={handleChangeField}>
+            <option value="Sejarah">Sejarah</option>
+            <option value="Filosofi">Filosofi</option>
+            <option value="Artikel">Artikel</option>
+          </Select>
+          {fields.type === 'Artikel'
+          && (
+          <Select name="category" placeholder="Category" value={fields.category} onChange={handleChangeField}>
+            <option value="Fun Fact">Fun Fact</option>
+            <option value="Event">Event</option>
+            <option value="Phinisi Update">Phinisi Update</option>
+          </Select>
+          )}
         </Stack>
         <Box my={2}>
           <ReactQuill
@@ -115,13 +126,13 @@ export default function Component() {
 
         <label>Cover</label>
         <div>
-          <TextField name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
+          <Input name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
         </div>
         <Box py={2}>
           {!!cover && <img src={cover} alt="cover" height="100" />}
         </Box>
 
-        <Button variant="contained" type="submit">Post Article</Button>
+        <Button isLoading={isLoading} outline type="submit">Post Article</Button>
       </form>
     </Container>
   );

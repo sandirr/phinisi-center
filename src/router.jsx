@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { auth } from './Configs/firebase';
+import ROUTES from './Configs/routes';
 
 export default function Router() {
   const [loggedin, setLoggedin] = useState(false);
@@ -15,20 +17,22 @@ export default function Router() {
 
   return (
     <BrowserRouter>
+      <Elements.Header />
       <Routes>
         <Route path="/">
           <Route index element={<Pages.Home />} />
-          <Route path="/beranda" element={<Pages.Home />} />
+          <Route path="/home" element={<Pages.Home />} />
         </Route>
-        <Route path="/article">
-          <Route index element={<div>list articles</div>} />
-          <Route path="create" element={<Pages.CreateArticle />} />
-          <Route path="read/:id" element={<div>test read articles</div>} />
+        <Route path={ROUTES.artikel()}>
+          <Route index element={<Pages.Article />} />
+          <Route path="buat" element={<Pages.CreateArticle />} />
+          <Route path="baca/:id" element={<div>test read articles</div>} />
         </Route>
         <Route path="/auth" element={<Pages.Auth />} />
 
         <Route path="*" element={<div>404</div>} />
       </Routes>
+      <Elements.Footer />
     </BrowserRouter>
   );
 }

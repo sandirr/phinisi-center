@@ -30,6 +30,7 @@ import { Close, Facebook, Google } from '@mui/icons-material';
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
 import Images from '../../../Configs/images';
 import { auth } from '../../../Configs/firebase';
+import ROUTES from '../../../Configs/routes';
 
 const googleProvider = new GoogleAuthProvider();
 const fbProvider = new FacebookAuthProvider();
@@ -96,22 +97,22 @@ export default function Component() {
             }}
           >
             <Tabs>
-              <TabList _selected={{ color: 'blue.500', borderColor: 'blue.500' }}>
-                <Tab as={Link} to="/" fontWeight="medium">Beranda</Tab>
+              <TabList _selected={{ color: 'blue.500', borderColor: 'blue.500', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
+                <Tab as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
                 <Tab fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
                   <Menu isOpen={openSF}>
                     <MenuButton fontWeight="medium" whiteSpace="nowrap">
                       Sejarah & Filosofi
                     </MenuButton>
                     <MenuList mt="0.5" ml="-4" minWidth="160px" borderTopRightRadius="0" borderTopLeftRadius="0">
-                      <MenuItem as={Link} to="/sejarah">Sejarah</MenuItem>
-                      <MenuItem as={Link} to="/filosofi">Filosofi</MenuItem>
+                      <MenuItem as={Link} to={ROUTES.sejarah()}>Sejarah</MenuItem>
+                      <MenuItem as={Link} to={ROUTES.filosofi()}>Filosofi</MenuItem>
                     </MenuList>
                   </Menu>
                 </Tab>
-                <Tab as={Link} to="/pemesanan" fontWeight="medium">Pemesanan</Tab>
-                <Tab as={Link} to="/penyewaan" fontWeight="medium">Penyewaan</Tab>
-                <Tab as={Link} to="/artikel" fontWeight="medium">Artikel</Tab>
+                <Tab as={Link} to={ROUTES.pemesanan()} fontWeight="medium">Pemesanan</Tab>
+                <Tab as={Link} to={ROUTES.penyewaan()} fontWeight="medium">Penyewaan</Tab>
+                <Tab as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
               </TabList>
             </Tabs>
           </Box>
