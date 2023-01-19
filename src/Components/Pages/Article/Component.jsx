@@ -2,14 +2,14 @@ import React from 'react';
 import {
   Box, Center, Container, Divider, Heading, Image, Tab, TabList, Tabs, Text,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import Elements from '../../Elements';
 
 export default function Component() {
   return (
     <Container maxW="7xl">
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
         <Box flex={1} py="10">
-          <Tabs variant="soft-rounded">
+          <Tabs variant="soft-rounded" defaultIndex={2}>
             <TabList whiteSpace="nowrap" lineHeight="20px">
               <Tab
                 fontWeight="medium"
@@ -100,19 +100,11 @@ export default function Component() {
           </Center>
         </Box>
 
-        <Box py="10" w={{ md: 'sm', base: 'md' }}>
+        <Box py="10" w={{ md: 'sm', base: 'xl' }}>
           <Heading size="lg">Hi, temukan Artikel Menarik disini !</Heading>
-          <Box mt="8">
-            <Heading size="xs">Artikel Populer</Heading>
-            <Box mt="4" as={Link} to="/" display="block">
-              <Text size="sm">Fun Fact</Text>
-              <Heading mt="1" size="md">Phinisi : Kapal Kayu Legendaris</Heading>
-            </Box>
-            <Box mt="4" as={Link} to="/" display="block">
-              <Text size="sm">Phinisi Update</Text>
-              <Heading mt="1" size="md">Phinisi Menjadi Warisan Budaya UNESCO</Heading>
-            </Box>
-          </Box>
+          <Elements.SideNavPopular />
+          <Divider mt={6} />
+          <Elements.SideNavRelated />
         </Box>
       </Box>
     </Container>

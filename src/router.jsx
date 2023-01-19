@@ -26,9 +26,8 @@ export default function Router() {
         <Route path={ROUTES.artikel()}>
           <Route index element={<Pages.Article />} />
           <Route path="buat" element={<Pages.CreateArticle />} />
-          <Route path="baca/:id" element={<div>test read articles</div>} />
+          <Route path="baca/:id" element={<Pages.DetailArticle />} />
         </Route>
-        <Route path="/auth" element={<Pages.Auth />} />
 
         <Route path="*" element={<div>404</div>} />
       </Routes>
