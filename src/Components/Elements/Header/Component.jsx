@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -23,11 +23,16 @@ import {
   Flex,
   Divider,
   Stack,
+  Avatar,
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
-import { Close, Facebook, Google } from '@mui/icons-material';
-import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  Close, Facebook, Google, EmailOutlined, NotificationsOutlined,
+} from '@mui/icons-material';
+import {
+  GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signOut,
+} from 'firebase/auth';
 import Images from '../../../Configs/images';
 import { auth } from '../../../Configs/firebase';
 import ROUTES from '../../../Configs/routes';
@@ -49,10 +54,23 @@ export default function Component() {
   });
   const activeTab = useLocation().pathname.split('/')[1];
 
+  const [logged, setLogged] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLogged(user);
+      } else {
+        setLogged(null);
+      }
+    });
+  }, []);
+
   const signinWithGoogle = async () => {
     const data = await signInWithPopup(auth, googleProvider);
     if (data.user) {
       // window.location.reload();
+      setPopLogin(false);
     }
   };
 
@@ -60,7 +78,12 @@ export default function Component() {
     const data = await signInWithPopup(auth, fbProvider);
     if (data.user) {
       // window.location.reload();
+      setPopLogin(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
   };
 
   return (
@@ -82,9 +105,53 @@ export default function Component() {
             <img src={Images.Logo} alt="Phinisi Center" width="120" />
           </Box>
           <Box flex={1} textAlign="right">
-            <Button colorScheme="blue" color="blue.500" variant="outline" onClick={() => setPopLogin(true)}>
-              Login
-            </Button>
+            {logged
+              ? (
+                <Box display="flex" justifyContent="flex-end" gap="5" alignItems="center">
+                  <Box color="#1C51B5" as={Link} to="/">
+                    <NotificationsOutlined color="inherit" />
+                  </Box>
+                  <Box color="#1C51B5" as={Link} to="/">
+                    <EmailOutlined color="inherit" />
+                  </Box>
+                  <Menu>
+                    <MenuButton>
+                      {logged.photoURL
+                        ? (
+                          <Image
+                            name={logged.displayName}
+                            src={logged.photoURL}
+                            alt="profile"
+                            h="42px"
+                            w="42px"
+                            objectFit="cover"
+                            borderRadius="3xl"
+                          />
+                        )
+                        : <Avatar name={logged.displayName} />}
+                    </MenuButton>
+                    <MenuList minWidth="160px">
+                      <MenuItem
+                        autoFocus={false}
+                        onClick={handleLogout}
+                        _active={{
+                          bg: 'transparent',
+                        }}
+                        _focus={{
+                          bg: 'transparent',
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Box>
+              )
+              : (
+                <Button colorScheme="blue" color="blue.500" variant="outline" onClick={() => setPopLogin(true)}>
+                  Login
+                </Button>
+              )}
           </Box>
         </Box>
         <Box
@@ -110,7 +177,7 @@ export default function Component() {
           >
             <Tabs index={indexes[activeTab]}>
               <TabList _selected={{ color: 'blue.500', borderColor: 'blue.500', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
-                <Tab isSelected={activeTab === ''} _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
+                <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
                   <Menu isOpen={openSF}>
                     <MenuButton fontWeight="medium" whiteSpace="nowrap">
@@ -124,7 +191,7 @@ export default function Component() {
                 </Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.pemesanan()} fontWeight="medium">Pemesanan</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.penyewaan()} fontWeight="medium">Penyewaan</Tab>
-                <Tab isSelected={activeTab === 'artikel'} _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
+                <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
               </TabList>
             </Tabs>
           </Box>

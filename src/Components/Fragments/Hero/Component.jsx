@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Heading, Text } from '@chakra-ui/react';
@@ -12,22 +11,21 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
 SwiperCore.use([Autoplay, Pagination]);
+
 export default function Component() {
   const defaultAutoplay = {
-    delay: 3000,
+    delay: 5000,
     disableOnInteraction: false,
-    // pauseOnMouseEnter: true,
   };
+
   const [swiperRef, setSwiperRef] = useState(null);
 
-  const stopAutoSwipe = () => {
-    console.log('masuk', swiperRef.autoplay);
-    swiperRef.autoplay.stop();
+  const stopAutoSwipe = async () => {
+    await swiperRef.autoplay.pause();
   };
 
-  const startAutoSwipe = () => {
-    console.log('keluar', swiperRef.autoplay);
-    swiperRef.autoplay.start();
+  const startAutoSwipe = async () => {
+    await swiperRef.autoplay.start();
   };
 
   return (
@@ -38,9 +36,9 @@ export default function Component() {
         slidesPerView={1}
         loop
         onSwiper={(swiper) => setSwiperRef(swiper)}
-        allowTouchMove={false}
-        noSwiping
-        noSwipingClass="swiper-slide"
+        // allowTouchMove={false}
+        // noSwiping
+        // noSwipingClass="swiper-slide"
         pagination={{
           clickable: true,
           renderBullet: (index, className) => `<span key=${index} class="${className}" style="background-color:#fff; height:5px; width:28px; border-radius:24px;"></span>`,
@@ -51,7 +49,7 @@ export default function Component() {
           '--swiper-pagination-bullet-inactive-opacity': '0.4',
           '--swiper-pagination-bullet-opacity': '0.9',
         }}
-        modules={[Pagination, Autoplay]}
+        // modules={[Pagination, Autoplay]}
       >
         {[1, 2].map((i) => (
           <SwiperSlide key={i}>
@@ -67,22 +65,24 @@ export default function Component() {
   );
 }
 
-export function VideoContainer({ stopAutoSwipe, startAutoSwipe, swiperRef }) {
+export function VideoContainer({ swiperRef }) {
   const videoRef = useRef(null);
   const [play, setPlay] = useState(false);
 
   const togglePlay = () => {
-    setPlay(((prev) => !prev));
+    if (swiperRef) {
+      setPlay(((prev) => !prev));
+    }
   };
 
-  const handleStartVideo = () => {
-    stopAutoSwipe();
-    videoRef.current.play();
+  const handleStartVideo = async () => {
+    await swiperRef.autoplay.stop();
+    await videoRef.current.play();
   };
 
-  const handleStopVideo = () => {
-    startAutoSwipe();
-    videoRef.current.pause();
+  const handleStopVideo = async () => {
+    await videoRef.current.pause();
+    await swiperRef.autoplay.start();
   };
 
   useEffect(() => {
