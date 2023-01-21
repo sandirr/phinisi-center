@@ -24,7 +24,7 @@ import {
   Divider,
   Stack,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
 import { Close, Facebook, Google } from '@mui/icons-material';
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -38,6 +38,16 @@ const fbProvider = new FacebookAuthProvider();
 export default function Component() {
   const [openSF, setOpenSF] = useState(false);
   const [popLogin, setPopLogin] = useState(false);
+
+  const [indexes] = useState({
+    '': 0,
+    sejarah: 1,
+    filosofi: 2,
+    pemesanan: 2,
+    penyewaan: 3,
+    artikel: 4,
+  });
+  const activeTab = useLocation().pathname.split('/')[1];
 
   const signinWithGoogle = async () => {
     const data = await signInWithPopup(auth, googleProvider);
@@ -95,11 +105,13 @@ export default function Component() {
                 display: 'none',
               },
             }}
+            display="flex"
+            flexWrap="wrap"
           >
-            <Tabs>
+            <Tabs index={indexes[activeTab]}>
               <TabList _selected={{ color: 'blue.500', borderColor: 'blue.500', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
-                <Tab as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
-                <Tab fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
+                <Tab isSelected={activeTab === ''} _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
+                <Tab _focusVisible={{ boxShadow: 'none' }} fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
                   <Menu isOpen={openSF}>
                     <MenuButton fontWeight="medium" whiteSpace="nowrap">
                       Sejarah & Filosofi
@@ -110,9 +122,9 @@ export default function Component() {
                     </MenuList>
                   </Menu>
                 </Tab>
-                <Tab as={Link} to={ROUTES.pemesanan()} fontWeight="medium">Pemesanan</Tab>
-                <Tab as={Link} to={ROUTES.penyewaan()} fontWeight="medium">Penyewaan</Tab>
-                <Tab as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
+                <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.pemesanan()} fontWeight="medium">Pemesanan</Tab>
+                <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.penyewaan()} fontWeight="medium">Penyewaan</Tab>
+                <Tab isSelected={activeTab === 'artikel'} _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
               </TabList>
             </Tabs>
           </Box>

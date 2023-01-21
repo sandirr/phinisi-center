@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box, Center, Container, Divider, Heading, Image, Tab, TabList, Tabs, Text,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import Elements from '../../Elements';
 
 export default function Component() {
@@ -55,7 +56,7 @@ export default function Component() {
           <Divider mb="6" mt="2" />
           <Box>
 
-            <Box mt="8" display="flex" gap="10" pr={4}>
+            <Box mt="8" display="flex" gap="10" pr={4} as={Link} to="baca/idarticle">
               <Box>
                 <Heading size="md">Phinisi : Kapal Kayu Legendaris</Heading>
                 <Text noOfLines={4} size="sm" mt="2">
@@ -73,7 +74,7 @@ export default function Component() {
             </Box>
             <Divider mt="3" />
 
-            <Box mt="8" display="flex" gap="10" pr={4}>
+            <Box mt="8" display="flex" gap="10" pr={4} as={Link} to="baca/idarticle">
               <Box>
                 <Heading size="md">Phinisi : Kapal Kayu Legendaris</Heading>
                 <Text noOfLines={4} size="sm" mt="2">
