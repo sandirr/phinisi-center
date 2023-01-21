@@ -47,7 +47,7 @@ export default function Component() {
   const [indexes] = useState({
     '': 0,
     sejarah: 1,
-    filosofi: 2,
+    filosofi: 1,
     pemesanan: 2,
     penyewaan: 3,
     artikel: 4,
@@ -157,9 +157,6 @@ export default function Component() {
         <Box
           mt="6"
           display="flex"
-          // css={{
-          //   flexWrap: 'wrap',
-          // }}
           flexWrap="wrap"
           justifyContent="space-between"
           alignItems="center"

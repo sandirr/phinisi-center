@@ -115,14 +115,15 @@ export function VideoContainer({ swiperRef }) {
       />
       <Box
         position="absolute"
-        left={{ base: '8', md: '16', lg: '40' }}
+        px={{ base: '8', md: '16', lg: '40' }}
         top="0"
         bottom="0.5"
+        left="0.5"
+        right="0.5"
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        zIndex={0}
-        // onClick={togglePlay}
+        background="linear-gradient(90.14deg, rgba(9, 27, 60, 0.8) 0.11%, rgba(0, 0, 0, 0) 62.07%)"
       >
         <Heading
           fontWeight="700"

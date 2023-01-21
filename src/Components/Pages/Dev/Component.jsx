@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Text, Box } from '@chakra-ui/react';
 
 export default function Component() {
   return (
     <Box>
-      <Typography variant="h2">Phinisi Center</Typography>
+      <Text>Phinisi Center</Text>
     </Box>
   );
 }
