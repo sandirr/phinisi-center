@@ -1,56 +1,44 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
-  Box, Center, Container, Divider, Heading, Image, Tab, TabList, Tabs, Text,
+  Box,
+  Center,
+  Container,
+  Divider,
+  Heading,
+  Image,
+  Tab,
+  TabList,
+  Tabs,
+  Text,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Elements from '../../Elements';
 
 export default function Component() {
+  const tabs = useMemo(() => ['Semua', 'Fun Fact', 'Event', 'Phinisi Update']);
+
   return (
     <Container maxW="7xl">
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
         <Box flex={1} py="10">
           <Tabs variant="soft-rounded" defaultIndex={2}>
             <TabList whiteSpace="nowrap" lineHeight="20px">
-              <Tab
-                fontWeight="medium"
-                _selected={{
-                  bg: '#C3D5F6',
-                  color: '#163F8D',
-                  fontWeight: 'semibold',
-                }}
-                fontSize="14px"
-                py="0.5"
-                px="4"
-              >
-                Fun Fact
-              </Tab>
-              <Tab
-                fontWeight="medium"
-                _selected={{
-                  bg: '#C3D5F6',
-                  color: '#163F8D',
-                  fontWeight: 'semibold',
-                }}
-                fontSize="14px"
-                py="0.5"
-                px="4"
-              >
-                Event
-              </Tab>
-              <Tab
-                fontWeight="medium"
-                _selected={{
-                  bg: '#C3D5F6',
-                  color: '#163F8D',
-                  fontWeight: 'semibold',
-                }}
-                fontSize="14px"
-                py="0.5"
-                px="4"
-              >
-                Phinisi Update
-              </Tab>
+              {tabs.map((tab, index) => (
+                <Tab
+                  key={index}
+                  fontWeight="medium"
+                  _selected={{
+                    bg: '#C3D5F6',
+                    color: '#163F8D',
+                    fontWeight: 'semibold',
+                  }}
+                  fontSize="14px"
+                  py="0.5"
+                  px="4"
+                >
+                  {tab}
+                </Tab>
+              ))}
             </TabList>
           </Tabs>
           <Divider mb="6" mt="2" />
@@ -70,7 +58,14 @@ export default function Component() {
                   <Text fontSize="xs">2349 Character</Text>
                 </Box>
               </Box>
-              <Image alt="cover" width={120} height={120} objectFit="cover" borderRadius="12" src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" />
+              <Image
+                alt="cover"
+                width={120}
+                height={120}
+                objectFit="cover"
+                borderRadius="12"
+                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+              />
             </Box>
             <Divider mt="3" />
 
@@ -88,7 +83,14 @@ export default function Component() {
                   <Text fontSize="xs">2349 Character</Text>
                 </Box>
               </Box>
-              <Image alt="cover" width={120} height={120} objectFit="cover" borderRadius="12" src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80" />
+              <Image
+                alt="cover"
+                width={120}
+                height={120}
+                objectFit="cover"
+                borderRadius="12"
+                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+              />
             </Box>
             <Divider mt="3" />
 

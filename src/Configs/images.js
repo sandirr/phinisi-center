@@ -6,6 +6,7 @@ import Tiktok from '../Assets/Tiktok.svg';
 import TiktokWhite from '../Assets/TiktokWhite.svg';
 import Youtube from '../Assets/Youtube.svg';
 import YoutubeWhite from '../Assets/YoutubeWhite.svg';
+import Play from '../Assets/Play.svg';
 
 const Images = {
   Logo,
@@ -16,6 +17,7 @@ const Images = {
   TiktokWhite,
   Youtube,
   YoutubeWhite,
+  Play,
 };
 
 export default Images;

@@ -100,7 +100,6 @@ export function VideoContainer({ swiperRef }) {
       position="relative"
       onClick={togglePlay}
       // onMouseUp={handleStopVideo}
-      zIndex={1}
     >
       <Box
         ref={videoRef}
@@ -112,6 +111,7 @@ export function VideoContainer({ swiperRef }) {
         display="flex"
         flexDirection="column"
         justifyContent="center"
+        onEnded={() => setPlay(false)}
       />
       <Box
         position="absolute"

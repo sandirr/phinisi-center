@@ -28,7 +28,9 @@ export default function Router() {
           <Route path="buat" element={<Pages.CreateArticle />} />
           <Route path="baca/:id" element={<Pages.DetailArticle />} />
         </Route>
-
+        <Route path={ROUTES.pemesanan()} element={<Pages.Order />}>
+          <Route path="vendor/:id" element={<Pages.Order />} />
+        </Route>
         <Route path="*" element={<div>404</div>} />
       </Routes>
       <Elements.Footer />
