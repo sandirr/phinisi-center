@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Routes, useLocation,
+} from 'react-router-dom';
 import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { auth } from './Configs/firebase';
@@ -17,6 +19,7 @@ export default function Router() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Elements.Header />
       <Routes>
         <Route path="/">
@@ -28,12 +31,26 @@ export default function Router() {
           <Route path="buat" element={<Pages.CreateArticle />} />
           <Route path="baca/:id" element={<Pages.DetailArticle />} />
         </Route>
-        <Route path={ROUTES.pemesanan()} element={<Pages.Order />}>
-          <Route path="vendor/:id" element={<Pages.Order />} />
+        <Route path={ROUTES.pemesanan()}>
+          <Route index element={<Pages.Order />} />
+          <Route path="vendor/:id" element={<Pages.DetailVendor />} />
         </Route>
         <Route path="*" element={<div>404</div>} />
       </Routes>
       <Elements.Footer />
     </BrowserRouter>
   );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [pathname]);
+
+  return null;
 }

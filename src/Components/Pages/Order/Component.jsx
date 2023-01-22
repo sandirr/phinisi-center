@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
 import {
-  Text, Box, Container, Heading, Button, Image,
+  Text, Box, Container, Heading, Button, Image, SimpleGrid,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import ExampleVideo from '../../../Assets/videoplayback.mp4';
 import Images from '../../../Configs/images';
+import { LocationIcon, PhinisiIcon } from '../../../Assets/icons/icons';
 
 export default function Component() {
   const videoRef = useRef(null);
@@ -94,8 +96,8 @@ export default function Component() {
           <Text
             mt={{ base: '2', md: '4' }}
             color="white"
-            size={{
-              base: 'xs', lg: 'sm',
+            fontSize={{
+              base: 'xs', lg: 'md',
             }}
             fontWeight="400"
             textAlign="center"
@@ -136,6 +138,45 @@ export default function Component() {
       </Box>
       <Box mt="6">
         <Heading size="lg">Daftar Vendor</Heading>
+        <SimpleGrid
+          columns={{
+            lg: 5, md: 3, sm: 2, base: 1,
+          }}
+          gap={{
+            lg: 6, md: 5, sm: 4, base: 3,
+          }}
+          mt="4"
+          mb="16"
+        >
+          {new Array(10).fill(1).map((e, idx) => (
+            <Box
+              key={idx}
+              boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
+              borderRadius="16"
+              padding="4"
+              as={Link}
+              to="vendor/contoh"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                w="100%"
+                objectFit="cover"
+                borderRadius={8}
+              />
+              <Heading size="md" mt={4}>Hj. Rosdaeni</Heading>
+              <Box mt={{ lg: 10, base: 6 }}>
+                <Box display="flex" alignItems="center" gap="2">
+                  <LocationIcon />
+                  <Text size="md">Tanaberu</Text>
+                </Box>
+                <Box display="flex" alignItems="center" gap="2" mt="2">
+                  <PhinisiIcon />
+                  <Text size="md">14 Phinisi</Text>
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </SimpleGrid>
       </Box>
     </Container>
   );

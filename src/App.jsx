@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 // import { ThemeProvider } from '@mui/material/styles';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import './App.css';
 import { callFunc } from './Configs/firebase';
 import Router from './router';
@@ -25,9 +25,18 @@ function App() {
 
   // const theme = React.useMemo(() => muiTheme);
 
+  const theme = extendTheme({
+    colors: {
+      blue: {
+        50: '#EBF1FC',
+        600: '#1C51B5',
+      },
+    },
+  });
+
   return (
   // <ThemeProvider theme={theme}>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Router />
     </ChakraProvider>
   // </ThemeProvider>

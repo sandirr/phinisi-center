@@ -173,7 +173,7 @@ export default function Component() {
             flexWrap="wrap"
           >
             <Tabs index={indexes[activeTab]}>
-              <TabList _selected={{ color: 'blue.500', borderColor: 'blue.500', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
+              <TabList _selected={{ color: 'blue.600', borderColor: 'blue.600', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
                   <Menu isOpen={openSF}>
@@ -193,7 +193,7 @@ export default function Component() {
             </Tabs>
           </Box>
 
-          <Box flex={{ base: 'auto', md: 'inherit' }}>
+          <Box flex={{ base: 'auto', md: 'inherit' }} mb={{ base: 1, md: 0 }}>
             <InputGroup>
               <Input placeholder="Search" size="md" borderRadius="3xl" />
               <InputRightElement>
