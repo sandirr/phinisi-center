@@ -1,29 +1,25 @@
-import React, { useEffect } from 'react';
-// import { ThemeProvider } from '@mui/material/styles';
+import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import './App.css';
-import { callFunc } from './Configs/firebase';
+// import { callFunc } from './Configs/firebase';
 import Router from './router';
-// import muiTheme from './muiTheme';
 
 function App() {
-  const getData = async () => {
-    const callable = callFunc('getArticles');
+  // const getData = async () => {
+  //   const callable = callFunc('getArticles');
 
-    await callable({})
-      .then((res) => {
-        console.log('success', res);
-      })
-      .catch((err) => {
-        console.log('anjing', err);
-      });
-  };
+  //   await callable({})
+  //     .then((res) => {
+  //       console.log('success', res);
+  //     })
+  //     .catch((err) => {
+  //       console.log('anjing', err);
+  //     });
+  // };
 
-  useEffect(() => {
-    getData();
-  });
-
-  // const theme = React.useMemo(() => muiTheme);
+  // useEffect(() => {
+  //   getData();
+  // });
 
   const theme = extendTheme({
     colors: {
@@ -35,11 +31,9 @@ function App() {
   });
 
   return (
-  // <ThemeProvider theme={theme}>
     <ChakraProvider theme={theme}>
       <Router />
     </ChakraProvider>
-  // </ThemeProvider>
   );
 }
 

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -11,38 +12,28 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
   Tab,
   TabList,
   Tabs,
-  Text,
   Image,
-  Flex,
-  Divider,
-  Stack,
   Avatar,
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
 import {
-  Close, Facebook, Google, EmailOutlined, NotificationsOutlined,
+  EmailOutlined, NotificationsOutlined,
 } from '@mui/icons-material';
 import {
-  GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signOut,
+  signOut,
 } from 'firebase/auth';
 import Images from '../../../Configs/images';
 import { auth } from '../../../Configs/firebase';
 import ROUTES from '../../../Configs/routes';
-
-const googleProvider = new GoogleAuthProvider();
-const fbProvider = new FacebookAuthProvider();
+import { LoginContext } from '../../../Context/index.js';
 
 export default function Component() {
   const [openSF, setOpenSF] = useState(false);
-  const [popLogin, setPopLogin] = useState(false);
+  const { showPopUpLogin, loggedin } = useContext(LoginContext);
 
   const [indexes] = useState({
     '': 0,
@@ -53,34 +44,6 @@ export default function Component() {
     artikel: 4,
   });
   const activeTab = useLocation().pathname.split('/')[1];
-
-  const [logged, setLogged] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setLogged(user);
-      } else {
-        setLogged(null);
-      }
-    });
-  }, []);
-
-  const signinWithGoogle = async () => {
-    const data = await signInWithPopup(auth, googleProvider);
-    if (data.user) {
-      // window.location.reload();
-      setPopLogin(false);
-    }
-  };
-
-  const signinWithFB = async () => {
-    const data = await signInWithPopup(auth, fbProvider);
-    if (data.user) {
-      // window.location.reload();
-      setPopLogin(false);
-    }
-  };
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -105,7 +68,7 @@ export default function Component() {
             <img src={Images.Logo} alt="Phinisi Center" width="120" />
           </Box>
           <Box flex={1} textAlign="right">
-            {logged
+            {loggedin
               ? (
                 <Box display="flex" justifyContent="flex-end" gap="5" alignItems="center">
                   <Box color="#1C51B5" as={Link} to="/">
@@ -116,19 +79,18 @@ export default function Component() {
                   </Box>
                   <Menu>
                     <MenuButton>
-                      {logged.photoURL
+                      {loggedin?.photoURL
                         ? (
                           <Image
-                            name={logged.displayName}
-                            src={logged.photoURL}
-                            alt="profile"
+                            src={loggedin.photoURL}
                             h="42px"
                             w="42px"
                             objectFit="cover"
                             borderRadius="3xl"
+                            referrerPolicy="no-referrer"
                           />
                         )
-                        : <Avatar name={logged.displayName} />}
+                        : <Avatar name={loggedin.displayName} />}
                     </MenuButton>
                     <MenuList minWidth="160px">
                       <MenuItem
@@ -148,7 +110,7 @@ export default function Component() {
                 </Box>
               )
               : (
-                <Button colorScheme="blue" color="blue.500" variant="outline" onClick={() => setPopLogin(true)}>
+                <Button colorScheme="blue" color="blue.500" variant="outline" onClick={() => showPopUpLogin()}>
                   Login
                 </Button>
               )}
@@ -210,47 +172,6 @@ export default function Component() {
         </Box>
       </Container>
 
-      <Modal isOpen={popLogin} onClose={() => null} size="2xl">
-        <ModalOverlay />
-        <ModalContent borderRadius="2xl">
-          <ModalBody pb="20" px={0}>
-            <IconButton bg="transparent" color="blackAlpha.300" ml="2" onClick={() => setPopLogin(false)}>
-              <Close />
-            </IconButton>
-
-            <Divider mb="66px" />
-
-            <Container maxW="xs">
-              <Flex justify="center">
-                <Image src={Images.Logo} width="100%" />
-              </Flex>
-
-              <Stack direction="column" spacing={4} mt="66px" color="#2263DD">
-                <Button leftIcon={<Google />} colorScheme="#2263DD" variant="outline" borderRadius="3xl" onClick={signinWithGoogle}>
-                  Login dengan Google
-                </Button>
-                <Button leftIcon={<Facebook />} colorScheme="#2263DD" variant="outline" borderRadius="3xl" onClick={signinWithFB}>
-                  Login dengan Facebook
-                </Button>
-              </Stack>
-            </Container>
-
-            <Box justifyContent="center" display="flex">
-              <Text fontSize={12} textAlign="center" maxW="md" mt="60px" color="black">
-                Click “Login” to agree to Phinisi Center
-                {' '}
-                <Link style={{ textDecoration: 'underline' }} to="/">Terms of Service</Link>
-                {' '}
-                and acknowledge that Phinisi Center
-                {' '}
-                <Link style={{ textDecoration: 'underline' }} to="/">Privacy Policy</Link>
-                {' '}
-                applies to you.
-              </Text>
-            </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 }
