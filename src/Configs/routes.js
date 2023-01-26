@@ -9,6 +9,7 @@ const ROUTES = {
   privacy: () => '/privacy-policy',
   about: () => '/about',
   faq: () => '/faq',
+  admin: () => '/admin',
 };
 
 export default ROUTES;

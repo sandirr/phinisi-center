@@ -5,9 +5,9 @@ import {
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { callFunc, storage } from '../../../Configs/firebase';
+import { callFunc, storage } from '../../../../../Configs/firebase';
 
-export default function Component({ onSuccess, onFailed }) {
+export default function Component({ onSuccess, onFailed, givenData }) {
   const initialState = {
     title: '',
     author: '',
@@ -15,9 +15,9 @@ export default function Component({ onSuccess, onFailed }) {
     type: '',
     category: '',
   };
-  const [fields, setFields] = useState(() => initialState);
+  const [fields, setFields] = useState(() => givenData || initialState);
   const [img, setImg] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(() => givenData?.content || '');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeField = ({ target }) => {
@@ -26,14 +26,12 @@ export default function Component({ onSuccess, onFailed }) {
 
   const handleChangeImg = async ({ target }) => {
     if (target.files) {
-      // setImg(target.files[0]);
       const file = target.files[0];
       setImg(URL.createObjectURL(file));
       const coverRef = storageRef(storage, `cover/${Date.now().toString()}`);
       await uploadBytes(coverRef, file)
         .then(async () => {
           const cover = await getDownloadURL(coverRef);
-          // console.log(cover);
           setFields({ ...fields, cover });
         });
     }
@@ -42,22 +40,25 @@ export default function Component({ onSuccess, onFailed }) {
   const pushData = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const callable = callFunc('createArticle');
-    await callable({
+    let callable = callFunc('createArticle');
+    let body = {
       ...fields,
       content,
       createdAt: new Date().toISOString(),
-    }).then(() => {
-      setFields(() => ({
-        title: '',
-        author: '',
-        cover: '',
-        type: '-',
-        category: '-',
-      }));
+    };
+    if (fields.id) {
+      callable = callFunc('updateArticle');
+      body = {
+        id: fields.id,
+        body,
+      };
+    }
+
+    await callable(body).then(() => {
+      setFields(() => initialState);
       setImg('');
       setContent('');
-      onSuccess();
+      onSuccess(true);
     }).finally(() => {
       setIsLoading(false);
       onFailed();
@@ -96,17 +97,17 @@ export default function Component({ onSuccess, onFailed }) {
 
   return (
     <form onSubmit={pushData}>
-      <Stack gap={2} mt={2}>
-        <Input label="Title" name="title" placeholder="Title" value={fields.title} onChange={handleChangeField} />
-        <Input label="Author" name="author" placeholder="Author" value={fields.author} onChange={handleChangeField} />
-        <Select name="type" placeholder="Type" value={fields.type} onChange={handleChangeField}>
+      <Stack gap={2}>
+        <Input label="Title" name="title" placeholder="Judul" value={fields.title} onChange={handleChangeField} />
+        <Input label="Author" name="author" placeholder="Penulis" value={fields.author} onChange={handleChangeField} />
+        <Select name="type" placeholder="Tipe" value={fields.type} onChange={handleChangeField}>
           <option value="Sejarah">Sejarah</option>
           <option value="Filosofi">Filosofi</option>
           <option value="Artikel">Artikel</option>
         </Select>
         {fields.type === 'Artikel'
           && (
-          <Select name="category" placeholder="Category" value={fields.category} onChange={handleChangeField}>
+          <Select name="category" placeholder="Kategori" value={fields.category} onChange={handleChangeField}>
             <option value="Fun Fact">Fun Fact</option>
             <option value="Event">Event</option>
             <option value="Phinisi Update">Phinisi Update</option>
@@ -131,7 +132,7 @@ export default function Component({ onSuccess, onFailed }) {
         {!!cover && <img src={cover} alt="cover" height="100" />}
       </Box>
 
-      <Button isLoading={isLoading} outline type="submit">Post Article</Button>
+      <Button isLoading={isLoading} outline type="submit">Simpan</Button>
     </form>
   );
 }

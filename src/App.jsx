@@ -1,26 +1,14 @@
 import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import moment from 'moment';
+import 'moment/locale/id';
 import './App.css';
 // import { callFunc } from './Configs/firebase';
 import Router from './router';
 
+moment.locale('id');
+
 function App() {
-  // const getData = async () => {
-  //   const callable = callFunc('getArticles');
-
-  //   await callable({})
-  //     .then((res) => {
-  //       console.log('success', res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('anjing', err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // });
-
   const theme = extendTheme({
     colors: {
       blue: {

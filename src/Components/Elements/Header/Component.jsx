@@ -29,7 +29,8 @@ import {
 import Images from '../../../Configs/images';
 import { auth } from '../../../Configs/firebase';
 import ROUTES from '../../../Configs/routes';
-import { LoginContext } from '../../../Context/index.js';
+import { LoginContext } from '../../../Context';
+import { admins } from '../../../Configs/constants';
 
 export default function Component() {
   const [openSF, setOpenSF] = useState(false);
@@ -42,6 +43,7 @@ export default function Component() {
     pemesanan: 2,
     penyewaan: 3,
     artikel: 4,
+    admin: 5,
   });
   const activeTab = useLocation().pathname.split('/')[1];
 
@@ -151,6 +153,8 @@ export default function Component() {
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.pemesanan()} fontWeight="medium">Pemesanan</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.penyewaan()} fontWeight="medium">Penyewaan</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.artikel()} fontWeight="medium">Artikel</Tab>
+                {(!!loggedin && admins.includes(loggedin.email?.toLowerCase()))
+                  && <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.admin()} fontWeight="medium">Admin</Tab>}
               </TabList>
             </Tabs>
           </Box>
