@@ -14,15 +14,15 @@ export default function Component() {
             <Image src={Images.LogoWhite} alt="phinisi center" />
             <Text maxWidth={314} size="xs" my={4}>Lorem ipsum dolor sit amet consectetur. Ultrices sit vel integer arcu. </Text>
             <Box display="flex" gap="2">
-              <Link to="/">
+              <a href="https://instagram.com/phinisicenter.id?igshid=ZDdkNTZiNTM=" target="_blank" rel="noreferrer">
                 <img src={Images.InstagramWhite} alt="ig" />
-              </Link>
-              <Link to="/">
+              </a>
+              <a href="https://www.tiktok.com/@phinisicenter.id?_t=8ZZ6Cgqxjft&_r=1" target="_blank" rel="noreferrer">
                 <img src={Images.TiktokWhite} alt="tt" />
-              </Link>
-              <Link to="/">
+              </a>
+              <a href="https://youtube.com/@phinisicenter" target="_blank" rel="noreferrer">
                 <img src={Images.YoutubeWhite} alt="yt" />
-              </Link>
+              </a>
             </Box>
           </Box>
           <Box display="flex" gap={{ base: '20px', md: '60px' }} flexDirection={{ base: 'column', md: 'row' }}>

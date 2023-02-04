@@ -13,6 +13,7 @@ import {
 import ManageSejarah from './tabs/Sejarah';
 import ManageFilosofi from './tabs/Filosofi';
 import ManageArtikel from './tabs/Artikel';
+import ManageVendor from './tabs/Vendor';
 
 export default function Component() {
   const [menuList] = useState([
@@ -59,7 +60,7 @@ export default function Component() {
               <ManageArtikel />
             </TabPanel>
             <TabPanel pb="6">
-              <Heading size="lg">Manajemen Vendor</Heading>
+              <ManageVendor />
             </TabPanel>
             <TabPanel pb="6">
               <Heading size="lg">Chat Area</Heading>

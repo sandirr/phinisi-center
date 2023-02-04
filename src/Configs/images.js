@@ -7,6 +7,8 @@ import TiktokWhite from '../Assets/TiktokWhite.svg';
 import Youtube from '../Assets/Youtube.svg';
 import YoutubeWhite from '../Assets/YoutubeWhite.svg';
 import Play from '../Assets/Play.svg';
+import SejarahPhinisi from '../Assets/SejarahPhinisi.svg';
+import FilosofiPhinisi from '../Assets/FilosofiPhinisi.svg';
 
 const Images = {
   Logo,
@@ -18,6 +20,8 @@ const Images = {
   Youtube,
   YoutubeWhite,
   Play,
+  SejarahPhinisi,
+  FilosofiPhinisi,
 };
 
 export default Images;

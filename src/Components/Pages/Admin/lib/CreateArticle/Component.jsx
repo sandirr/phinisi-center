@@ -43,6 +43,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
     let callable = callFunc('createArticle');
     let body = {
       ...fields,
+      rate: fields.rate || 0,
       content,
       createdAt: new Date().toISOString(),
     };
@@ -50,7 +51,12 @@ export default function Component({ onSuccess, onFailed, givenData }) {
       callable = callFunc('updateArticle');
       body = {
         id: fields.id,
-        body,
+        body: {
+          ...fields,
+          rate: fields.rate || 0,
+          content,
+          updatedAt: new Date().toISOString(),
+        },
       };
     }
 

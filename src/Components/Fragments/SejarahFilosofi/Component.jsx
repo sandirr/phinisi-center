@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   SwiperCore.use([Autoplay]);
@@ -18,11 +19,13 @@ export default function Component() {
   const [sf] = useState([
     {
       title: 'Sejarah Phinisi',
-      desc: 'Kapal phinisi adalah salah satu sebutan bagi kapal yang menggunakan sistem tiang, tali, dan layar. kapal pinisi disinyalir pertama kali dibuat dalam perjalanan panjang Seorang pangeran kebesaran kerajaan luwu Sawerigading untuk menemui calon istrinya We Cudai ke negeri china',
+      desc: 'Para pengrajin kapal phinisi melihat kapal sebagai hubungan antara manusia dengan kapal ialah hubungan antara subjek dengan subjek, sehingga perlakuan kepada kapal bukan sebagai alat untuk berlayar melainkan sebagai anak kandung yang dibesarkan dan dirawat sepenuh hati sehingga ada perasaan cinta kasih dalam proses pembuatannya.',
+      img: Images.SejarahPhinisi,
     },
     {
       title: 'Filosofi Phinisi',
-      desc: 'Para pengrajin kapal phinisi melihat kapal yang mereka kerjakan bukan semata mata benda mati, mereka melihat hubungan antara manusia dengan kapal ialah hubungan antara subjek dengan subjek, bukan hubungan antara subjek dengan objek, sehinga mereka memperlakukan kapal bukan sebagai alat untuk berlayar melainkan sebagai anak kandung yang dibesarkankan dan dirawat sepenuh hati sehingga ada perasaan cinta kasih dalam proses pembuatannya.',
+      desc: 'Phinisi adalah bentuk perkembangan kapal melalui akulturasi, secara definitif phinisi adalah kapal yang memiliki sistem tiang, tali dan layar. Diperkenalkan sebagai “peeneeseek” pertama dibuat pada 1840-an oleh beberapa orang Prancis dan Jerman yang terdampar di Trengganu Malaysia. Kapal layar ini menjadi gambaran asal bagi kapal layar baru yang disebut Pinas.',
+      img: Images.FilosofiPhinisi,
     },
   ]);
 
@@ -45,11 +48,12 @@ export default function Component() {
             <Box
               style={{
                 backgroundSize: 'cover',
-                borderRadius: 24,
-                background: 'linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%), url("https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80")',
+                borderRadius: '24px',
+                background: `linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%), url(${text.img})`,
+                backgroundRepeat: 'no-repeat',
               }}
               display="flex"
-              height={{ base: 200, md: 250, lg: 300 }}
+              height={[180, 200, 250, 290]}
               flexDirection="column"
               justifyContent="center"
               pl={{ base: '4', md: '12', lg: '20' }}
@@ -57,7 +61,7 @@ export default function Component() {
               <Heading
                 color="white"
                 size={{
-                  base: 'md', lg: 'xl', xl: '2xl',
+                  base: 'lg', lg: 'xl',
                 }}
                 fontWeight="700"
               >
@@ -65,11 +69,11 @@ export default function Component() {
               </Heading>
               <Text
                 width={{
-                  base: '48', sm: '56', md: 'sm', lg: 'md',
+                  base: '48', sm: '56', md: 'sm', lg: '2xl',
                 }}
-                noOfLines={3}
+                noOfLines={4}
                 color="white"
-                size={{ base: 'xs', lg: 'sm' }}
+                fontSize={['xx-small', 'xs', 'sm']}
                 mt={{ base: 2, md: 4, lg: 5 }}
               >
                 {text.desc}

@@ -52,22 +52,22 @@ export default function Component() {
   };
 
   return (
-    <Box bg="white" boxShadow="md" pt="6">
+    <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky">
       <Container maxW="7xl">
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display={{ base: 'none', md: 'flex' }} gap="4" flex={1}>
-            <Link to="/">
+            <a href="https://instagram.com/phinisicenter.id?igshid=ZDdkNTZiNTM=" target="_blank" rel="noreferrer">
               <img src={Images.Instagram} alt="ig" />
-            </Link>
-            <Link to="/">
+            </a>
+            <a href="https://www.tiktok.com/@phinisicenter.id?_t=8ZZ6Cgqxjft&_r=1" target="_blank" rel="noreferrer">
               <img src={Images.Tiktok} alt="tt" />
-            </Link>
-            <Link to="/">
+            </a>
+            <a href="https://youtube.com/@phinisicenter" target="_blank" rel="noreferrer">
               <img src={Images.Youtube} alt="yt" />
-            </Link>
+            </a>
           </Box>
           <Box>
-            <img src={Images.Logo} alt="Phinisi Center" width="120" />
+            <Image src={Images.Logo} alt="Phinisi Center" width={[60, 100, 120]} />
           </Box>
           <Box flex={1} textAlign="right">
             {loggedin
@@ -119,7 +119,7 @@ export default function Component() {
           </Box>
         </Box>
         <Box
-          mt="6"
+          mt={['2', '4', '6']}
           display="flex"
           flexWrap="wrap"
           justifyContent="space-between"
