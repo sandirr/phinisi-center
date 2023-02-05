@@ -41,7 +41,7 @@ export default function Component() {
           <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>
           <Heading size="xl" mb="6">{article.title}</Heading>
           <Center>
-            <Image width={460} height={460} borderRadius={16} src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'} />
+            <Image width={460} borderRadius={16} src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'} />
           </Center>
           <Box mt="6" dangerouslySetInnerHTML={{ __html: article.content }} />
           <Box display="flex" gap={3} color="blackAlpha.600" mt="6">
@@ -64,7 +64,7 @@ export default function Component() {
           <Heading size="lg">Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
           <Divider mt={6} />
-          <Elements.SideNavRelated />
+          <Elements.SideNavRelated category={article.category} />
         </Box>
       </Box>
     </Container>

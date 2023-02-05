@@ -17,7 +17,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
     description: '',
   };
   const [fields, setFields] = useState(() => givenData || initialState);
-  const [img, setImg] = useState('');
   const [certificates, setCertificates] = useState(() => givenData?.certificates || []);
   const [certi, setCerti] = useState({
     name: '',
@@ -49,7 +48,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
   const handleChangeImg = async ({ target }) => {
     if (target.files) {
       const file = target.files[0];
-      setImg(URL.createObjectURL(file));
+      // setImg(URL.createObjectURL(file));
       const coverRef = storageRef(storage, `vendor/${Date.now().toString()}`);
       await uploadBytes(coverRef, file)
         .then(async () => {
@@ -82,15 +81,12 @@ export default function Component({ onSuccess, onFailed, givenData }) {
 
     await callable(body).then(() => {
       setFields(() => initialState);
-      setImg('');
       onSuccess(true);
     }).finally(() => {
       setIsLoading(false);
       onFailed();
     });
   };
-
-  const cover = img || fields.cover;
 
   return (
     <form onSubmit={pushData}>
@@ -140,7 +136,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
           <Input name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
         </div>
         <Box py={2}>
-          {!!cover && <img src={cover} alt="cover" height="100" />}
+          {!!fields.cover && <img src={fields.cover} alt="cover" height="100" />}
         </Box>
       </Box>
 

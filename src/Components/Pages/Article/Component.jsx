@@ -4,8 +4,11 @@ import {
   Center,
   Container,
   Divider,
+  Flex,
   Heading,
   Image,
+  Skeleton,
+  Stack,
   Tab,
   TabList,
   Tabs,
@@ -90,25 +93,35 @@ export default function Component() {
     }
   }, [meta.activePage, activeTab]);
 
+  const renderLoading = () => [1, 2, 3].map((i) => (
+    <Box mt="8" pr={4} key={i}>
+      <Flex justify="space-between" gap="24px">
+        <Stack direction="column" w="full" gap="4px">
+          <Skeleton w="full" height="20px" />
+          <Skeleton w="full" height="12px" mt={2} />
+          <Skeleton w="full" height="12px" />
+          <Skeleton w="full" height="12px" />
+        </Stack>
+        <Skeleton width={120} height={120} borderRadius="12px" />
+      </Flex>
+      <Skeleton w={['70%', '50%']} height="8px" />
+      <Divider mt="3" />
+    </Box>
+  ));
+
   const renderArticles = () => {
-    if (loading) return 'Loading...';
+    if (loading) {
+      return renderLoading();
+    }
     if (articlesList.length) {
       return articlesList.map(((article, idx) => (
         <Box key={idx}>
-          <Box mt="8" display="flex" gap="10" pr={4} as={Link} to={`baca/${article.id}`}>
+          <Box mt="8" display="flex" justifyContent="space-between" gap="10" pr={4} as={Link} to={`baca/${article.id}`}>
             <Box>
               <Heading size="md">{article.title}</Heading>
               <Text noOfLines={4} size="sm" mt="2">
                 {article.generatedContent}
               </Text>
-              <Box display="flex" gap={3} color="blackAlpha.600" mt="2">
-                <Text fontSize="xs">{article.createdAt}</Text>
-                <Text fontSize="xs">
-                  {article.generatedContent?.length}
-                  {' '}
-                  Characters
-                </Text>
-              </Box>
             </Box>
             <Image
               alt="cover"
@@ -118,6 +131,14 @@ export default function Component() {
               borderRadius="12"
               src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'}
             />
+          </Box>
+          <Box display="flex" gap={3} color="blackAlpha.600" mt="2">
+            <Text fontSize="xs">{article.createdAt}</Text>
+            <Text fontSize="xs">
+              {article.generatedContent?.length}
+              {' '}
+              Characters
+            </Text>
           </Box>
           <Divider mt="3" />
         </Box>
@@ -156,6 +177,7 @@ export default function Component() {
               dataLength={articlesList.length}
               hasMore={hasMoreItems}
               next={handleLoadMore}
+              loader={renderLoading()}
             >
               {renderArticles()}
             </InfiniteScroll>

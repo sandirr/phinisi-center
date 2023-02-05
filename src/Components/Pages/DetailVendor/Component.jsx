@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Text,
   Box,
@@ -26,11 +26,22 @@ import {
 } from '../../../Assets/icons/icons';
 import ROUTES from '../../../Configs/routes';
 import { useQuery } from '../../../CustomHooks';
+import { ChatModalContext, OrderModalContext } from '../../../Context';
 
 export default function Component() {
   const query = useQuery();
   const navigate = useNavigate();
+  const { showChatModal } = useContext(ChatModalContext);
+  const { showOrderModal } = useContext(OrderModalContext);
   const [activeTab, setActiveTab] = useState(0);
+
+  const handleInterested = () => {
+    showChatModal({ vendor: { name: 'Hj Awang' } });
+  };
+
+  const handleFixOrder = () => {
+    showOrderModal({ vendor: { name: 'Hj Awang' } });
+  };
 
   useEffect(() => {
     if (query.get('tab')) {
@@ -65,8 +76,8 @@ export default function Component() {
             <Text fontSize="md" mt={1}>Vendor Pembuat perahu phinisi tertua di bulukumba, Sulawesi selatan</Text>
           </Box>
           <Box display="flex" gap="3" mt="6">
-            <Button w="full" bg="#1C51B5" color="white" colorScheme="blue">Tertarik</Button>
-            <Button w="full">Fix Pesan</Button>
+            <Button w="full" bg="#1C51B5" color="white" colorScheme="blue" onClick={handleInterested}>Tertarik</Button>
+            <Button w="full" onClick={handleFixOrder}>Fix Pesan</Button>
           </Box>
 
           <Divider my="4" />

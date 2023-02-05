@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Heading, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { callFunc } from '../../../Configs/firebase';
+import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
   const [articlesList, setArticlesList] = useState([]);
@@ -9,12 +10,12 @@ export default function Component() {
   const getArticles = async () => {
     const callable = callFunc('getArticlePopulars');
     await callable({
-      page: 1, limit: 3, type: 'Artikel',
+      page: 1, limit: 3,
     })
       .then((res) => {
         const {
           data,
-        } = res.data;
+        } = res;
         const normalizeData = data.map((item, index) => ({
           ...item,
           index: index + 1,
@@ -34,7 +35,7 @@ export default function Component() {
     <Box mt="8">
       <Heading size="xs">Artikel Populer</Heading>
       {articlesList.map((article, idx) => (
-        <Box mt="4" as={Link} to="/" display="block" key={idx}>
+        <Box mt="4" as={Link} to={`${ROUTES.artikel()}/baca/${article.id}`} display="block" key={idx}>
           <Text size="sm">{article.category}</Text>
           <Heading noOfLines={2} mt="1" size="md">{article.title}</Heading>
         </Box>

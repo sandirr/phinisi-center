@@ -7,7 +7,12 @@ import Images from '../../../Configs/images';
 
 export default function Component() {
   return (
-    <Box bg="#2263DD" color="white" py="6" overflow="hidden">
+    <Box
+      bg="#2263DD"
+      color="white"
+      py="6"
+      overflow="hidden"
+    >
       <Container minW="7xl">
         <Box display="flex" justifyContent="space-between" gap={{ base: '20px', md: '60px' }} flexDirection={{ base: 'column', xl: 'row' }}>
           <Box>

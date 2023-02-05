@@ -16,7 +16,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
     category: '',
   };
   const [fields, setFields] = useState(() => givenData || initialState);
-  const [img, setImg] = useState('');
   const [content, setContent] = useState(() => givenData?.content || '');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +26,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
   const handleChangeImg = async ({ target }) => {
     if (target.files) {
       const file = target.files[0];
-      setImg(URL.createObjectURL(file));
       const coverRef = storageRef(storage, `cover/${Date.now().toString()}`);
       await uploadBytes(coverRef, file)
         .then(async () => {
@@ -62,7 +60,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
 
     await callable(body).then(() => {
       setFields(() => initialState);
-      setImg('');
       setContent('');
       onSuccess(true);
     }).finally(() => {
@@ -71,7 +68,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
     });
   };
 
-  const cover = img || fields.cover;
   const modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -135,7 +131,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
         <Input name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
       </div>
       <Box py={2}>
-        {!!cover && <img src={cover} alt="cover" height="100" />}
+        {!!fields.cover && <img src={fields.cover} alt="cover" height="100" />}
       </Box>
 
       <Button isLoading={isLoading} outline type="submit">Simpan</Button>
