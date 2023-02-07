@@ -1,4 +1,5 @@
 import {
+  Box,
   Container, Heading, Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -125,33 +126,35 @@ export default function Router() {
                 handleClose={closeOrderModal}
                 {...orderModalProps}
               />
-              <Elements.Header />
-              <Routes>
-                <Route path="/">
-                  <Route index element={<Pages.Home />} />
-                  <Route path="/home" element={<Pages.Home />} />
-                </Route>
-                <Route path={ROUTES.artikel()}>
-                  <Route index element={<Pages.Article />} />
-                  {/* <Route path="buat" element={<Pages.CreateArticle />} /> */}
-                  <Route path="baca/:id" element={<Pages.DetailArticle />} />
-                </Route>
-                <Route path={ROUTES.pemesanan()}>
-                  <Route index element={<Pages.Order />} />
-                  <Route path="vendor/:id" element={<Pages.DetailVendor />} />
-                </Route>
-                {!!loggedin && admins.includes(loggedin.email.toLowerCase())
-                && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}
-                <Route
-                  path="*"
-                  element={(
-                    <Container maxW="7xl" py="4">
-                      <Heading size="md">Oops Halaman Tidak Ditemukan!</Heading>
-                      <Text>Error 404</Text>
-                    </Container>
-            )}
-                />
-              </Routes>
+              <Box minHeight="100vh">
+                <Elements.Header />
+                <Routes>
+                  <Route path="/">
+                    <Route index element={<Pages.Home />} />
+                    <Route path="/home" element={<Pages.Home />} />
+                  </Route>
+                  <Route path={ROUTES.artikel()}>
+                    <Route index element={<Pages.Article />} />
+                    {/* <Route path="buat" element={<Pages.CreateArticle />} /> */}
+                    <Route path="baca/:id" element={<Pages.DetailArticle />} />
+                  </Route>
+                  <Route path={ROUTES.pemesanan()}>
+                    <Route index element={<Pages.Order />} />
+                    <Route path="vendor/:id" element={<Pages.DetailVendor />} />
+                  </Route>
+                  {!!loggedin && admins.includes(loggedin.email.toLowerCase())
+                  && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}
+                  <Route
+                    path="*"
+                    element={(
+                      <Container maxW="7xl" py="4">
+                        <Heading size="md">Oops Halaman Tidak Ditemukan!</Heading>
+                        <Text>Error 404</Text>
+                      </Container>
+                  )}
+                  />
+                </Routes>
+              </Box>
               <Elements.Footer />
             </OrderModalContext.Provider>
           </ChatModalContext.Provider>

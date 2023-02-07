@@ -93,16 +93,27 @@ export default function Component() {
   return (
     <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky">
       <Container maxW="7xl">
+        <Box display={{ base: 'flex', md: 'none' }} gap="2" mb="2">
+          <a href="https://www.kemdikbud.go.id/" target="_blank" rel="noreferrer">
+            <Image height="18px" src={Images.Kemdikbud} alt="kemdikbud" />
+          </a>
+          <a href="https://danaindonesiana.kemdikbud.go.id/" target="_blank" rel="noreferrer">
+            <Image height="16px" src={Images.DanaIndonesiana} alt="Dana Indonesiana" />
+          </a>
+          <a href="https://lpdp.kemenkeu.go.id/" target="_blank" rel="noreferrer">
+            <Image height="16px" src={Images.LPDP} alt="LPDP" />
+          </a>
+        </Box>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box display={{ base: 'none', md: 'flex' }} gap="4" flex={1}>
-            <a href="https://instagram.com/phinisicenter.id?igshid=ZDdkNTZiNTM=" target="_blank" rel="noreferrer">
-              <img src={Images.Instagram} alt="ig" />
+          <Box display={{ base: 'none', md: 'flex' }} gap="2" flex={1}>
+            <a href="https://www.kemdikbud.go.id/" target="_blank" rel="noreferrer">
+              <Image height="26px" src={Images.Kemdikbud} alt="kemdikbud" />
             </a>
-            <a href="https://www.tiktok.com/@phinisicenter.id?_t=8ZZ6Cgqxjft&_r=1" target="_blank" rel="noreferrer">
-              <img src={Images.Tiktok} alt="tt" />
+            <a href="https://danaindonesiana.kemdikbud.go.id/" target="_blank" rel="noreferrer">
+              <Image height="24px" src={Images.DanaIndonesiana} alt="Dana Indonesiana" />
             </a>
-            <a href="https://youtube.com/@phinisicenter" target="_blank" rel="noreferrer">
-              <img src={Images.Youtube} alt="yt" />
+            <a href="https://lpdp.kemenkeu.go.id/" target="_blank" rel="noreferrer">
+              <Image height="24px" src={Images.LPDP} alt="LPDP" />
             </a>
           </Box>
           <Box>

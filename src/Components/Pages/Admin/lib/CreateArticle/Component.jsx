@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   Button, Stack, Input, Box, Select,
@@ -5,6 +6,8 @@ import {
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import SunEditor, { buttonList } from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
 import { callFunc, storage } from '../../../../../Configs/firebase';
 
 export default function Component({ onSuccess, onFailed, givenData }) {
@@ -117,12 +120,30 @@ export default function Component({ onSuccess, onFailed, givenData }) {
           )}
       </Stack>
       <Box my={2}>
-        <ReactQuill
+        {/* <ReactQuill
           theme="snow"
           modules={modules}
           formats={formats}
           value={content}
           onChange={setContent}
+        /> */}
+        <SunEditor
+          // theme="snow"
+          // modules={modules}
+          // formats={formats}
+          defaultValue={content}
+          value={content}
+          setAllPlugins
+          onChange={setContent}
+          setOptions={{
+            buttonList: [
+              ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
+              ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
+              '/',
+              ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'table'],
+              ['link', 'image', 'video', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save'],
+            ],
+          }}
         />
       </Box>
 

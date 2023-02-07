@@ -9,6 +9,9 @@ import YoutubeWhite from '../Assets/YoutubeWhite.svg';
 import Play from '../Assets/Play.svg';
 import SejarahPhinisi from '../Assets/SejarahPhinisi.svg';
 import FilosofiPhinisi from '../Assets/FilosofiPhinisi.svg';
+import DanaIndonesiana from '../Assets/logo/danaindonesiana.jpg';
+import LPDP from '../Assets/logo/lpdp.png';
+import Kemdikbud from '../Assets/logo/kemdikbud.png';
 
 const Images = {
   Logo,
@@ -22,6 +25,9 @@ const Images = {
   Play,
   SejarahPhinisi,
   FilosofiPhinisi,
+  DanaIndonesiana,
+  LPDP,
+  Kemdikbud,
 };
 
 export default Images;
