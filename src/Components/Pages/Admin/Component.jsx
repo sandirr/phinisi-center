@@ -13,6 +13,7 @@ import {
 import ManageSejarah from './tabs/Sejarah';
 import ManageFilosofi from './tabs/Filosofi';
 import ManageArtikel from './tabs/Artikel';
+import ProsesPembuatan from './tabs/ProsesPembuatan';
 import ManageVendor from './tabs/Vendor';
 
 export default function Component() {
@@ -20,6 +21,7 @@ export default function Component() {
     { name: 'Sejarah' },
     { name: 'Filosofi' },
     { name: 'Artikel' },
+    { name: 'Proses Pembuatan' },
     { name: 'Vendor' },
     { name: 'Chat' },
   ]);
@@ -58,6 +60,9 @@ export default function Component() {
             </TabPanel>
             <TabPanel pb="6">
               <ManageArtikel />
+            </TabPanel>
+            <TabPanel pb="6">
+              <ProsesPembuatan />
             </TabPanel>
             <TabPanel pb="6">
               <ManageVendor />

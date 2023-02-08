@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Heading, Text } from '@chakra-ui/react';
+import {
+  Box, Heading, Image, Text,
+} from '@chakra-ui/react';
 import SwiperCore, {
   Pagination, Autoplay,
 } from 'swiper';
@@ -9,8 +12,24 @@ import ExampleVideo from '../../../Assets/videoplayback.mp4';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
+import Images from '../../../Configs/images';
 
 SwiperCore.use([Autoplay, Pagination]);
+const listData = [
+  {
+    title: 'Selamat datang\ndi Phinisi Center',
+    desc: 'Exploring the oceans with pride and\nhistory, Phinisi Center inspires adventure',
+    imgLink: Images.Hero1,
+  },
+  {
+    title: '"Menjelajahi panorama laut\ndengan keanggunan dan warisan\nbudaya bersama Phinisi”',
+    imgLink: Images.Hero2,
+  },
+  {
+    title: '"Temukan berita-\nberita menarik\nseputar Phinisi”',
+    imgLink: Images.Hero3,
+  },
+];
 
 export default function Component() {
   const defaultAutoplay = {
@@ -51,10 +70,12 @@ export default function Component() {
         }}
         // modules={[Pagination, Autoplay]}
       >
-        {[1, 2].map((i) => (
+        {listData.map((data, i) => (
           <SwiperSlide key={i}>
             <VideoContainer
               swiperRef={swiperRef}
+              data={data}
+              index={i}
               stopAutoSwipe={stopAutoSwipe}
               startAutoSwipe={startAutoSwipe}
             />
@@ -65,7 +86,7 @@ export default function Component() {
   );
 }
 
-export function VideoContainer({ swiperRef }) {
+export function VideoContainer({ swiperRef, data, index }) {
   const videoRef = useRef(null);
   const [play, setPlay] = useState(false);
 
@@ -99,9 +120,21 @@ export function VideoContainer({ swiperRef }) {
     <Box
       position="relative"
       onClick={togglePlay}
-      // onMouseUp={handleStopVideo}
     >
-      <Box
+      <Image
+        // ref={videoRef}
+        // as="video"
+        src={data.imgLink}
+        backgroundSize="cover"
+        minW="full"
+        minH={['140px', '280px', 'full']}
+        display="flex"
+        flexDirection="column"
+        objectFit="cover"
+        justifyContent="center"
+        // onEnded={() => setPlay(false)}
+      />
+      {/* <Box
         ref={videoRef}
         as="video"
         src={ExampleVideo}
@@ -112,7 +145,7 @@ export function VideoContainer({ swiperRef }) {
         flexDirection="column"
         justifyContent="center"
         onEnded={() => setPlay(false)}
-      />
+      /> */}
       <Box
         position="absolute"
         px={{ base: '8', md: '16', lg: '40' }}
@@ -127,25 +160,21 @@ export function VideoContainer({ swiperRef }) {
       >
         <Heading
           fontWeight="700"
-          size={{
-            base: 'xl', md: '2xl', lg: '3xl',
-          }}
+          size={index === 0 ? ['lg', 'xl', '2xl', '3xl'] : ['md', 'lg', 'xl', '2xl']}
           color="white"
           lineHeight="100%"
+          whiteSpace="pre-line"
         >
-          Selamat datang
-          <br />
-          di Phinisi Center
+          {data.title}
         </Heading>
         <Text
           mt="2"
           color="white"
-          size={{
-            base: 'md', md: 'xl', lg: '2xl',
-          }}
+          fontSize={['xs', 'md', 'lg', '2xl']}
           fontWeight="400"
+          whiteSpace="pre-line"
         >
-          Lorem ipsum dolor sit amet
+          {data.desc}
         </Text>
       </Box>
     </Box>

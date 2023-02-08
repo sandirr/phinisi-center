@@ -108,6 +108,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
         <Select name="type" placeholder="Tipe" value={fields.type} onChange={handleChangeField}>
           <option value="Sejarah">Sejarah</option>
           <option value="Filosofi">Filosofi</option>
+          <option value="Proses Pembuatan">Proses Pembuatan</option>
           <option value="Artikel">Artikel</option>
         </Select>
         {fields.type === 'Artikel'

@@ -93,7 +93,7 @@ export default function Component() {
   return (
     <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky">
       <Container maxW="7xl">
-        <Box display={{ base: 'flex', md: 'none' }} gap="2" mb="2">
+        <Box display={{ base: 'flex', md: 'none' }} gap="2" mb="4">
           <a href="https://www.kemdikbud.go.id/" target="_blank" rel="noreferrer">
             <Image height="18px" src={Images.Kemdikbud} alt="kemdikbud" />
           </a>
