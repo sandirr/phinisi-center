@@ -4,6 +4,7 @@ import DetailArticle from './DetailArticle';
 import Article from './Article';
 import Order from './Order';
 import DetailVendor from './DetailVendor';
+import DetailOrder from './DetailOrder';
 import Admin from './Admin';
 import Auth from './Auth';
 
@@ -14,6 +15,7 @@ export default {
   Article,
   Order,
   DetailVendor,
+  DetailOrder,
   Admin,
   Auth,
 };

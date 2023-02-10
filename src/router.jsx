@@ -140,7 +140,10 @@ export default function Router() {
                   </Route>
                   <Route path={ROUTES.pemesanan()}>
                     <Route index element={<Pages.Order />} />
-                    <Route path="vendor/:id" element={<Pages.DetailVendor />} />
+                    <Route path="vendor/:id">
+                      <Route index element={<Pages.DetailVendor />} />
+                      <Route path="order/:orderId" element={<Pages.DetailOrder />} />
+                    </Route>
                   </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}

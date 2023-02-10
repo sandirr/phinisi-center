@@ -15,6 +15,11 @@ import Kemdikbud from '../Assets/logo/kemdikbud.png';
 import Hero1 from '../Assets/hero/1.png';
 import Hero2 from '../Assets/hero/2.png';
 import Hero3 from '../Assets/hero/3.png';
+import Order1 from '../Assets/order/1.png';
+import Order2 from '../Assets/order/2.png';
+import Order3 from '../Assets/order/3.png';
+import Order4 from '../Assets/order/4.png';
+import Order5 from '../Assets/order/5.png';
 
 const Images = {
   Logo,
@@ -34,6 +39,11 @@ const Images = {
   Hero1,
   Hero2,
   Hero3,
+  Order1,
+  Order2,
+  Order3,
+  Order4,
+  Order5,
 };
 
 export default Images;

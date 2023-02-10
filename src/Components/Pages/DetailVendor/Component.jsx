@@ -198,6 +198,8 @@ export default function Component() {
                 borderRadius="16px"
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
                 p="4"
+                cursor="pointer"
+                onClick={() => navigate('order/orderId')}
               >
                 <Image
                   src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"

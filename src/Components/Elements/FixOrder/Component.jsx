@@ -23,7 +23,6 @@ export default function Component({
   handleClose, open, vendor = {},
 }) {
   const [loading] = useState(false);
-  console.log(vendor);
   const sendMessage = async () => {
   };
   return (
@@ -32,6 +31,8 @@ export default function Component({
       <ModalContent borderRadius={24}>
         <ModalHeader pb="0">
           Formulir Pemesanan
+          {' '}
+          {vendor.name}
         </ModalHeader>
         <ModalCloseButton color="blackAlpha.300" size="lg" />
         <ModalBody>
