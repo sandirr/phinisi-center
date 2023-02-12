@@ -5,6 +5,9 @@ import Article from './Article';
 import Order from './Order';
 import DetailVendor from './DetailVendor';
 import DetailOrder from './DetailOrder';
+import DetailTrip from './DetailTrip';
+import DetailShip from './DetailShip';
+import Rental from './Rental';
 import Admin from './Admin';
 import Auth from './Auth';
 
@@ -16,6 +19,9 @@ export default {
   Order,
   DetailVendor,
   DetailOrder,
+  DetailTrip,
+  DetailShip,
+  Rental,
   Admin,
   Auth,
 };

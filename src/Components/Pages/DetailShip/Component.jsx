@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   Box,
@@ -9,13 +9,15 @@ import {
   Flex,
   Button,
   Divider,
-  Stack,
   Grid,
   GridItem,
   Modal,
   ModalOverlay,
   ModalContent,
   CloseButton,
+  Select,
+  Stack,
+  Badge,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import SwiperCore, {
@@ -27,7 +29,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-coverflow';
 import Images from '../../../Configs/images';
 import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
-import { ChatModalContext } from '../../../Context';
 
 const images = [
   Images.Order1,
@@ -39,19 +40,14 @@ const images = [
 
 export default function Component() {
   SwiperCore.use([Navigation]);
-  const { orderId } = useParams();
+  const { id } = useParams();
   const [fullImg, setFullImg] = useState('');
-  const { showChatModal } = useContext(ChatModalContext);
-
-  const handleInterested = () => {
-    showChatModal({ vendor: { name: 'Hj Awang' } });
-  };
 
   return (
     <Container maxW="7xl" py="5">
       <Heading size="xl">
         Augustine Phinisi
-        {orderId}
+        {id}
       </Heading>
       <Text size="xl" mt="2">Labuan Bajo, Nusa Tenggara Timur, Indonesia</Text>
       <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6}>
@@ -137,19 +133,41 @@ export default function Component() {
               </Stack>
             </Box>
           </Flex>
+          <Divider my={6} w="full" />
         </Box>
-        <Box minW={{ base: 'xs', md: 'lg' }}>
+        <Box minW={{ base: 'xs', sm: 'sm', md: 'lg' }}>
           <Box
             borderRadius={24}
-            textAlign="center"
-            p="10"
+            px="6"
+            py="7"
             mt="3"
             w="full"
             boxShadow="0px 20px 25px -5px rgba(0, 0, 0, 0.1), inset 0px 0px 2px rgba(0, 0, 0, 0.25)"
           >
-            <Heading fontSize={['lg', 'xl', '2xl']}>Tertarik Dengan Model Ini?</Heading>
-            <Text size={['xs', 'sm', 'md']} mt={1}>jika anda tertarik, klik tombol dibawah</Text>
-            <Button mt={6} colorScheme="blue" onClick={handleInterested}>Tertarik</Button>
+            <Text size={['xs', 'sm', 'md']}>Mulai dari</Text>
+            <Heading fontSize={['lg', 'xl', '2xl']}>Rp 999.000 /Pax</Heading>
+            <Select placeholder="Jumlah Tamu" mt="6">
+              {new Array(12).fill(0).map((e, i) => (
+                <option key={i} value={i}>
+                  {i}
+                  {' '}
+                  Orang
+                </option>
+              ))}
+            </Select>
+            <Button w="full" mt={6} colorScheme="blue">Booking</Button>
+            <Flex mt="6" justify="space-between" alignItems="center">
+              <Text textDecorationLine="underline">Rp 999.000 x 10</Text>
+              <Text>Rp 9.990.000</Text>
+            </Flex>
+            <Flex mt="2" justify="space-between" alignItems="center">
+              <Text textDecorationLine="underline">Biaya Layanan</Text>
+              <Badge colorScheme="green" textTransform="none">Gratis</Badge>
+            </Flex>
+            <Flex mt="6" justify="space-between" alignItems="center">
+              <Heading size="md">Estimasi Total Biaya</Heading>
+              <Heading size="md">Rp 9.990.000</Heading>
+            </Flex>
           </Box>
         </Box>
       </Flex>

@@ -20,6 +20,7 @@ import Order2 from '../Assets/order/2.png';
 import Order3 from '../Assets/order/3.png';
 import Order4 from '../Assets/order/4.png';
 import Order5 from '../Assets/order/5.png';
+import Order6 from '../Assets/order/6.svg';
 
 const Images = {
   Logo,
@@ -44,6 +45,7 @@ const Images = {
   Order3,
   Order4,
   Order5,
+  Order6,
 };
 
 export default Images;

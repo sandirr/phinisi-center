@@ -250,7 +250,7 @@ export default function Component() {
             display="flex"
             flexWrap="wrap"
           >
-            <Tabs index={indexes[activeTab]}>
+            <Tabs index={indexes[activeTab]} size={['sm', 'md', 'lg']}>
               <TabList _selected={{ color: 'blue.600', borderColor: 'blue.600', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
                 <Tab _focusVisible={{ boxShadow: 'none' }} fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>

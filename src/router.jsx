@@ -145,6 +145,11 @@ export default function Router() {
                       <Route path="order/:orderId" element={<Pages.DetailOrder />} />
                     </Route>
                   </Route>
+                  <Route path={ROUTES.penyewaan()}>
+                    <Route index element={<Pages.Rental />} />
+                    <Route path="trip/:id" element={<Pages.DetailTrip />} />
+                    <Route path="ship/:id" element={<Pages.DetailShip />} />
+                  </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}
                   <Route

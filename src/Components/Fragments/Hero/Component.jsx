@@ -127,7 +127,7 @@ export function VideoContainer({ swiperRef, data, index }) {
         src={data.imgLink}
         backgroundSize="cover"
         minW="full"
-        minH={['140px', '280px', 'full']}
+        minH={['240px', '280px', 'full']}
         display="flex"
         flexDirection="column"
         objectFit="cover"

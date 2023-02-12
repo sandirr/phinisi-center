@@ -53,7 +53,7 @@ export default function Component() {
                 backgroundRepeat: 'no-repeat',
               }}
               display="flex"
-              height={[180, 200, 250, 290]}
+              height={[160, 200, 250, 290]}
               flexDirection="column"
               justifyContent="center"
               pl={{ base: '4', md: '12', lg: '20' }}
