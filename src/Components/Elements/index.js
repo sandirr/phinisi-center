@@ -7,6 +7,7 @@ import Table from './Table';
 import Confirmation from './Confirmation';
 import ChatModal from './ChatModal';
 import FixOrder from './FixOrder';
+import ImagesModal from './ImagesModal';
 
 const Elements = {
   Header,
@@ -18,6 +19,7 @@ const Elements = {
   Confirmation,
   ChatModal,
   FixOrder,
+  ImagesModal,
 };
 
 export default Elements;

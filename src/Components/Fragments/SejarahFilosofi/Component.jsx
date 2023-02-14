@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import {
@@ -10,19 +11,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
+import { useNavigate } from 'react-router-dom';
 import Images from '../../../Configs/images';
+import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
   SwiperCore.use([Autoplay]);
+  const navigate = useNavigate();
   const [isMobile] = useMediaQuery('(max-width: 768px)');
 
   const [sf] = useState([
     {
+      link: ROUTES.sejarah(),
       title: 'Sejarah Phinisi',
       desc: 'Para pengrajin kapal phinisi melihat kapal sebagai hubungan antara manusia dengan kapal ialah hubungan antara subjek dengan subjek, sehingga perlakuan kepada kapal bukan sebagai alat untuk berlayar melainkan sebagai anak kandung yang dibesarkan dan dirawat sepenuh hati sehingga ada perasaan cinta kasih dalam proses pembuatannya.',
       img: Images.SejarahPhinisi,
     },
     {
+      link: ROUTES.filosofi(),
       title: 'Filosofi Phinisi',
       desc: 'Phinisi adalah bentuk perkembangan kapal melalui akulturasi, secara definitif phinisi adalah kapal yang memiliki sistem tiang, tali dan layar. Diperkenalkan sebagai “peeneeseek” pertama dibuat pada 1840-an oleh beberapa orang Prancis dan Jerman yang terdampar di Trengganu Malaysia. Kapal layar ini menjadi gambaran asal bagi kapal layar baru yang disebut Pinas.',
       img: Images.FilosofiPhinisi,
@@ -33,39 +39,39 @@ export default function Component() {
     <Box pt="8" pb="4" bg="blue.50" position="relative" height="auto" overflow="hidden">
       <Swiper
         className="special-swiper"
-        spaceBetween={isMobile ? 40 : 70}
+        // spaceBetween={isMobile ? 40 : 70}
         style={{
           overflow: 'visible',
         }}
         slidesPerView={1.5}
         centeredSlides
-        grabCursor
         loop
         modules={[Pagination]}
       >
-        {sf.map((text) => (
-          <SwiperSlide key={text.title}>
+        {sf.map((item) => (
+          <SwiperSlide key={item.title}>
             <Box
+              onClick={() => navigate(item.link)}
               style={{
                 backgroundSize: 'cover',
                 borderRadius: '24px',
-                background: `linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%), url(${text.img})`,
+                overflow: 'hidden',
+                background: `linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%), url(${item.img})`,
                 backgroundRepeat: 'no-repeat',
               }}
               display="flex"
-              height={[160, 200, 250, 290]}
+              height={[150, 200, 250, 290]}
               flexDirection="column"
               justifyContent="center"
               pl={{ base: '4', md: '12', lg: '20' }}
+              mx={[3, 4, 6, 8]}
             >
               <Heading
                 color="white"
-                size={{
-                  base: 'lg', lg: 'xl',
-                }}
+                size={['md', 'lg', 'xl']}
                 fontWeight="700"
               >
-                {text.title}
+                {item.title}
               </Heading>
               <Text
                 width={{
@@ -73,10 +79,10 @@ export default function Component() {
                 }}
                 noOfLines={4}
                 color="white"
-                fontSize={['xx-small', 'xs', 'sm']}
-                mt={{ base: 2, md: 4, lg: 5 }}
+                fontSize={['x-small', 'xs', 'sm']}
+                mt={{ base: 1, md: 3, lg: 5 }}
               >
-                {text.desc}
+                {item.desc}
               </Text>
             </Box>
           </SwiperSlide>

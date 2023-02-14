@@ -116,8 +116,10 @@ export default function Component() {
               <Image height="24px" src={Images.LPDP} alt="LPDP" />
             </a>
           </Box>
-          <Box>
-            <Image src={Images.Logo} alt="Phinisi Center" width={[20, 100, 120]} />
+          <Box cursor="pointer">
+            <h1 onClick={() => navigate('/')}>
+              <Image src={Images.Logo} alt="Phinisi Center" width={[20, 100, 120]} />
+            </h1>
           </Box>
           <Box flex={1} textAlign="right">
             {loggedin
@@ -279,6 +281,10 @@ export default function Component() {
               <InputRightElement>
                 <IconButton
                   colorScheme="blue"
+                  bg="blue.600"
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
                   aria-label="Search database"
                   size="sm"
                   borderRadius="3xl"

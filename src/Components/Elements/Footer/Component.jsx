@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  Box, Container, Heading, Image, Text,
+  Box, Container, Heading, Image, SimpleGrid, Text,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Images from '../../../Configs/images';
 import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
+  const navigate = useNavigate();
   return (
     <Box
       bg="#2263DD"
@@ -14,11 +15,11 @@ export default function Component() {
       py="6"
       overflow="hidden"
     >
-      <Container minW="7xl">
-        <Box display="flex" justifyContent="space-between" gap={{ base: '20px', md: '60px' }} flexDirection={{ base: 'column', xl: 'row' }}>
+      <Container maxW="7xl">
+        <SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
           <Box>
-            <Image src={Images.LogoWhite} alt="phinisi center" />
-            <Text maxWidth={314} size="xs" my={4}>
+            <Image cursor="pointer" onClick={() => navigate('/')} src={Images.LogoWhite} alt="phinisi center" w={['100px', '120px', '140px', '160px']} />
+            <Text maxWidth={314} fontSize={['xs', 'sm', 'md']} my={4}>
               Exploring the oceans with pride and history,
               Phinisi Center inspires adventure
             </Text>
@@ -34,7 +35,7 @@ export default function Component() {
               </a>
             </Box>
           </Box>
-          <Box display="flex" gap={{ base: '20px', md: '60px' }} flexDirection={{ base: 'column', md: 'row' }}>
+          <SimpleGrid columns={[2, 2, 2, 4]} gap={6}>
             <Box>
               <Heading size="xs" fontWeight="700">Produk</Heading>
               <Link to={ROUTES.sejarah()}>
@@ -87,8 +88,8 @@ export default function Component() {
                 Bulukumba, Sulawesi Selatan
               </Text>
             </Box>
-          </Box>
-        </Box>
+          </SimpleGrid>
+        </SimpleGrid>
       </Container>
     </Box>
   );

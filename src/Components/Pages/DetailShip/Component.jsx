@@ -11,24 +11,14 @@ import {
   Divider,
   Grid,
   GridItem,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  CloseButton,
   Select,
   Stack,
   Badge,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import SwiperCore, {
-  Navigation,
-} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-coverflow';
 import Images from '../../../Configs/images';
 import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
+import Elements from '../../Elements';
 
 const images = [
   Images.Order1,
@@ -39,7 +29,6 @@ const images = [
 ];
 
 export default function Component() {
-  SwiperCore.use([Navigation]);
   const { id } = useParams();
   const [fullImg, setFullImg] = useState('');
 
@@ -172,31 +161,7 @@ export default function Component() {
         </Box>
       </Flex>
 
-      <Modal isOpen={!!fullImg} onClose={() => setFullImg('')} size="5xl">
-        <ModalOverlay />
-        <ModalContent bg="transparent" position="relative">
-          <CloseButton onClick={() => setFullImg('')} color="#fff" position="absolute" top={4} right={4} size="lg" zIndex={9999} />
-          <Swiper
-            slidesPerView={1}
-            initialSlide={images.indexOf(fullImg)}
-            modules={[Navigation]}
-            centeredSlides
-            autoplay={false}
-            style={{
-              width: '100%',
-              '--swiper-navigation-color': '#FFF',
-            }}
-            loop
-            navigation
-          >
-            {images.map((img) => (
-              <SwiperSlide key={img}>
-                <Image src={img} h="full" w="full" objectFit="cover" borderRadius={24} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </ModalContent>
-      </Modal>
+      <Elements.ImagesModal defaultImg={fullImg} images={images} close={() => setFullImg('')} />
     </Container>
   );
 }
