@@ -24,9 +24,9 @@ export default function Component() {
     <>
       <Box bg="blue.50" py={['10', '12', '14']}>
         <Container maxW="4xl" textAlign="center">
-          <Heading size="lg">Sejarah Phinisi</Heading>
-          <Heading size="4xl">Lorem ipsum dolor sit amet consectetur.</Heading>
-          <Text fontSize="3xl" mt="14" noOfLines={5}>
+          <Heading size={['md', 'lg']}>Sejarah Phinisi</Heading>
+          <Heading size={['xl', '2xl', '3xl', '4xl']} mt="2">Lorem ipsum dolor sit amet consectetur.</Heading>
+          <Text fontSize={['lg', 'xl', '2xl', '3xl']} mt={['8', '10', '12', '14']} noOfLines={5}>
             Masyarakat Bugis-Makassar dikenal sebagai masyarakat
             yang memiliki kemampuan yang sangat luar biasa dalam
             dunia kemaritiman. Tak hanya pandai dalam berhadapan
@@ -34,7 +34,7 @@ export default function Component() {
             masyarakat Bugis-Makassar juga pandai dalam pembuatan
             perahu, salah satunya adalah Phinisi.
           </Text>
-          <Text cursor="pointer" color="blue.700" mt="4" fontSize="3xl" fontWeight="400">Lebih lanjut &gt;</Text>
+          <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400">Lebih lanjut &gt;</Text>
         </Container>
         <Container maxW="5xl">
           <SimpleGrid mt="12" columns={[2, 2, 4]} gap={6}>
@@ -45,13 +45,15 @@ export default function Component() {
                 bg="white"
                 overflow="hidden"
                 textAlign="center"
-                pb="8"
+                pb={['4', '6', '8']}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               >
                 <Image src={Images.Order6} w="full" height={230} objectFit="cover" />
-                <Heading fontSize="2xl" mt="4">Sampan</Heading>
-                <Text mt="4" fontSize="xl">Lorem ipsum dolor sit amet consectetur.</Text>
-                <Text cursor="pointer" color="blue.700" mt="4" fontSize="xl">Lebih lanjut &gt;</Text>
+                <Stack px={2} spacing={[2, 3, 4]} mt={4}>
+                  <Heading fontSize={['lg', 'xl', '2xl']}>Sampan</Heading>
+                  <Text fontSize={['sm', 'md', 'lg', 'xl']}>Lorem ipsum dolor sit amet consectetur.</Text>
+                  <Text cursor="pointer" color="blue.700" fontSize={['sm', 'md', 'lg', 'xl']}>Lebih lanjut &gt;</Text>
+                </Stack>
               </Box>
             ))}
           </SimpleGrid>
@@ -59,9 +61,9 @@ export default function Component() {
       </Box>
 
       <Container maxW="5xl" py={['5', '7', '9']} textAlign="center">
-        <Heading size="2xl">Proses Adaptasi</Heading>
-        <Collapse startingHeight={340} in={fullContent}>
-          <Text whiteSpace="pre-line" fontSize="3xl" mt="4">
+        <Heading size={['lg', 'xl', '2xl']}>Proses Adaptasi</Heading>
+        <Collapse startingHeight={[220, 260, 300, 340]} in={fullContent}>
+          <Text whiteSpace="pre-line" fontSize={['lg', 'xl', '2xl', '3xl']} mt="4">
             {prosesAdaptasiContent}
           </Text>
         </Collapse>
@@ -75,30 +77,29 @@ export default function Component() {
       <Box bg="blue.50" py={['10', '12', '14']}>
         <Container maxW="5xl">
           <Box textAlign="center">
-            <Heading size="lg">Perkembangan</Heading>
-            <Heading size="4xl">Perahu Berlunas</Heading>
+            <Heading size={['md', 'lg']}>Perkembangan</Heading>
+            <Heading size={['xl', '2xl', '3xl', '4xl']}>Perahu Berlunas</Heading>
           </Box>
-          <Stack direction="column" mt="12" spacing="12">
+          <Stack direction="column" mt={['6', '8', '10', '12']} spacing={['6', '8', '10', '12']}>
             {new Array(7).fill(0).map((k, i) => (
               <Flex
                 key={i}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
                 borderRadius={25}
                 overflow="hidden"
-                gap="10"
                 alignItems="center"
                 bg="white"
               >
                 <Box flex={2}>
-                  <Image src={Images.Order6} w="full" objectFit="cover" h="295" />
+                  <Image src={Images.Order6} w="full" objectFit="cover" h={['180', '220', '260', '295']} />
                 </Box>
-                <Box flex={3} textAlign="center">
-                  <Heading size="xl">Perahu Pa’dewakang</Heading>
-                  <Text noOfLines={3} mt="6" fontSize="xl">
+                <Box flex={3} textAlign="center" px={['4', '6', '8', '10']}>
+                  <Heading size={['sm', 'md', 'lg', 'xl']}>Perahu Pa’dewakang</Heading>
+                  <Text noOfLines={3} mt={['4', '5', '6']} fontSize={['sm', 'md', 'lg', 'xl']}>
                     Pa’dewakang merupakan perahu kuno pertama tercipta yang memakai lunas
                     dan dindingnya terdiri dari kepingan-kepingan papan yang disusun.
                   </Text>
-                  <Text cursor="pointer" color="blue.700" mt="4" fontSize="xl">Lebih lanjut &gt;</Text>
+                  <Text cursor="pointer" color="blue.700" mt={['2', '3', '4']} fontSize={['sm', 'md', 'lg', 'xl']}>Lebih lanjut &gt;</Text>
                 </Box>
               </Flex>
             ))}
