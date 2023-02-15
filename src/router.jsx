@@ -133,6 +133,8 @@ export default function Router() {
                     <Route index element={<Pages.Home />} />
                     <Route path="/home" element={<Pages.Home />} />
                   </Route>
+                  <Route path={ROUTES.sejarah()} element={<Pages.Histories />} />
+                  <Route path={ROUTES.filosofi()} element={<Pages.Filosofi />} />
                   <Route path={ROUTES.artikel()}>
                     <Route index element={<Pages.Article />} />
                     {/* <Route path="buat" element={<Pages.CreateArticle />} /> */}

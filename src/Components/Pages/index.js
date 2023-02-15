@@ -8,6 +8,8 @@ import DetailOrder from './DetailOrder';
 import DetailTrip from './DetailTrip';
 import DetailShip from './DetailShip';
 import Rental from './Rental';
+import Histories from './Histories';
+import Filosofi from './Filosofi';
 import Admin from './Admin';
 import Auth from './Auth';
 
@@ -22,6 +24,8 @@ export default {
   DetailTrip,
   DetailShip,
   Rental,
+  Histories,
+  Filosofi,
   Admin,
   Auth,
 };
