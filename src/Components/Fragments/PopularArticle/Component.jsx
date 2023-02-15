@@ -36,7 +36,9 @@ export default function Component() {
           ...item,
           index: index + 1,
         }));
-        setArticlesList(normalizeData);
+        if (data.length) {
+          setArticlesList(normalizeData);
+        }
       })
       .catch(() => {
         // console.log('anjing', err);

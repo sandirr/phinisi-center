@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import {
   Box,
   Button,
@@ -44,6 +47,7 @@ import { ConfirmationContext, LoginContext } from '../../../Context';
 import { admins } from '../../../Configs/constants';
 
 export default function Component() {
+  const headerRef = useRef(null);
   const [openSF, setOpenSF] = useState(false);
   const navigate = useNavigate();
   const { showPopUpLogin, loggedin } = useContext(LoginContext);
@@ -60,6 +64,12 @@ export default function Component() {
   });
   const activeTab = useLocation().pathname.split('/')[1];
 
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setOpenSF(false);
+  }, [pathname]);
+
   const handleLogout = () => {
     showConfirmation({
       handleAgree: async () => {
@@ -69,6 +79,28 @@ export default function Component() {
       },
       title: 'Yakin ingin logout?',
     });
+  };
+
+  let lastScroll = 0;
+  let loaded;
+
+  window.onscroll = (e) => {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const header = headerRef.current;
+    const height = -header.clientHeight;
+
+    if (scrollY <= Math.max(lastScroll, Number(header.clientHeight) / 1.5)
+    || loaded === undefined) {
+      header.style.transition = 'transform 0.5s';
+      header.style.transform = 'translateY(0px)';
+    } else {
+      header.style.transition = 'transform 1s';
+      header.style.transform = `translateY(${height}px)`;
+    }
+    // (scrollY <= Math.max(lastScroll, 50) || window.innerWidth <= 1200 || loaded === undefined)
+
+    lastScroll = scrollY;
+    loaded = true;
   };
 
   const renderBadge = (val) => (
@@ -91,7 +123,7 @@ export default function Component() {
   );
 
   return (
-    <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky">
+    <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky" ref={headerRef}>
       <Container maxW="7xl">
         <Box display={{ base: 'flex', md: 'none' }} gap="2" mb="4">
           <a href="https://www.kemdikbud.go.id/" target="_blank" rel="noreferrer">
@@ -255,7 +287,13 @@ export default function Component() {
             <Tabs index={indexes[activeTab]} size={['sm', 'md', 'lg']}>
               <TabList _selected={{ color: 'blue.600', borderColor: 'blue.600', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
-                <Tab _focusVisible={{ boxShadow: 'none' }} fontWeight="medium" onMouseEnter={() => setOpenSF(true)} onMouseLeave={() => setOpenSF(false)}>
+                <Tab
+                  _focusVisible={{ boxShadow: 'none' }}
+                  fontWeight="medium"
+                  onClick={() => setOpenSF(true)}
+                  onMouseEnter={() => setOpenSF(true)}
+                  onMouseLeave={() => setOpenSF(false)}
+                >
                   <Menu isOpen={openSF}>
                     <MenuButton fontWeight="medium" whiteSpace="nowrap">
                       Sejarah & Filosofi

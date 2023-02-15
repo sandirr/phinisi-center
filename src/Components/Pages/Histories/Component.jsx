@@ -37,7 +37,7 @@ export default function Component() {
           <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400">Lebih lanjut &gt;</Text>
         </Container>
         <Container maxW="5xl">
-          <SimpleGrid mt="12" columns={[2, 2, 4]} gap={6}>
+          <SimpleGrid mt={['8', '10', '12']} columns={[2, 2, 4]} gap={[4, 5, 6]}>
             {new Array(4).fill(0).map((k, i) => (
               <Box
                 key={i}
@@ -48,7 +48,7 @@ export default function Component() {
                 pb={['4', '6', '8']}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               >
-                <Image src={Images.Order6} w="full" height={230} objectFit="cover" />
+                <Image src={Images.Hero2} w="full" height={[160, 180, 230, 230]} objectFit="cover" />
                 <Stack px={2} spacing={[2, 3, 4]} mt={4}>
                   <Heading fontSize={['lg', 'xl', '2xl']}>Sampan</Heading>
                   <Text fontSize={['sm', 'md', 'lg', 'xl']}>Lorem ipsum dolor sit amet consectetur.</Text>
@@ -91,7 +91,7 @@ export default function Component() {
                 bg="white"
               >
                 <Box flex={2}>
-                  <Image src={Images.Order6} w="full" objectFit="cover" h={['180', '220', '260', '295']} />
+                  <Image src={Images.Hero2} w="full" objectFit="cover" h={['180', '220', '260', '295']} />
                 </Box>
                 <Box flex={3} textAlign="center" px={['4', '6', '8', '10']}>
                   <Heading size={['sm', 'md', 'lg', 'xl']}>Perahu Pa’dewakang</Heading>

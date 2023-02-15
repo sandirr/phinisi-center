@@ -24,7 +24,7 @@ export default function Component() {
     <Box bg="blue.50" py={6}>
       <Heading color="blackAlpha.900" size={['md', 'lg']} ml={2.5} textAlign="center" mb={4}>Proses Pembuatan Phinisi</Heading>
       <Swiper
-        spaceBetween={isMobile ? 12 : isPad ? 18 : 24}
+        // spaceBetween={isMobile ? 12 : isPad ? 18 : 24}
         slidesPerView={isMobile ? 2.5 : isPad ? 3.5 : 5.5}
         // centeredSlides
         loop
@@ -33,8 +33,9 @@ export default function Component() {
           <SwiperSlide key={i}>
             <Box
               onClick={() => navigate(`${ROUTES.artikel()}/baca/contoh`)}
-              py={6}
-              px={4}
+              py={[4, 5, 6]}
+              ml={['12px', '18px', '20px']}
+              px={[2, 3, 4]}
               mb={1}
               bg="white"
               borderRadius={16}
