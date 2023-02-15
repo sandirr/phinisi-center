@@ -144,7 +144,17 @@ export default function Component() {
                 </option>
               ))}
             </Select>
-            <Button w="full" mt={6} colorScheme="blue">Booking</Button>
+            <Button
+              w="full"
+              mt={6}
+              colorScheme="blue"
+              bg="blue.600"
+              _hover={{
+                bg: 'blue.500',
+              }}
+            >
+              Booking
+            </Button>
             <Flex mt="6" justify="space-between" alignItems="center">
               <Text textDecorationLine="underline">Rp 999.000 x 10</Text>
               <Text>Rp 9.990.000</Text>

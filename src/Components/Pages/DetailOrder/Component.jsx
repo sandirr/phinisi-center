@@ -138,7 +138,17 @@ export default function Component() {
           >
             <Heading fontSize={['lg', 'xl', '2xl']}>Tertarik Dengan Model Ini?</Heading>
             <Text size={['xs', 'sm', 'md']} mt={1}>jika anda tertarik, klik tombol dibawah</Text>
-            <Button mt={6} colorScheme="blue" onClick={handleInterested}>Tertarik</Button>
+            <Button
+              mt={6}
+              colorScheme="blue"
+              bg="blue.600"
+              _hover={{
+                bg: 'blue.500',
+              }}
+              onClick={handleInterested}
+            >
+              Tertarik
+            </Button>
           </Box>
         </Box>
       </Flex>

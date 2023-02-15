@@ -37,7 +37,7 @@ export default function Component() {
     <Box py="6">
       <Container maxW="7xl" ref={containerRef}>
         <Flex alignItems="center" justify="space-between">
-          <Heading size="lg">Open trip</Heading>
+          <Heading size="lg">Join Trip</Heading>
           <Flex gap="2" alignItems="center">
             <Flex
               className="review-swiper-button-prev"
@@ -113,7 +113,7 @@ export default function Component() {
                   bottom={['8', '12']}
                   onClick={() => navigate('trip/id')}
                 >
-                  Booking Sekarang
+                  Selengkapnya
                 </Button>
               </Box>
             </SwiperSlide>
@@ -124,7 +124,7 @@ export default function Component() {
 
       <Container maxW="7xl">
         <Flex alignItems="center" justify="space-between" mt="6">
-          <Heading size="lg">Booking Kapal</Heading>
+          <Heading size="lg">Booking Phinisi</Heading>
           <Flex gap="2" alignItems="center">
             <Flex
               className="review-swiper-button-prev2"
