@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React, { useState } from 'react';
 import {
   Text,
@@ -12,13 +13,36 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Images from '../../../Configs/images';
+import Elements from '../../Elements';
 
 const prosesAdaptasiContent = `Karena pertumbuhan dan perkembangan kebutuhan manusia, alat transportasi perairan seperti yang diuraikan sebelumnya tidak mampu lagi memenuhi kebutuhan dan mobilitas penduduk. Untuk memenuhi kebutuhan dimaksud, manusia kemudian menciptakan perahu yang lebih besar. Perahu yang lebih besar ini tidak lagi terbuat dari batang kayu yang dikeruk tetapi sudah mulai menggunakan balok dasar yang disebut Lunas (kalabiseang, konjo).
 Dindingnya terbuat dari kepingan—kepingan papan yang tentu Saja pada awal terciptanya dibuat dengan teknik yang sederhana, Tidak diketahui dengan pasti kapan jenis perahu ini tercipta di Sulawesi Selatan, namun diperkirakan mulai dibuat sekitar abad ke-16. Seperti telah dijelaskan sebelumnya bahwa kepandaian orang Ara dan Lemo-lemo membuat perahu yang disusun dari kepingan papan berawal dari ditemukannya kepingan perahu Sawerigading yang terdampar di sekitar perairan Tanjung Bira.
 Dari ciptaan awal inilah selanjutnya perahu dikembangkan terus dari waktu ke waktu sesuai dengan tuntutan kebutuhan, baik mengenai teknik pembuatannya maupun kapasitas angkutnya. Pengembangan teknik serta kapasitas perahu yang dimaksud berlangsung selama ratusan tahun (secara evolusi) dan diperkirakan pada akhir abad ke-19 atau sekitar 1900 terciptalah Kapal Phinisi`;
 
+const content = `Pa’dewakang merupakan perahu kuno pertama tercipta yang memakai lunas dan dindingnya terdiri dari kepingan-kepingan papan yang disusun. Terciptanya jenis perahu ini diduga karena tuntutan terhadap kebutuhan alat transportasi perairan yang lebih memadai. Seperti diketahui perahu di Sulawesi Selatan yang ada sebelumnya adalah jenis perahu yang terbuat dari batang kayu besar yang dikeruk seperti sampan, soppe’, jarangka dan sebagainya.
+
+Bentuk perahu pa’dewakang agak mirip dengan perahu pajala sekarang. Mesikipun pada awalnya, teknik pemasangan papan dan penulangan pada perahu masih sangat sederhana.
+Layarnya berbentuk segi empat yang disebut sombala tanja’ (Makassar), sompe tanja’ (Bugis), tetapi ada juga yang memakai layar tambahan pada bagian depan yang berbentuk segi tiga lancip. Menurut G. Adrian Horridge sejak terciptanya yaitu diperkirakan pada abad ke-16, terdapat tiga tipe/jenis perahu pa‘dewakang yang pernah ada, yaitu Abi Jawa, Abi Tarus dan Abi Jumpandang. Menurut beberapa sumber, perahu Pa’dewakang dahulu dipergunakan oleh nelayan Makassar untuk pergi ke Pulau Dewakang, salah satu pulau dalam gugusan Kepulauan Spermonde Kabupaten Pangkep Sulawesi Selatan. Salah seorang narasumber Dg. Ma’batu (90 tahun) menyebutkan kegunaan utama perahu tersebut ialah untuk dipakai menyeberang ke Pulau Dewakang (Lopi pa’limbang-limbangan-Makassar).
+Penamaannyapun disesuaikan dengan tujuan dan kegunaannya; pa’dewakang artinya untuk dipakai ke Pulau Dewakang. Penamaan ini senada dengan pendapat G. A. Horridge (1979) bahwa kemungkinan nama pa’dewakang berasal dari bahasa Makassar. Daya angkut dari perahu jenis ini hanya berkisar 3-5 ton. Sejak sekitar tahun 1600 perahu pa’dewakang telah dipergunakan oleh nelayan Makassar dan Bugis berlayar ke Australia Utara untuk menangkap teripang. Perahu Pa’dewakang kini sudah tidak dibuat lagi namun miniatur perahu Pa’dewakang masih disimpan di Museum Leiden Belanda. Demikian halnya perahu Pa‘dewakang Hati Marege yang pernah dibuat di Tanah Beru pada 1987 dan kini dipergunakan untuk mengadakan Napak tilas lalu simpan di museum Darwin Australia.`;
+
 export default function Component() {
   const [fullContent, setFullContent] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [dataToShow, setDataToShow] = useState({});
+
+  const openMore = (meta = '') => {
+    setShowMore(true);
+    setDataToShow({
+      content,
+      title: 'Perahu Sampan',
+      meta,
+    });
+  };
+
+  const closeOpenMore = () => {
+    setShowMore(false);
+    setDataToShow({});
+  };
 
   return (
     <>
@@ -34,7 +58,7 @@ export default function Component() {
             masyarakat Bugis-Makassar juga pandai dalam pembuatan
             perahu, salah satunya adalah Phinisi.
           </Text>
-          <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400">Lebih lanjut &gt;</Text>
+          <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400" onClick={() => openMore('Sejarah Phinisi')}>Lebih lanjut &gt;</Text>
         </Container>
         <Container maxW="5xl">
           <SimpleGrid mt={['8', '10', '12']} columns={[2, 2, 4]} gap={[4, 5, 6]}>
@@ -52,7 +76,7 @@ export default function Component() {
                 <Stack px={2} spacing={[2, 3, 4]} mt={4}>
                   <Heading fontSize={['lg', 'xl', '2xl']}>Sampan</Heading>
                   <Text fontSize={['sm', 'md', 'lg', 'xl']}>Lorem ipsum dolor sit amet consectetur.</Text>
-                  <Text cursor="pointer" color="blue.700" fontSize={['sm', 'md', 'lg', 'xl']}>Lebih lanjut &gt;</Text>
+                  <Text cursor="pointer" color="blue.700" fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('')}>Lebih lanjut &gt;</Text>
                 </Stack>
               </Box>
             ))}
@@ -99,13 +123,19 @@ export default function Component() {
                     Pa’dewakang merupakan perahu kuno pertama tercipta yang memakai lunas
                     dan dindingnya terdiri dari kepingan-kepingan papan yang disusun.
                   </Text>
-                  <Text cursor="pointer" color="blue.700" mt={['2', '3', '4']} fontSize={['sm', 'md', 'lg', 'xl']}>Lebih lanjut &gt;</Text>
+                  <Text cursor="pointer" color="blue.700" mt={['2', '3', '4']} fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('')}>Lebih lanjut &gt;</Text>
                 </Box>
               </Flex>
             ))}
           </Stack>
         </Container>
       </Box>
+
+      <Elements.ContentModal
+        open={!!showMore}
+        data={dataToShow}
+        onClose={closeOpenMore}
+      />
     </>
   );
 }

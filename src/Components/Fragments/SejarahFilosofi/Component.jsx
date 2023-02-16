@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import {
-  Box, Heading, Text, useMediaQuery,
+  Box, Heading, Image, Text, useMediaQuery,
 } from '@chakra-ui/react';
 import SwiperCore, {
   Pagination, Autoplay,
@@ -36,7 +36,7 @@ export default function Component() {
   ]);
 
   return (
-    <Box pt="8" pb="4" bg="blue.50" position="relative" height="auto" overflow="hidden">
+    <Box py={['8', '10', '12']} bg="blue.50" position="relative" height="auto" overflow="hidden">
       <Swiper
         className="special-swiper"
         // spaceBetween={isMobile ? 40 : 70}
@@ -56,34 +56,47 @@ export default function Component() {
                 backgroundSize: 'cover',
                 borderRadius: '24px',
                 overflow: 'hidden',
-                background: `linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%), url(${item.img})`,
-                backgroundRepeat: 'no-repeat',
+                background: 'linear-gradient(90deg, rgba(9, 27, 60, 0.7) 0%, rgba(0, 0, 0, 0) 68.79%)',
               }}
-              display="flex"
-              height={[150, 200, 250, 290]}
-              flexDirection="column"
-              justifyContent="center"
-              pl={{ base: '4', md: '12', lg: '20' }}
-              mx={[3, 4, 6, 8]}
+              mx={[3, 6, 8, 10]}
+              position="relative"
             >
-              <Heading
-                color="white"
-                size={['md', 'lg', 'xl']}
-                fontWeight="700"
+              <Image
+                src={item.img}
+                w="full"
+                height={[150, 200, 250, 290]}
+                objectFit="cover"
+              />
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                px={{ base: '4', md: '12', lg: '20' }}
+                position="absolute"
+                top={0}
+                left={0}
+                bottom={0}
+                right={0}
               >
-                {item.title}
-              </Heading>
-              <Text
-                width={{
-                  base: '48', sm: '56', md: 'sm', lg: '2xl',
-                }}
-                noOfLines={4}
-                color="white"
-                fontSize={['x-small', 'xs', 'sm']}
-                mt={{ base: 1, md: 3, lg: 5 }}
-              >
-                {item.desc}
-              </Text>
+                <Heading
+                  color="white"
+                  size={['md', 'lg', 'xl']}
+                  fontWeight="700"
+                >
+                  {item.title}
+                </Heading>
+                <Text
+                  // width={{
+                  //   base: '48', sm: '56', md: 'sm', lg: '2xl',
+                  // }}
+                  noOfLines={4}
+                  color="white"
+                  fontSize={['x-small', 'xs', 'sm']}
+                  mt={{ base: 1, md: 3, lg: 5 }}
+                >
+                  {item.desc}
+                </Text>
+              </Box>
             </Box>
           </SwiperSlide>
         ))}

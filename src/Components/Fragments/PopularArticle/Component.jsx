@@ -70,7 +70,7 @@ export default function Component() {
                 justifyContent="flex-end"
               >
                 <Heading fontSize={['xs', 'sm']} color="white" fontWeight="700">{article.category}</Heading>
-                <Heading size={['sm', 'md']} color="white" fontWeight="700" lineHeight="120%" mt={1}>
+                <Heading size={['sm', 'md']} color="white" fontWeight="700" lineHeight="120%" mt={1} noOfLines={2}>
                   {article.title}
                 </Heading>
                 <Button

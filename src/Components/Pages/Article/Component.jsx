@@ -110,8 +110,8 @@ export default function Component() {
   ));
 
   const renderArticles = () => {
-    if (loading) {
-      return renderLoading();
+    if (!loading && !articlesList.length) {
+      return 'No data...';
     }
     if (articlesList.length) {
       return articlesList.map(((article, idx) => (
@@ -144,7 +144,7 @@ export default function Component() {
         </Box>
       )));
     }
-    return 'No data...';
+    return null;
   };
 
   return (
@@ -181,6 +181,7 @@ export default function Component() {
             >
               {renderArticles()}
             </InfiniteScroll>
+            {loading && renderLoading()}
           </Box>
         </Box>
 
