@@ -8,6 +8,7 @@ import Elements from '../../Elements';
 import { callFunc } from '../../../Configs/firebase';
 import { generateArticleDesc } from '../../../Utils/text';
 import ROUTES from '../../../Configs/routes';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   const { id } = useParams();
@@ -36,15 +37,15 @@ export default function Component() {
   return (
     <Container maxW="7xl">
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
-        <Box flex={1} py="10">
+        <Box flex={1} py={['4', '6', '8', '10']}>
           {loading && 'Loading...'}
           {!!article.category
           && <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>}
-          <Heading size="xl" mb="6">{article.title}</Heading>
+          <Heading size={['md', 'lg', 'xl']} mb={['3', '4', '5', '6']}>{article.title}</Heading>
           <Center>
-            <Image width={460} borderRadius={16} src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'} />
+            <Image width={460} borderRadius={16} src={article.cover || Images.Order1} />
           </Center>
-          <Box mt="6" dangerouslySetInnerHTML={{ __html: article.content }} />
+          <Box mt={['3', '4', '5', '6']} dangerouslySetInnerHTML={{ __html: article.content }} />
           <Box display="flex" gap={3} color="blackAlpha.600" mt="6">
             <Text fontSize="xs">{moment(article.createdAt).startOf('minute').fromNow()}</Text>
             <Text fontSize="xs">
@@ -62,7 +63,7 @@ export default function Component() {
         </Box>
 
         <Box py="10" w={{ md: 'sm', base: 'xl' }}>
-          <Heading size="lg">Hi, temukan Artikel Menarik disini !</Heading>
+          <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
           <Divider mt={6} />
           {!!article.category

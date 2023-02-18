@@ -55,7 +55,7 @@ export default function Component() {
         <Heading color="blackAlpha.900" size={['sm', 'md']} ml={2.5}>Artikel Populer</Heading>
         <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={[3, 4, 6]} mt={2}>
           {articlesList.map((article, i) => (
-            <GridItem key={i} rowSpan={i === 0 ? 2 : 1} height={i === 0 ? [380, 380, 450] : [200, 200, 'auto']}>
+            <GridItem key={i} rowSpan={i === 0 ? 2 : 1} height={i === 0 ? [380, 380, 450] : [200, 'auto', 'auto']}>
               <Box
                 style={{
                   backgroundSize: 'cover',

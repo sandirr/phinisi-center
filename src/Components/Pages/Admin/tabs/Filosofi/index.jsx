@@ -50,7 +50,9 @@ const dataFormat = [
 export default function Component() {
   const [articlesList, setArticlesList] = useState([]);
   const [openModal, setOpenModal] = useState('');
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState({
+    type: 'Filosofi',
+  });
 
   const { showConfirmation, closeConfirmation } = useContext(ConfirmationContext);
 
@@ -120,14 +122,16 @@ export default function Component() {
 
   const handleCloseOpenModal = (getAgain = false) => {
     setOpenModal(false);
-    setSelectedArticle(null);
+    setSelectedArticle({
+      type: 'Filosofi',
+    });
 
     if (getAgain) {
       getArticles();
     }
   };
 
-  const handleOpenModal = (modalType, item = null) => {
+  const handleOpenModal = (modalType, item = selectedArticle) => {
     setSelectedArticle(item);
     setOpenModal(modalType);
   };

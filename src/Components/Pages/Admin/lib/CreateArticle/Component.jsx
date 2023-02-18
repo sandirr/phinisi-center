@@ -105,7 +105,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
       <Stack gap={2}>
         <Input label="Title" name="title" placeholder="Judul" value={fields.title} onChange={handleChangeField} />
         <Input label="Author" name="author" placeholder="Penulis" value={fields.author} onChange={handleChangeField} />
-        <Select name="type" placeholder="Tipe" value={fields.type} onChange={handleChangeField}>
+        <Select name="type" placeholder="Tipe" value={fields.type} onChange={handleChangeField} disabled>
           <option value="Sejarah">Sejarah</option>
           <option value="Filosofi">Filosofi</option>
           <option value="Proses Pembuatan">Proses Pembuatan</option>
@@ -118,6 +118,19 @@ export default function Component({ onSuccess, onFailed, givenData }) {
             <option value="Event">Event</option>
             <option value="Phinisi Update">Phinisi Update</option>
           </Select>
+          )}
+        {(fields.type === 'Sejarah' || fields.type === 'Filosofi')
+          && (
+          <Select name="priority" placeholder="Prioritas" value={fields.priority} onChange={handleChangeField}>
+            <option value="Common">Common</option>
+            {fields.type === 'Sejarah'
+            && <option value="Featured">Featured</option>}
+            <option value="Primary">Primary</option>
+          </Select>
+          )}
+        {fields.type === 'Filosofi'
+          && (
+          <Input label="Alias" name="alias" placeholder="Alias" value={fields.alias} onChange={handleChangeField} />
           )}
       </Stack>
       <Box my={2}>

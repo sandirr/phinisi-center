@@ -20,6 +20,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Elements from '../../Elements';
 import { callFunc } from '../../../Configs/firebase';
 import { generateArticleDesc } from '../../../Utils/text';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   const tabs = useMemo(() => ['Semua', 'Fun Fact', 'Event', 'Phinisi Update']);
@@ -94,18 +95,18 @@ export default function Component() {
   }, [meta.activePage, activeTab]);
 
   const renderLoading = () => [1, 2, 3].map((i) => (
-    <Box mt="8" pr={4} key={i}>
-      <Flex justify="space-between" gap="24px">
+    <Box mt={['3', '4', '6', '8']} pr={4} key={i}>
+      <Flex justify="space-between" gap={['2', '4', '6', '8', '10']}>
         <Stack direction="column" w="full" gap="4px">
           <Skeleton w="full" height="20px" />
           <Skeleton w="full" height="12px" mt={2} />
           <Skeleton w="full" height="12px" />
           <Skeleton w="full" height="12px" />
         </Stack>
-        <Skeleton width={120} height={120} borderRadius="12px" />
+        <Skeleton width="120px" height="120px" borderRadius="12px" />
       </Flex>
       <Skeleton w={['70%', '50%']} height="8px" />
-      <Divider mt="3" />
+      <Divider mt={['1', '2', '3']} />
     </Box>
   ));
 
@@ -116,10 +117,18 @@ export default function Component() {
     if (articlesList.length) {
       return articlesList.map(((article, idx) => (
         <Box key={idx}>
-          <Box mt="8" display="flex" justifyContent="space-between" gap="10" pr={4} as={Link} to={`baca/${article.id}`}>
+          <Box
+            mt={['3', '4', '6', '8']}
+            display="flex"
+            justifyContent="space-between"
+            gap={['2', '4', '6', '8', '10']}
+            pr={4}
+            as={Link}
+            to={`baca/${article.id}`}
+          >
             <Box>
-              <Heading size="md">{article.title}</Heading>
-              <Text noOfLines={4} size="sm" mt="2">
+              <Heading size={['xs', 'sm', 'md']}>{article.title}</Heading>
+              <Text noOfLines={4} fontSize={['xs', 'sm', 'md']} mt="2">
                 {article.generatedContent}
               </Text>
             </Box>
@@ -129,7 +138,7 @@ export default function Component() {
               height={120}
               objectFit="cover"
               borderRadius="12"
-              src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'}
+              src={article.cover || Images.Order1}
             />
           </Box>
           <Box display="flex" gap={3} color="blackAlpha.600" mt="2">
@@ -140,7 +149,7 @@ export default function Component() {
               Characters
             </Text>
           </Box>
-          <Divider mt="3" />
+          <Divider mt={['1', '2', '3']} />
         </Box>
       )));
     }
@@ -150,7 +159,7 @@ export default function Component() {
   return (
     <Container maxW="7xl">
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
-        <Box flex={1} py="10">
+        <Box flex={1} py={['4', '6', '8', '10']}>
           <Tabs variant="soft-rounded" index={tabs.indexOf(activeTab)} onChange={handleChangeTab}>
             <TabList whiteSpace="nowrap" lineHeight="20px">
               {tabs.map((tab, index) => (
@@ -171,7 +180,7 @@ export default function Component() {
               ))}
             </TabList>
           </Tabs>
-          <Divider mb="6" mt="2" />
+          <Divider mb={['2', '4', '6']} mt="2" />
           <Box>
             <InfiniteScroll
               dataLength={articlesList.length}
@@ -192,7 +201,7 @@ export default function Component() {
         </Box>
 
         <Box py="10" w={{ md: 'sm', base: 'xl' }}>
-          <Heading size="lg">Hi, temukan Artikel Menarik disini !</Heading>
+          <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
         </Box>
       </Box>

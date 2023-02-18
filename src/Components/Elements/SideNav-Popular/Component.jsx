@@ -33,11 +33,11 @@ export default function Component() {
 
   return (
     <Box mt="8">
-      <Heading size="xs">Artikel Populer</Heading>
+      <Heading size={['sm', 'md', 'lg', 'xs']}>Artikel Populer</Heading>
       {articlesList.map((article, idx) => (
         <Box mt="4" as={Link} to={`${ROUTES.artikel()}/baca/${article.id}`} display="block" key={idx}>
-          <Text size="sm">{article.category}</Text>
-          <Heading noOfLines={2} mt="1" size="md">{article.title}</Heading>
+          <Text fontSize={['xs', 'sm', 'md']}>{article.category}</Text>
+          <Heading noOfLines={2} mt="1" size={['xs', 'sm', 'md']}>{article.title}</Heading>
         </Box>
       ))}
     </Box>

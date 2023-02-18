@@ -70,6 +70,7 @@ export default function Component() {
               mb={1}
               bg="white"
               borderRadius={16}
+              h="100%"
               boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
             >
               <img
