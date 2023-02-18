@@ -38,7 +38,8 @@ export default function Component() {
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
         <Box flex={1} py="10">
           {loading && 'Loading...'}
-          <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>
+          {!!article.category
+          && <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>}
           <Heading size="xl" mb="6">{article.title}</Heading>
           <Center>
             <Image width={460} borderRadius={16} src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'} />
@@ -64,7 +65,10 @@ export default function Component() {
           <Heading size="lg">Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
           <Divider mt={6} />
-          <Elements.SideNavRelated category={article.category} />
+          {!!article.category
+          && (
+            <Elements.SideNavRelated category={article.category} />
+          )}
         </Box>
       </Box>
     </Container>

@@ -32,6 +32,10 @@ export default function Component() {
   const { id } = useParams();
   const [fullImg, setFullImg] = useState('');
 
+  const sendWAMessage = () => {
+    window.open('https://wa.me/6282197493245?text=Halo, Mauka pesan phinisi 3 biji', '_blank');
+  };
+
   return (
     <Container maxW="7xl" py="5">
       <Heading size="xl">
@@ -152,6 +156,7 @@ export default function Component() {
               _hover={{
                 bg: 'blue.500',
               }}
+              onClick={sendWAMessage}
             >
               Booking
             </Button>

@@ -66,6 +66,10 @@ export default function Component() {
             Jadi segera reservasi sebelum kehabisan seatsnya,
             terima kasih Sahabat Pinisi.`);
 
+  const sendWAMessage = () => {
+    window.open('https://wa.me/6282197493245?text=Halo, Mauka ikut ini trip sama teman2 ku adakah diskonnn', '_blank');
+  };
+
   return (
     <Container maxW="7xl" py="5">
       <Heading size="xl">
@@ -120,6 +124,7 @@ export default function Component() {
               _hover={{
                 bg: 'blue.500',
               }}
+              onClick={sendWAMessage}
             >
               Join Sekarang
             </Button>
