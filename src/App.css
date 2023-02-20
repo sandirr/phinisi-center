@@ -6,5 +6,27 @@
 
 .swiper-button-next, .swiper-button-prev {
     text-rendering: auto;
-  }
+}
+
+.cui-steps__step-icon-container:not([data-highlighted]){
+    background-color: transparent !important;
+    border-color: #D1D5DB !important;
+}
+
+.cui-steps__step-icon-container[data-highlighted]{
+    background-color: #2263DD !important;
+    border-color: #2263DD !important;
+}
+
+.cui-steps__step-icon-container[aria-current="step"]{
+    background-color: transparent !important;
+    border-color: #2263DD !important;
+}
+
+.cui-steps__horizontal-step.css-2tbpf0::after{
+    margin: 0 !important;
+}
   
+div[role='progressbar']{
+    background-color:  #2263DD !important;
+}

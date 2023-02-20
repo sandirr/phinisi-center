@@ -17,8 +17,8 @@ export default function Component({ vendor, onClose }) {
       vendorId: vendor?.id,
       limit: 10,
       page: 1,
-    }).then((res) => {
-      console.log('data', res);
+    }).then(() => {
+      // console.log('data', res);
     });
   };
 

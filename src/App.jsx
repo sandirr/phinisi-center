@@ -1,6 +1,9 @@
 import React from 'react';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import {
+  ChakraProvider, extendTheme,
+} from '@chakra-ui/react';
 import moment from 'moment';
+import { StepsTheme as Steps } from 'chakra-ui-steps';
 import 'moment/locale/id';
 import './App.css';
 // import { callFunc } from './Configs/firebase';
@@ -15,6 +18,9 @@ function App() {
         50: '#EBF1FC',
         600: '#1C51B5',
       },
+    },
+    components: {
+      Steps,
     },
   });
 

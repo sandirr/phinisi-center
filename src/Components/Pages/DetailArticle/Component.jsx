@@ -56,7 +56,7 @@ export default function Component() {
           </Box>
         </Box>
 
-        <Box display={{ base: 'none', md: 'inherit' }} mx="10">
+        <Box display={{ base: 'none', md: 'inherit' }} mx={['6', '8', '10']}>
           <Center height="full">
             <Divider orientation="vertical" />
           </Center>

@@ -21,8 +21,9 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import {
-  BoatIcon, LocationIcon, StatIcon, TimeIcon,
+  BoatIcon, CheckIcon, CircleIcon, LocationIcon, StatIcon, TimeIcon,
 } from '../../../Assets/icons/icons';
 import ROUTES from '../../../Configs/routes';
 import { useQuery } from '../../../CustomHooks';
@@ -50,6 +51,10 @@ export default function Component() {
       navigate(`${ROUTES.pemesanan()}/vendor/contoh?tab=0`);
     }
   }, [query]);
+
+  const { activeStep } = useSteps({
+    initialStep: 3,
+  });
 
   return (
     <Container maxW="7xl">
@@ -113,12 +118,12 @@ export default function Component() {
 
           <Divider my="4" />
 
-          <Box>
+          {/* <Box>
             <Heading size="sm">Sertifikat</Heading>
             <Text mt="4" size="md">Vendor Phinisi Tertua</Text>
             <Text size="md" color="blackAlpha.600">Dinas Kubudayaan Sulawesi Selatan</Text>
           </Box>
-          <Divider mt="4" />
+          <Divider mt="4" /> */}
         </Box>
 
         <Box w="3xl">
@@ -248,7 +253,20 @@ export default function Component() {
                 <Heading size={['xs', 'sm', 'md']} mt={2}>
                   Phinisi Nusantara Dunia Baru
                 </Heading>
-                <Progress hasStripe value={64} mt="6" mb="4" />
+                <Steps colorScheme="blue" activeStep={activeStep} mt={6} size="sm">
+                  {new Array(10).fill(0).map((item, index) => (
+                    <Step
+                      label=""
+                      key={index}
+                      description=""
+                      icon={() => CircleIcon({ color: index === activeStep ? 'blue.600' : 'white', label: index === activeStep ? 'Pemasangan Papan Penguat' : '' })}
+                      checkIcon={() => CheckIcon({ color: 'white', label: 'Pemasangan Papan Penguat' })}
+                    >
+                      {null}
+                    </Step>
+                  ))}
+                </Steps>
+                <Progress hasStripe value={64} my="4" borderRadius="full" />
                 <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']}>
                   <StatIcon height="24px" width="24px" />
                   <Text>Progres Pengerjaan</Text>
