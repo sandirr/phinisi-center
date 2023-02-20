@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react';
 import {
   Text, Box, Container, Heading, Button, Image, SimpleGrid,
@@ -59,12 +60,15 @@ export default function Component() {
         // onMouseUp={handleStopVideo}
       >
         <Box
-          ref={videoRef}
-          as="video"
-          src={ExampleVideo}
+          // ref={videoRef}
+          // as="video"
+          as="img"
+          // src={ExampleVideo}
+          src={Images.LambungPhinisi}
           backgroundSize="cover"
+          objectFit="cover"
           minW="full"
-          minH="full"
+          minH={[180, 220, 240, 'full']}
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -84,9 +88,7 @@ export default function Component() {
         >
           <Heading
             fontWeight="700"
-            size={{
-              base: 'lg', lg: 'xl',
-            }}
+            size={['md', 'lg', 'xl']}
             color="white"
             lineHeight="100%"
             display={play ? 'none' : 'block'}
@@ -96,9 +98,7 @@ export default function Component() {
           <Text
             mt={{ base: '2', md: '4' }}
             color="white"
-            fontSize={{
-              base: 'xs', lg: 'md',
-            }}
+            fontSize={['xs', 'sm', 'md']}
             fontWeight="400"
             textAlign="center"
             display={play ? 'none' : 'inline-block'}
@@ -113,7 +113,7 @@ export default function Component() {
                 display={showBtn ? 'inline-block' : 'none'}
                 color="white"
                 alignItems="center"
-                onClick={handlePauseVideo}
+                // onClick={handlePauseVideo}
                 colorScheme="whiteAlpha"
                 fontWeight="semibold"
               >
@@ -126,7 +126,7 @@ export default function Component() {
                 mt={{ base: '2', md: '4' }}
                 color="white"
                 alignItems="center"
-                onClick={handleStartVideo}
+                // onClick={handleStartVideo}
                 leftIcon={<Image src={Images.Play} />}
                 colorScheme="whiteAlpha"
                 fontWeight="semibold"

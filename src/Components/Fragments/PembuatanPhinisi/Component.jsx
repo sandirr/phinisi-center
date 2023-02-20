@@ -16,6 +16,7 @@ import moment from 'moment';
 import ROUTES from '../../../Configs/routes';
 import { callFunc } from '../../../Configs/firebase';
 import { generateArticleDesc } from '../../../Utils/text';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   SwiperCore.use([Autoplay]);
@@ -74,7 +75,7 @@ export default function Component() {
               boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
             >
               <img
-                src={article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'}
+                src={article.cover || Images.Order2}
                 alt="proses phinisi"
                 style={{
                   width: '100%',
