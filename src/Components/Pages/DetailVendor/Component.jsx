@@ -18,6 +18,7 @@ import {
   MenuItem,
   SimpleGrid,
   Progress,
+  Tooltip,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
@@ -253,7 +254,7 @@ export default function Component() {
                 <Heading size={['xs', 'sm', 'md']} mt={2}>
                   Phinisi Nusantara Dunia Baru
                 </Heading>
-                <Steps colorScheme="blue" activeStep={activeStep} mt={6} size="sm">
+                <Steps colorScheme="blue" activeStep={activeStep} mt={6} size="sm" orientation="horizontal" display={['none', 'none', 'inline-flex']}>
                   {new Array(10).fill(0).map((item, index) => (
                     <Step
                       label=""
@@ -266,7 +267,9 @@ export default function Component() {
                     </Step>
                   ))}
                 </Steps>
-                <Progress hasStripe value={64} my="4" borderRadius="full" />
+                <Tooltip hasArrow label="Pemasangan Papan Penguat" bg="white" color="blue.600" placement="top">
+                  <Progress hasStripe value={64} my="4" borderRadius="full" />
+                </Tooltip>
                 <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']}>
                   <StatIcon height="24px" width="24px" />
                   <Text>Progres Pengerjaan</Text>

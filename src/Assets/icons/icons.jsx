@@ -120,7 +120,7 @@ export function CheckIcon(props) {
   const { label } = props;
   return (
     <Tooltip hasArrow label={label} bg="blue.600" color="white" placement="top-start" mb="2" ml="-1">
-      <CI {...props} boxSize="sm" />
+      <CI {...props} />
     </Tooltip>
   );
 }
