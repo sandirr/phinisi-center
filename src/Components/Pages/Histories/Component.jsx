@@ -1,5 +1,4 @@
-/* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Box,
@@ -12,29 +11,68 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import moment from 'moment';
 import Images from '../../../Configs/images';
 import Elements from '../../Elements';
+import { generateArticleDesc } from '../../../Utils/text';
+import { callFunc } from '../../../Configs/firebase';
 
 const prosesAdaptasiContent = `Karena pertumbuhan dan perkembangan kebutuhan manusia, alat transportasi perairan seperti yang diuraikan sebelumnya tidak mampu lagi memenuhi kebutuhan dan mobilitas penduduk. Untuk memenuhi kebutuhan dimaksud, manusia kemudian menciptakan perahu yang lebih besar. Perahu yang lebih besar ini tidak lagi terbuat dari batang kayu yang dikeruk tetapi sudah mulai menggunakan balok dasar yang disebut Lunas (kalabiseang, konjo).
 Dindingnya terbuat dari kepingan—kepingan papan yang tentu Saja pada awal terciptanya dibuat dengan teknik yang sederhana, Tidak diketahui dengan pasti kapan jenis perahu ini tercipta di Sulawesi Selatan, namun diperkirakan mulai dibuat sekitar abad ke-16. Seperti telah dijelaskan sebelumnya bahwa kepandaian orang Ara dan Lemo-lemo membuat perahu yang disusun dari kepingan papan berawal dari ditemukannya kepingan perahu Sawerigading yang terdampar di sekitar perairan Tanjung Bira.
 Dari ciptaan awal inilah selanjutnya perahu dikembangkan terus dari waktu ke waktu sesuai dengan tuntutan kebutuhan, baik mengenai teknik pembuatannya maupun kapasitas angkutnya. Pengembangan teknik serta kapasitas perahu yang dimaksud berlangsung selama ratusan tahun (secara evolusi) dan diperkirakan pada akhir abad ke-19 atau sekitar 1900 terciptalah Kapal Phinisi`;
 
-const content = `Pa’dewakang merupakan perahu kuno pertama tercipta yang memakai lunas dan dindingnya terdiri dari kepingan-kepingan papan yang disusun. Terciptanya jenis perahu ini diduga karena tuntutan terhadap kebutuhan alat transportasi perairan yang lebih memadai. Seperti diketahui perahu di Sulawesi Selatan yang ada sebelumnya adalah jenis perahu yang terbuat dari batang kayu besar yang dikeruk seperti sampan, soppe’, jarangka dan sebagainya.
-
-Bentuk perahu pa’dewakang agak mirip dengan perahu pajala sekarang. Mesikipun pada awalnya, teknik pemasangan papan dan penulangan pada perahu masih sangat sederhana.
-Layarnya berbentuk segi empat yang disebut sombala tanja’ (Makassar), sompe tanja’ (Bugis), tetapi ada juga yang memakai layar tambahan pada bagian depan yang berbentuk segi tiga lancip. Menurut G. Adrian Horridge sejak terciptanya yaitu diperkirakan pada abad ke-16, terdapat tiga tipe/jenis perahu pa‘dewakang yang pernah ada, yaitu Abi Jawa, Abi Tarus dan Abi Jumpandang. Menurut beberapa sumber, perahu Pa’dewakang dahulu dipergunakan oleh nelayan Makassar untuk pergi ke Pulau Dewakang, salah satu pulau dalam gugusan Kepulauan Spermonde Kabupaten Pangkep Sulawesi Selatan. Salah seorang narasumber Dg. Ma’batu (90 tahun) menyebutkan kegunaan utama perahu tersebut ialah untuk dipakai menyeberang ke Pulau Dewakang (Lopi pa’limbang-limbangan-Makassar).
-Penamaannyapun disesuaikan dengan tujuan dan kegunaannya; pa’dewakang artinya untuk dipakai ke Pulau Dewakang. Penamaan ini senada dengan pendapat G. A. Horridge (1979) bahwa kemungkinan nama pa’dewakang berasal dari bahasa Makassar. Daya angkut dari perahu jenis ini hanya berkisar 3-5 ton. Sejak sekitar tahun 1600 perahu pa’dewakang telah dipergunakan oleh nelayan Makassar dan Bugis berlayar ke Australia Utara untuk menangkap teripang. Perahu Pa’dewakang kini sudah tidak dibuat lagi namun miniatur perahu Pa’dewakang masih disimpan di Museum Leiden Belanda. Demikian halnya perahu Pa‘dewakang Hati Marege yang pernah dibuat di Tanah Beru pada 1987 dan kini dipergunakan untuk mengadakan Napak tilas lalu simpan di museum Darwin Australia.`;
-
 export default function Component() {
   const [fullContent, setFullContent] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [dataToShow, setDataToShow] = useState({});
+  const [articleList, setArticlesList] = useState([]);
+  const [primaryArticle, setPrimaryArticle] = useState({});
+  const [featuredArticles, setFeaturedArticles] = useState([]);
 
-  const openMore = (meta = '') => {
+  const getArticles = async () => {
+    const callable = callFunc('getArticles');
+
+    await callable({
+      page: 1, limit: 20, type: 'Sejarah',
+    })
+      .then((res) => {
+        const {
+          data,
+        } = res.data;
+        const normalizeData = data.map((item, index) => ({
+          ...item,
+          index: index + 1,
+          createdAt: moment(item.createdAt).startOf('minute').fromNow(),
+          generatedContent: `${generateArticleDesc(item.content)}...`,
+        }));
+
+        const primary = normalizeData.filter((item) => item.priority === 'Primary') || [];
+        const featured = normalizeData.filter((item) => item.priority === 'Featured') || [];
+        const common = normalizeData.filter((item) => item.priority === 'Common') || [];
+        if (primary.length) {
+          setPrimaryArticle(primary[0]);
+        }
+        if (featured.length) {
+          setFeaturedArticles(featured);
+        }
+        setArticlesList(common);
+      })
+      .catch(() => {
+        // console.log('anjing', err);
+      });
+  };
+
+  useEffect(() => {
+    getArticles();
+  }, []);
+
+  const openMore = (meta = '', data = {}) => {
     setShowMore(true);
     setDataToShow({
-      content,
-      title: 'Perahu Sampan',
+      content: data.content,
+      title: data.title,
+      category: meta ? data.title : '',
+      cover: data.cover,
       meta,
     });
   };
@@ -49,20 +87,15 @@ export default function Component() {
       <Box bg="blue.50" py={['10', '12', '14']}>
         <Container maxW="4xl" textAlign="center">
           <Heading size={['md', 'lg']}>Sejarah Phinisi</Heading>
-          <Heading size={['xl', '2xl', '3xl', '4xl']} mt="2">Lorem ipsum dolor sit amet consectetur.</Heading>
+          <Heading size={['xl', '2xl', '3xl', '4xl']} mt="2">{primaryArticle.title}</Heading>
           <Text fontSize={['lg', 'xl', '2xl', '3xl']} mt={['8', '10', '12', '14']} noOfLines={5}>
-            Masyarakat Bugis-Makassar dikenal sebagai masyarakat
-            yang memiliki kemampuan yang sangat luar biasa dalam
-            dunia kemaritiman. Tak hanya pandai dalam berhadapan
-            dengan segala macam mara bahaya yang membentang di laut,
-            masyarakat Bugis-Makassar juga pandai dalam pembuatan
-            perahu, salah satunya adalah Phinisi.
+            {primaryArticle.generatedContent}
           </Text>
-          <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400" onClick={() => openMore('Sejarah Phinisi')}>Lebih lanjut &gt;</Text>
+          <Text cursor="pointer" color="blue.700" mt="4" fontSize={['lg', 'xl', '2xl', '3xl']} fontWeight="400" onClick={() => openMore('Sejarah Phinisi', primaryArticle)}>Lebih lanjut &gt;</Text>
         </Container>
         <Container maxW="5xl">
           <SimpleGrid mt={['8', '10', '12']} columns={[2, 2, 4]} gap={[4, 5, 6]}>
-            {new Array(4).fill(0).map((k, i) => (
+            {featuredArticles.map((article, i) => (
               <Box
                 key={i}
                 borderRadius={24}
@@ -72,11 +105,11 @@ export default function Component() {
                 pb={['4', '6', '8']}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               >
-                <Image src={Images.Hero2} w="full" height={[160, 180, 230, 230]} objectFit="cover" />
+                <Image src={article.cover || Images.Hero2} w="full" height={[160, 180, 230, 230]} objectFit="cover" />
                 <Stack px={2} spacing={[2, 3, 4]} mt={4}>
-                  <Heading fontSize={['lg', 'xl', '2xl']}>Sampan</Heading>
-                  <Text fontSize={['sm', 'md', 'lg', 'xl']}>Lorem ipsum dolor sit amet consectetur.</Text>
-                  <Text cursor="pointer" color="blue.700" fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('')}>Lebih lanjut &gt;</Text>
+                  <Heading fontSize={['lg', 'xl', '2xl']}>{article.title}</Heading>
+                  <Text fontSize={['sm', 'md', 'lg', 'xl']} noOfLines={2}>{article.generatedContent}</Text>
+                  <Text cursor="pointer" color="blue.700" fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('', article)}>Lebih lanjut &gt;</Text>
                 </Stack>
               </Box>
             ))}
@@ -105,7 +138,7 @@ export default function Component() {
             <Heading size={['xl', '2xl', '3xl', '4xl']}>Perahu Berlunas</Heading>
           </Box>
           <Stack direction="column" mt={['6', '8', '10', '12']} spacing={['6', '8', '10', '12']}>
-            {new Array(7).fill(0).map((k, i) => (
+            {articleList.map((article, i) => (
               <Flex
                 key={i}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
@@ -115,15 +148,14 @@ export default function Component() {
                 bg="white"
               >
                 <Box flex={2}>
-                  <Image src={Images.Hero2} w="full" objectFit="cover" h={['180', '220', '260', '295']} />
+                  <Image src={article.cover || Images.Hero2} w="full" objectFit="cover" h={['180', '220', '260', '295']} />
                 </Box>
                 <Box flex={3} textAlign="center" px={['4', '6', '8', '10']}>
-                  <Heading size={['sm', 'md', 'lg', 'xl']}>Perahu Pa’dewakang</Heading>
+                  <Heading size={['sm', 'md', 'lg', 'xl']}>{article.title}</Heading>
                   <Text noOfLines={3} mt={['4', '5', '6']} fontSize={['sm', 'md', 'lg', 'xl']}>
-                    Pa’dewakang merupakan perahu kuno pertama tercipta yang memakai lunas
-                    dan dindingnya terdiri dari kepingan-kepingan papan yang disusun.
+                    {article.generatedContent}
                   </Text>
-                  <Text cursor="pointer" color="blue.700" mt={['2', '3', '4']} fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('')}>Lebih lanjut &gt;</Text>
+                  <Text cursor="pointer" color="blue.700" mt={['2', '3', '4']} fontSize={['sm', 'md', 'lg', 'xl']} onClick={() => openMore('', article)}>Lebih lanjut &gt;</Text>
                 </Box>
               </Flex>
             ))}

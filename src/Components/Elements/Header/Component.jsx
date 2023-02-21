@@ -81,27 +81,29 @@ export default function Component() {
     });
   };
 
-  let lastScroll = 0;
-  let loaded;
+  useEffect(() => {
+    let lastScroll = 0;
+    let loaded;
 
-  window.onscroll = (e) => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    const header = headerRef.current;
-    const height = -header.clientHeight;
+    window.onscroll = (e) => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const header = headerRef.current;
+      const height = -header.clientHeight;
 
-    if (scrollY <= Math.max(lastScroll, Number(header.clientHeight) / 1.5)
-    || loaded === undefined) {
-      header.style.transition = 'transform 0.5s';
-      header.style.transform = 'translateY(0px)';
-    } else {
-      header.style.transition = 'transform 1s';
-      header.style.transform = `translateY(${height}px)`;
-    }
-    // (scrollY <= Math.max(lastScroll, 50) || window.innerWidth <= 1200 || loaded === undefined)
+      if (scrollY <= Math.max(lastScroll, Number(header.clientHeight) / 1.5)
+      || loaded === undefined) {
+        header.style.transition = 'transform 0.5s';
+        header.style.transform = 'translateY(0px)';
+      } else {
+        header.style.transition = 'transform 1s';
+        header.style.transform = `translateY(${height}px)`;
+      }
+      // (scrollY <= Math.max(lastScroll, 50) || window.innerWidth <= 1200 || loaded === undefined)
 
-    lastScroll = scrollY;
-    loaded = true;
-  };
+      lastScroll = scrollY;
+      loaded = true;
+    };
+  }, []);
 
   const renderBadge = (val) => (
     <Badge

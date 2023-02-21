@@ -22,6 +22,7 @@ import Order4 from '../Assets/order/4.png';
 import Order5 from '../Assets/order/5.png';
 import Order6 from '../Assets/order/6.svg';
 import LambungPhinisi from '../Assets/LambungPhinisi.png';
+import LabuanBajo from '../Assets/LabuanBajo.jpg';
 
 const Images = {
   Logo,
@@ -48,6 +49,7 @@ const Images = {
   Order5,
   Order6,
   LambungPhinisi,
+  LabuanBajo,
 };
 
 export default Images;

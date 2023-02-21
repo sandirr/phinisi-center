@@ -10,7 +10,7 @@ import SunEditor, { buttonList } from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { callFunc, storage } from '../../../../../Configs/firebase';
 
-export default function Component({ onSuccess, onFailed, givenData }) {
+export default function Component({ onSuccess, givenData }) {
   const initialState = {
     title: '',
     author: '',
@@ -65,9 +65,11 @@ export default function Component({ onSuccess, onFailed, givenData }) {
       setFields(() => initialState);
       setContent('');
       onSuccess(true);
+    }).catch(() => {
+      // console.log(err);
     }).finally(() => {
       setIsLoading(false);
-      onFailed();
+      // onFailed();
     });
   };
 
@@ -132,6 +134,10 @@ export default function Component({ onSuccess, onFailed, givenData }) {
           && (
           <Input label="Alias" name="alias" placeholder="Alias" value={fields.alias} onChange={handleChangeField} />
           )}
+        {fields.type === 'Proses Pembuatan'
+          && (
+          <Input label="Index" name="index" type="number" placeholder="Index" value={fields.index} onChange={handleChangeField} />
+          )}
       </Stack>
       <Box my={2}>
         {/* <ReactQuill
@@ -149,6 +155,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
           value={content}
           setAllPlugins
           onChange={setContent}
+          height="400px"
           setOptions={{
             buttonList: [
               ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],

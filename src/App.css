@@ -8,6 +8,10 @@
     text-rendering: auto;
 }
 
+.proses-pembuatan .swiper-slide{
+    height: auto !important;
+}
+
 .cui-steps__step-icon-container:not([data-highlighted]){
     background-color: transparent !important;
     border-color: #D1D5DB !important;

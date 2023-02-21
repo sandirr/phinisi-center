@@ -36,15 +36,15 @@ export default function Component({ open, data, onClose }) {
             outline="none"
             onClick={onClose}
           />
-          <Image mb={['4', '5', '6', '7', '8']} src={Images.Order4} w="full" h="full" borderRadius="24px 24px 0px 0px" />
+          <Image mb={['4', '5', '6', '7', '8']} src={data.cover || Images.Order4} w="full" h="full" borderRadius="24px 24px 0px 0px" />
           <Box as={data.meta ? Container : Box} maxW={data.meta ? '4xl' : 'full'}>
             {!!data.meta
           && <Heading size={['sm', 'md', 'lg']}>{data.meta}</Heading>}
-            <Heading fontSize={data.meta ? ['4xl', '5xl', '6xl'] : ['2xl', '3xl', '4xl']}>{data.title}</Heading>
-            {!!data.category
+            <Heading fontSize={data.meta ? ['3xl', '4xl', '5xl', '6xl'] : ['xl', '2xl', '3xl', '4xl']}>{data.meta ? data.category : data.title}</Heading>
+            {!!data.category && !data.meta
           && <Text fontSize={['md', 'xl', '2xl']} mt={['1', '2']}>{data.category}</Text>}
             <Text fontSize={['md', 'lg', 'xl']} whiteSpace="pre-line" mt={['4', '5', '6', '7', '8']} textAlign="justify">
-              {data.content}
+              <Box dangerouslySetInnerHTML={{ __html: data.content }} />
             </Text>
             <Box textAlign="center">
               <Text

@@ -64,11 +64,11 @@ export default function Component() {
           // as="video"
           as="img"
           // src={ExampleVideo}
-          src={Images.LambungPhinisi}
+          src={Images.LabuanBajo}
           backgroundSize="cover"
           objectFit="cover"
           minW="full"
-          minH={[180, 220, 240, 'full']}
+          h={[220, 420, 480, 520]}
           display="flex"
           flexDirection="column"
           justifyContent="center"

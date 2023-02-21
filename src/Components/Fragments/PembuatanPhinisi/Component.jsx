@@ -58,20 +58,21 @@ export default function Component() {
       <Swiper
         // spaceBetween={isMobile ? 12 : isPad ? 18 : 24}
         slidesPerView={isMobile ? 2.5 : isPad ? 3.5 : 5.5}
+        className="proses-pembuatan"
         // centeredSlides
-        loop
+        // loop
       >
-        {articlesList.map((article) => (
+        {articlesList.sort((a, b) => b.index - a.index).map((article) => (
           <SwiperSlide key={article.id}>
             <Box
               onClick={() => navigate(`${ROUTES.artikel()}/baca/${article.id}`)}
               py={[4, 5, 6]}
-              ml={['12px', '18px', '20px']}
+              mx={['4px', '6px', '8px', '10px']}
               px={[2, 3, 4]}
               mb={1}
               bg="white"
+              h="full"
               borderRadius={16}
-              h="100%"
               boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
             >
               <img
