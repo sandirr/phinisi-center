@@ -21,7 +21,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
 import {
   BoatIcon, CheckIcon, CircleIcon, LocationIcon, StatIcon, TimeIcon,
@@ -33,6 +33,7 @@ import { ChatModalContext, OrderModalContext } from '../../../Context';
 export default function Component() {
   const query = useQuery();
   const navigate = useNavigate();
+  const { id } = useParams();
   const { showChatModal } = useContext(ChatModalContext);
   const { showOrderModal } = useContext(OrderModalContext);
   const [activeTab, setActiveTab] = useState(0);
@@ -49,7 +50,7 @@ export default function Component() {
     if (query.get('tab')) {
       setActiveTab(Number(query.get('tab')));
     } else {
-      navigate(`${ROUTES.pemesanan()}/vendor/contoh?tab=0`);
+      navigate(`${ROUTES.pemesanan()}/vendor/${id}?tab=0`);
     }
   }, [query]);
 
@@ -138,7 +139,7 @@ export default function Component() {
               }}
               wrap="wrap"
             >
-              <Tabs index={activeTab} onChange={(idx) => navigate(`${ROUTES.pemesanan()}/vendor/contoh?tab=${idx}`)}>
+              <Tabs index={activeTab} onChange={(idx) => navigate(`${ROUTES.pemesanan()}/vendor/${id}?tab=${idx}`)}>
                 <TabList _focusVisible={{ boxShadow: 'none' }}>
                   <Tab
                     _selected={{ color: 'blue.600', borderColor: 'blue.600', outline: 'none' }}

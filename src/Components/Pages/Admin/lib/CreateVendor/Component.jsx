@@ -15,6 +15,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
     location: '',
     year: '',
     description: '',
+    city: '',
   };
   const [fields, setFields] = useState(() => givenData || initialState);
   const [certificates, setCertificates] = useState(() => givenData?.certificates || []);
@@ -94,6 +95,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
         <Input name="name" placeholder="Nama vendor" value={fields.name} onChange={handleChangeField} />
         <Input name="tagline" placeholder="Tagline" value={fields.tagline} onChange={handleChangeField} />
         <Input name="location" placeholder="Lokasi" value={fields.location} onChange={handleChangeField} />
+        <Input name="city" placeholder="Kabupaten/Kota" value={fields.city} onChange={handleChangeField} />
         <Input name="year" placeholder="Tahun berdiri" value={fields.year} onChange={handleChangeField} />
         <Input name="description" placeholder="Deskripsi" value={fields.description} onChange={handleChangeField} />
         <Box>

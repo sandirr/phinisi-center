@@ -58,6 +58,7 @@ export default function Component() {
   const [openModal, setOpenModal] = useState('');
   const [openPesanan, setOpenPesanan] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [hasMoreItems, setHasMoreItems] = useState(false);
 
   const { showConfirmation, closeConfirmation } = useContext(ConfirmationContext);
 
@@ -86,9 +87,10 @@ export default function Component() {
 
   const getVendor = async () => {
     const callable = callFunc('getVendors');
+    setLoading(true);
 
     await callable({
-      page: 1, limit: 10,
+      page: meta.activePage, limit: 10,
     })
       .then((res) => {
         const {
@@ -99,7 +101,7 @@ export default function Component() {
         } = res.data;
         const normalizeData = data.map((item, index) => ({
           ...item,
-          index: index + 1,
+          index: index + 1 + (articlesList.length),
           createdAt: moment(item.createdAt).startOf('minute').fromNow(),
           description: `${generateArticleDesc(item.description, 50)}...`,
           actions: (
@@ -110,7 +112,8 @@ export default function Component() {
             </Flex>
           ),
         }));
-        setArticlesList(normalizeData);
+        setArticlesList([...articlesList, ...normalizeData]);
+        setHasMoreItems(activePage < totalPage);
         setMeta({
           activePage,
           totalPage,
@@ -119,12 +122,24 @@ export default function Component() {
       })
       .catch((err) => {
         // console.log('anjing', err);
+      }).finally(() => {
+        setLoading(false);
       });
   };
 
+  const handleLoadMore = () => {
+    setMeta((prev) => ({
+      ...prev,
+      activePage: prev.activePage + 1,
+    }));
+  };
+
   useEffect(() => {
-    getVendor();
-  }, []);
+    const firstLoad = meta.activePage === 1 && !articlesList.length;
+    if (firstLoad || hasMoreItems) {
+      getVendor();
+    }
+  }, [meta.activePage]);
 
   const handleCloseOpenModal = (getAgain = false) => {
     setOpenModal(false);
@@ -150,7 +165,13 @@ export default function Component() {
         <Heading size="lg">Manajemen Vendor</Heading>
         <Button colorScheme="blue" onClick={() => handleOpenModal('Buat')}>Buat Vendor</Button>
       </Flex>
-      <Elements.Table listData={articlesList} dataFormat={dataFormat} />
+      <Elements.Table
+        isLoading={loading}
+        hasMoreItems={hasMoreItems}
+        handleLoadMore={handleLoadMore}
+        listData={articlesList}
+        dataFormat={dataFormat}
+      />
       <Modal isOpen={!!openModal} size="6xl" onClose={handleCloseOpenModal}>
         <ModalOverlay />
         <ModalContent pb="4">

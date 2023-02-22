@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Heading, Text, useMediaQuery,
+  Box, Heading, Skeleton, Text, useMediaQuery,
 } from '@chakra-ui/react';
 import SwiperCore, {
   Autoplay,
@@ -22,11 +22,13 @@ export default function Component() {
   SwiperCore.use([Autoplay]);
   const navigate = useNavigate();
   const [articlesList, setArticlesList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [isMobile] = useMediaQuery('(max-width: 768px)');
   const [isPad] = useMediaQuery('(max-width: 960px)');
 
   const getArticles = async () => {
     const callable = callFunc('getArticles');
+    setLoading(true);
 
     await callable({
       page: 1, limit: 10, type: 'Proses Pembuatan',
@@ -45,6 +47,8 @@ export default function Component() {
       })
       .catch(() => {
         // console.log('err', err);
+      }).finally(() => {
+        setLoading(false);
       });
   };
 
@@ -89,6 +93,18 @@ export default function Component() {
                 {article.generatedContent}
               </Text>
             </Box>
+          </SwiperSlide>
+        ))}
+        {loading && [1, 2, 3, 4, 5, 6].map((article) => (
+          <SwiperSlide key={article}>
+            <Skeleton
+              mx={['4px', '6px', '8px', '10px']}
+              px={[2, 3, 4]}
+              mb={1}
+              h="28"
+              borderRadius={16}
+              boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
+            />
           </SwiperSlide>
         ))}
       </Swiper>

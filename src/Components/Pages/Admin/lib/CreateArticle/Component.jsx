@@ -134,7 +134,7 @@ export default function Component({ onSuccess, givenData }) {
           && (
           <Input label="Alias" name="alias" placeholder="Alias" value={fields.alias} onChange={handleChangeField} />
           )}
-        {fields.type === 'Proses Pembuatan'
+        {fields.type !== 'Artikel'
           && (
           <Input label="Index" name="index" type="number" placeholder="Index" value={fields.index} onChange={handleChangeField} />
           )}

@@ -53,6 +53,8 @@ export default function Component() {
   const [selectedArticle, setSelectedArticle] = useState({
     type: 'Sejarah',
   });
+  const [hasMoreItems, setHasMoreItems] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { showConfirmation, closeConfirmation } = useContext(ConfirmationContext);
 
@@ -83,7 +85,7 @@ export default function Component() {
     const callable = callFunc('getArticles');
 
     await callable({
-      page: 1, limit: 10, type: 'Sejarah',
+      page: meta.activePage, limit: 10, type: 'Sejarah',
     })
       .then((res) => {
         const {
@@ -94,7 +96,7 @@ export default function Component() {
         } = res.data;
         const normalizeData = data.map((item, index) => ({
           ...item,
-          index: index + 1,
+          index: index + 1 + (articlesList.length),
           createdAt: moment(item.createdAt).startOf('minute').fromNow(),
           generatedContent: `${generateArticleDesc(item.content, 50)}...`,
           actions: (
@@ -104,21 +106,34 @@ export default function Component() {
             </Flex>
           ),
         }));
-        setArticlesList(normalizeData);
+        setArticlesList([...articlesList, ...normalizeData]);
         setMeta({
           activePage,
           totalPage,
           total,
         });
+        setHasMoreItems(activePage < totalPage);
       })
       .catch((err) => {
         // console.log('anjing', err);
+      }).finally(() => {
+        setLoading(false);
       });
   };
 
+  const handleLoadMore = () => {
+    setMeta((prev) => ({
+      ...prev,
+      activePage: prev.activePage + 1,
+    }));
+  };
+
   useEffect(() => {
-    getArticles();
-  }, []);
+    const firstLoad = meta.activePage === 1 && !articlesList.length;
+    if (firstLoad || hasMoreItems) {
+      getArticles();
+    }
+  }, [meta.activePage]);
 
   const handleCloseOpenModal = (getAgain = false) => {
     setOpenModal(false);
@@ -142,7 +157,13 @@ export default function Component() {
         <Heading size="lg">Manajemen Sejarah</Heading>
         <Button colorScheme="blue" onClick={() => handleOpenModal('Buat')}>Buat Sejarah</Button>
       </Flex>
-      <Elements.Table listData={articlesList} dataFormat={dataFormat} />
+      <Elements.Table
+        isLoading={loading}
+        hasMoreItems={hasMoreItems}
+        handleLoadMore={handleLoadMore}
+        listData={articlesList}
+        dataFormat={dataFormat}
+      />
       <Modal isOpen={!!openModal} size="6xl" onClose={handleCloseOpenModal}>
         <ModalOverlay />
         <ModalContent pb="4">

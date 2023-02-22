@@ -40,7 +40,7 @@ export default function Component() {
 
     setLoading(true);
     await callable({
-      page: meta.activePage, limit: 5, type: 'Artikel', category: activeTab === tabs[0] ? '' : activeTab,
+      page: meta.activePage, limit: 8, type: 'Artikel', category: activeTab === tabs[0] ? '' : activeTab,
     })
       .then((res) => {
         const {

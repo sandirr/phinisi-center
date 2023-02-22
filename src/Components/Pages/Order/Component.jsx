@@ -1,17 +1,76 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Text, Box, Container, Heading, Button, Image, SimpleGrid,
+  Text, Box, Container, Heading, Button, Image, SimpleGrid, Skeleton,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import ExampleVideo from '../../../Assets/videoplayback.mp4';
 import Images from '../../../Configs/images';
 import { LocationIcon, PhinisiIcon } from '../../../Assets/icons/icons';
+import { callFunc } from '../../../Configs/firebase';
 
 export default function Component() {
   const videoRef = useRef(null);
   const [play, setPlay] = useState(false);
   const [showBtn, setShowBtn] = useState(true);
+
+  const [loading, setLoading] = useState(false);
+  const [vendors, setVendors] = useState([]);
+  const [hasMoreItems, setHasMoreItems] = useState(false);
+
+  const [meta, setMeta] = useState({
+    activePage: 1,
+    totalPage: 1,
+    total: 1,
+  });
+
+  const getVendor = async () => {
+    const callable = callFunc('getVendors');
+    setLoading(true);
+
+    await callable({
+      page: meta.activePage, limit: 10,
+    })
+      .then((res) => {
+        const {
+          activePage,
+          totalPage,
+          total,
+          data,
+        } = res.data;
+        const normalizeData = data.map((item, index) => ({
+          ...item,
+          index: index + 1 + (vendors.length),
+        }));
+        setVendors([...vendors, ...normalizeData]);
+        setHasMoreItems(activePage < totalPage);
+        setMeta({
+          activePage,
+          totalPage,
+          total,
+        });
+      })
+      .catch((err) => {
+        // console.log('anjing', err);
+      }).finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleLoadMore = () => {
+    setMeta((prev) => ({
+      ...prev,
+      activePage: prev.activePage + 1,
+    }));
+  };
+
+  useEffect(() => {
+    const firstLoad = meta.activePage === 1 && !vendors.length;
+    if (firstLoad || hasMoreItems) {
+      getVendor();
+    }
+  }, [meta.activePage]);
 
   const handleStartVideo = async () => {
     await videoRef.current.play();
@@ -137,46 +196,60 @@ export default function Component() {
         </Box>
       </Box>
       <Box mt="6">
-        <Heading size="lg">Daftar Vendor</Heading>
-        <SimpleGrid
-          columns={{
-            lg: 5, md: 3, sm: 2, base: 1,
-          }}
-          gap={{
-            lg: 6, md: 5, sm: 4, base: 3,
-          }}
-          mt="4"
-          mb="16"
+        <Heading size={['md', 'lg']}>Daftar Vendor</Heading>
+        <InfiniteScroll
+          dataLength={vendors.length}
+          hasMore={hasMoreItems}
+          next={handleLoadMore}
         >
-          {new Array(10).fill(1).map((e, idx) => (
-            <Box
-              key={idx}
-              boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
-              borderRadius="16"
-              padding="4"
-              as={Link}
-              to="vendor/contoh"
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
-                w="100%"
-                objectFit="cover"
-                borderRadius={8}
-              />
-              <Heading size="md" mt={4}>Hj. Rosdaeni</Heading>
-              <Box mt={{ lg: 10, base: 6 }}>
-                <Box display="flex" alignItems="center" gap="2">
-                  <LocationIcon />
-                  <Text size="md">Tanaberu</Text>
-                </Box>
-                <Box display="flex" alignItems="center" gap="2" mt="2">
-                  <PhinisiIcon />
-                  <Text size="md">14 Phinisi</Text>
+          <SimpleGrid
+            columns={[2, 3, 4, 5]}
+            gap={[3, 4, 5, 6]}
+            mt="4"
+            mb="16"
+          >
+            {vendors.map((vendor, idx) => (
+              <Box
+                key={idx}
+                boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
+                borderRadius="16"
+                padding={[3, 4]}
+                as={Link}
+                to={`vendor/${vendor.id}`}
+              >
+                <Image
+                  src={vendor.cover || Images.Order1}
+                  w="100%"
+                  objectFit="cover"
+                  borderRadius={8}
+                />
+                <Heading size={['xs', 'sm', 'md']} mt={[2, 3, 4]}>{vendor.name}</Heading>
+                <Box mt={[2, 4, 6, 8]}>
+                  <Box display="flex" alignItems="center" gap="2">
+                    <LocationIcon fontSize={['xs', 'sm', 'md']} />
+                    <Text fontSize={['xs', 'sm', 'md']}>{vendor.city || 'Bulukumba'}</Text>
+                  </Box>
+                  <Box display="flex" alignItems="center" gap="2" mt={[1, 2]}>
+                    <PhinisiIcon fontSize={['xs', 'sm', 'md']} />
+                    <Text fontSize={['xs', 'sm', 'md']}>14 Phinisi</Text>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
-        </SimpleGrid>
+            ))}
+            {loading && new Array(5).fill(0).map((item, idx) => (
+              <Box
+                key={idx}
+                boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
+                borderRadius="16"
+                padding={[3, 4]}
+              >
+                <Skeleton height="80px" />
+                <Skeleton height="20px" mt={[2, 4, 6, 8]} />
+                <Skeleton height="20px" mt={[2, 4]} />
+              </Box>
+            ))}
+          </SimpleGrid>
+        </InfiniteScroll>
       </Box>
     </Container>
   );

@@ -138,7 +138,7 @@ export default function Component() {
             <Heading size={['xl', '2xl', '3xl', '4xl']}>Perahu Berlunas</Heading>
           </Box>
           <Stack direction="column" mt={['6', '8', '10', '12']} spacing={['6', '8', '10', '12']}>
-            {articleList.map((article, i) => (
+            {articleList.sort((a, b) => b.index - a.index).map((article, i) => (
               <Flex
                 key={i}
                 boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"

@@ -274,7 +274,7 @@ export default function Component() {
           flexWrap="wrap"
           justifyContent="space-between"
           alignItems="center"
-          gap="4"
+          gap={['2', '4']}
         >
           <Box
             overflowX="auto"
