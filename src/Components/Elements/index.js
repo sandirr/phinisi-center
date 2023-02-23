@@ -9,6 +9,7 @@ import ChatModal from './ChatModal';
 import FixOrder from './FixOrder';
 import ImagesModal from './ImagesModal';
 import ContentModal from './ContentModal';
+import Loading from './Loading';
 
 const Elements = {
   Header,
@@ -22,6 +23,7 @@ const Elements = {
   FixOrder,
   ImagesModal,
   ContentModal,
+  Loading,
 };
 
 export default Elements;

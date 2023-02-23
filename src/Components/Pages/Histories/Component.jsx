@@ -28,9 +28,11 @@ export default function Component() {
   const [articleList, setArticlesList] = useState([]);
   const [primaryArticle, setPrimaryArticle] = useState({});
   const [featuredArticles, setFeaturedArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getArticles = async () => {
     const callable = callFunc('getArticles');
+    setLoading(true);
 
     await callable({
       page: 1, limit: 20, type: 'Sejarah',
@@ -59,6 +61,9 @@ export default function Component() {
       })
       .catch(() => {
         // console.log('anjing', err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -168,6 +173,7 @@ export default function Component() {
         data={dataToShow}
         onClose={closeOpenMore}
       />
+      <Elements.Loading loading={loading} />
     </>
   );
 }

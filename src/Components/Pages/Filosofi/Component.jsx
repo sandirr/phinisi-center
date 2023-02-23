@@ -18,10 +18,12 @@ export default function Component() {
   const [dataToShow, setDataToShow] = useState({});
   const [articleList, setArticlesList] = useState([]);
   const [primaryArticle, setPrimaryArticle] = useState({});
+  const [loading, setLoading] = useState(false);
   // const [featuredArticles, setFeaturedArticles] = useState([]);
 
   const getArticles = async () => {
     const callable = callFunc('getArticles');
+    setLoading(true);
 
     await callable({
       page: 1, limit: 10, type: 'Filosofi',
@@ -50,6 +52,9 @@ export default function Component() {
       })
       .catch(() => {
         // console.log('anjing', err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -172,6 +177,7 @@ export default function Component() {
         data={dataToShow}
         onClose={closeOpenMore}
       />
+      <Elements.Loading loading={loading} />
     </Box>
   );
 }

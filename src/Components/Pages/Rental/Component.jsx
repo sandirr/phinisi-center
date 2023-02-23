@@ -23,6 +23,7 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import { useNavigate } from 'react-router-dom';
 import Images from '../../../Configs/images';
+import Elements from '../../Elements';
 
 export default function Component() {
   SwiperCore.use([Navigation]);
@@ -195,7 +196,7 @@ export default function Component() {
         </Swiper>
       </Box>
       )}
-
+      <Elements.Loading loading={false} />
     </Box>
   );
 }
