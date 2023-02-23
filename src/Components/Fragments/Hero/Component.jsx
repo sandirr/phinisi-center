@@ -8,7 +8,7 @@ import SwiperCore, {
   Pagination, Autoplay,
 } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import ExampleVideo from '../../../Assets/videoplayback.mp4';
+// import ExampleVideo from '../../../Assets/videoplayback.mp4';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';

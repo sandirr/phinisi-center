@@ -5,7 +5,6 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ExampleVideo from '../../../Assets/videoplayback.mp4';
 import Images from '../../../Configs/images';
 import { LocationIcon, PhinisiIcon } from '../../../Assets/icons/icons';
 import { callFunc } from '../../../Configs/firebase';
