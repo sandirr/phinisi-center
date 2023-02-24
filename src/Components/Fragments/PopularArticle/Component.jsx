@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, Container, Grid, GridItem, Heading,
+  Box, Button, Container, Grid, GridItem, Heading, Image,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { callFunc } from '../../../Configs/firebase';
 import ROUTES from '../../../Configs/routes';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   const navigate = useNavigate();
@@ -60,32 +61,39 @@ export default function Component() {
                 style={{
                   backgroundSize: 'cover',
                   borderRadius: 24,
-                  background: `linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 59.36%), url(${article.cover || 'https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'})`,
                 }}
                 height="100%"
-                px={{ base: '6', md: '8', lg: '12' }}
-                py="12"
+                position="relative"
                 display="flex"
                 flexDirection="column"
                 justifyContent="flex-end"
+                overflow="hidden"
               >
-                <Heading fontSize={['xs', 'sm']} color="white" fontWeight="700">{article.category}</Heading>
-                <Heading size={['sm', 'md']} color="white" fontWeight="700" lineHeight="120%" mt={1} noOfLines={2}>
-                  {article.title}
-                </Heading>
-                <Button
-                  onClick={() => navigate(`${ROUTES.artikel()}/baca/${article.id}`)}
-                  mt={4}
-                  py="1.5"
-                  px="3"
-                  fontWeight="semibold"
-                  bg="gray.100"
-                  color="gray.800"
-                  alignSelf="flex-start"
-                  size="sm"
+                <Image src={article.cover || Images.Order1} position="absolute" top={0} left={0} h="full" w="full" objectFit="cover" />
+                <Box
+                  px={{ base: '6', md: '8', lg: '12' }}
+                  py="12"
+                  background="linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 59.36%)"
+                  position="relative"
                 >
-                  Baca Artikel
-                </Button>
+                  <Heading fontSize={['xs', 'sm']} color="white" fontWeight="700">{article.category}</Heading>
+                  <Heading size={['sm', 'md']} color="white" fontWeight="700" lineHeight="120%" mt={1} noOfLines={2}>
+                    {article.title}
+                  </Heading>
+                  <Button
+                    onClick={() => navigate(`${ROUTES.artikel()}/baca/${article.id}`)}
+                    mt={4}
+                    py="1.5"
+                    px="3"
+                    fontWeight="semibold"
+                    bg="gray.100"
+                    color="gray.800"
+                    alignSelf="flex-start"
+                    size="sm"
+                  >
+                    Baca Artikel
+                  </Button>
+                </Box>
               </Box>
             </GridItem>
           ))}

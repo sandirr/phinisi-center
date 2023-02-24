@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Heading, Skeleton, Text, useMediaQuery,
+  Box, Heading, Image, Skeleton, Text, useMediaQuery,
 } from '@chakra-ui/react';
 import SwiperCore, {
   Autoplay,
@@ -79,7 +79,7 @@ export default function Component() {
               borderRadius={16}
               boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
             >
-              <img
+              <Image
                 src={article.cover || Images.Order6}
                 alt="proses phinisi"
                 style={{
@@ -87,6 +87,7 @@ export default function Component() {
                   objectFit: 'cover',
                   borderRadius: 8,
                 }}
+                h={['100px', '140px', '160px']}
               />
               <Heading mt="4" size={['xs', 'sm', 'md']} fontWeight="700" noOfLines={2}>{article.title}</Heading>
               <Text fontSize={['x-small', 'xs', 'sm', 'md']} mt={[2, 4]} lineHeight="150%" noOfLines={2}>
