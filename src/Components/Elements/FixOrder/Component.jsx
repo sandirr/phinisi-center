@@ -16,6 +16,7 @@ import {
   ModalOverlay,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -49,6 +50,8 @@ export default function Component({
   const [fields, setFields] = useState(initialState);
   const [imgLoading, setImgLoading] = useState(false);
   const invoiceRef = useRef(null);
+
+  const toast = useToast();
 
   useEffect(() => {
     window.addEventListener('dragover', (e) => {
@@ -126,6 +129,13 @@ export default function Component({
     };
     await callable(body).then(() => {
       setFields(() => initialState);
+      toast({
+        title: 'Permintaan terkirim.',
+        description: 'Cek Notifikasi Secara berkala.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
       handleClose();
     }).finally(() => {
       setLoading(false);
