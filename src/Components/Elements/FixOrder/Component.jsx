@@ -142,7 +142,7 @@ export default function Component({
           {' '}
           {vendor.name}
         </ModalHeader>
-        <ModalCloseButton color="blackAlpha.300" size="lg" />
+        <ModalCloseButton color="blackAlpha.300" fontSize={['sm', 'md', 'lg']} />
         <ModalBody>
           <Divider />
           <Stack direction="column" spacing={[2, 4]} mt="4">

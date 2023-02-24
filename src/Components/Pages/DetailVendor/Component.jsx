@@ -91,7 +91,7 @@ export default function Component() {
         px={{
           base: '0', sm: '2', md: '4', lg: '6',
         }}
-        py={{ base: '10', lg: '16' }}
+        py={[4, 8, 12, 16]}
         gap={{ base: '6', lg: '10' }}
       >
         <Box flex={1} p="4">
