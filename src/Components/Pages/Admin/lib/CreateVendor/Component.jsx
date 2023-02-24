@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { callFunc, storage } from '../../../../../Configs/firebase';
 
-export default function Component({ onSuccess, onFailed, givenData }) {
+export default function Component({ onSuccess, givenData }) {
   const initialState = {
     name: '',
     tagline: '',
@@ -85,7 +85,6 @@ export default function Component({ onSuccess, onFailed, givenData }) {
       onSuccess(true);
     }).finally(() => {
       setIsLoading(false);
-      onFailed();
     });
   };
 
@@ -135,7 +134,7 @@ export default function Component({ onSuccess, onFailed, givenData }) {
       <Box mt={2}>
         <label>Profile pict</label>
         <div>
-          <Input name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
+          <Input accept="image/png, image/jpg, image/jpeg" name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
         </div>
         <Box py={2}>
           {!!fields.cover && <img src={fields.cover} alt="cover" height="100" />}

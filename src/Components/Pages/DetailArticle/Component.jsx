@@ -36,9 +36,9 @@ export default function Component() {
   }, [id]);
   return (
     <Container maxW="7xl">
+      <Elements.Loading loading={loading} />
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
         <Box flex={1} py={['4', '6', '8', '10']}>
-          {loading && 'Loading...'}
           {!!article.category
           && <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>}
           <Heading size={['md', 'lg', 'xl']} mb={['3', '4', '5', '6']}>{article.title}</Heading>

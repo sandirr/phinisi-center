@@ -301,8 +301,8 @@ export default function Component() {
                       Sejarah & Filosofi
                     </MenuButton>
                     <MenuList mt="0.5" ml="-4" minWidth="160px" borderTopRightRadius="0" borderTopLeftRadius="0">
-                      <MenuItem as={Link} to={ROUTES.sejarah()}>Sejarah</MenuItem>
-                      <MenuItem as={Link} to={ROUTES.filosofi()}>Filosofi</MenuItem>
+                      <MenuItem _focusVisible={{ bg: 'none' }} _hover={{ bg: 'none' }} as={Link} to={ROUTES.sejarah()}>Sejarah</MenuItem>
+                      <MenuItem _focusVisible={{ bg: 'none' }} _hover={{ bg: 'none' }} as={Link} to={ROUTES.filosofi()}>Filosofi</MenuItem>
                     </MenuList>
                   </Menu>
                 </Tab>

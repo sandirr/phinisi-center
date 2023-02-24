@@ -32,7 +32,7 @@ export default function Component({ defaultImg, images, close }) {
             width: '100%',
             '--swiper-navigation-color': '#FFF',
           }}
-          loop
+          // loop
           navigation
         >
           {images.map((img) => (

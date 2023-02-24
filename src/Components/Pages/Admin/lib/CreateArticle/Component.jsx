@@ -170,7 +170,7 @@ export default function Component({ onSuccess, givenData }) {
 
       <label>Cover</label>
       <div>
-        <Input name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
+        <Input accept="image/png, image/jpg, image/jpeg" name="cover" placeholder="Cover" type="file" onChange={handleChangeImg} />
       </div>
       <Box py={2}>
         {!!fields.cover && <img src={fields.cover} alt="cover" height="100" />}

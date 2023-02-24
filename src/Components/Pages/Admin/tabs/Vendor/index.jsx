@@ -79,7 +79,7 @@ export default function Component() {
           });
       },
       title: 'Yakin ingin menghapus?',
-      desc: item.title,
+      desc: item.name,
     };
 
     showConfirmation(confirmationProps);
