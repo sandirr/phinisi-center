@@ -33,21 +33,21 @@ export default function Component({
   const sendMessage = async () => {
   };
   return (
-    <Modal onClose={handleClose} size="xl" isOpen={open}>
+    <Modal onClose={handleClose} size={['xs', 'xl']} isOpen={open}>
       <ModalOverlay />
       <ModalContent borderRadius={24}>
-        <ModalHeader px={6}>
-          <Flex justify="space-between" alignItems="center" px={6} pt={4}>
-            <Flex gap="6">
+        <ModalHeader px={[4, 6]}>
+          <Flex justify="space-between" alignItems="center" px={[2, 4, 6]} pt={4}>
+            <Flex gap={['2', '4', '6']} alignItems="center">
               <Avatar
                 referrerPolicy="no-referrer"
                 src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
               />
               <Box>
-                <Heading size="md">
+                <Heading size={['sm', 'md']}>
                   {vendor.name}
                 </Heading>
-                <Text fontSize="lg" fontWeight="400">Phinisi Center</Text>
+                <Text fontSize={['sm', 'md', 'lg']} fontWeight="400">Phinisi Center</Text>
               </Box>
             </Flex>
             <CloseButton color="blackAlpha.300" onClick={handleClose} />
@@ -55,7 +55,7 @@ export default function Component({
         </ModalHeader>
         <ModalBody px={0}>
           <Divider />
-          <Box px={6} py={4}>
+          <Box px={[4, 6]} py={4}>
             <Textarea
               placeholder="Tulis pesan..."
               variant="unstyled"
@@ -91,6 +91,7 @@ export default function Component({
             isLoading={loading}
             onClick={sendMessage}
             ml="2"
+            size={['sm', 'md']}
             colorScheme="blue"
             bg="blue.600"
             color="white"

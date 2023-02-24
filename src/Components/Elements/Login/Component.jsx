@@ -43,22 +43,22 @@ export default function Component({ open, handleClose }) {
   };
 
   return (
-    <Modal isOpen={open} onClose={() => null} size="2xl">
+    <Modal isOpen={open} onClose={() => null} size={['xs', 'sm', 'xl', '2xl']}>
       <ModalOverlay />
       <ModalContent borderRadius="2xl">
-        <ModalBody pb="20" px={0}>
+        <ModalBody pb={[12, 16, 20]} px={0}>
           <IconButton bg="transparent" color="blackAlpha.300" ml="2" onClick={handleClose}>
             <Close />
           </IconButton>
 
-          <Divider mb="66px" />
+          <Divider mb={['22px', '44px', '66px']} />
 
           <Container maxW="xs">
             <Flex justify="center">
-              <Image src={Images.Logo} width="100%" />
+              <Image src={Images.Logo} width={['40%', '80%', '100%']} />
             </Flex>
 
-            <Stack direction="column" spacing={4} mt="66px" color="#2263DD">
+            <Stack direction="column" spacing={4} mt={['22px', '44px', '66px']} color="#2263DD">
               <Button leftIcon={<Google />} colorScheme="#2263DD" variant="outline" borderRadius="3xl" onClick={signinWithGoogle}>
                 Login dengan Google
               </Button>
@@ -68,19 +68,21 @@ export default function Component({ open, handleClose }) {
             </Stack>
           </Container>
 
-          <Box justifyContent="center" display="flex">
-            <Text fontSize={12} textAlign="center" maxW="md" mt="60px" color="black">
-              Click “Login” to agree to Phinisi Center
-              {' '}
-              <Link style={{ textDecoration: 'underline' }} to="/">Terms of Service</Link>
-              {' '}
-              and acknowledge that Phinisi Center
-              {' '}
-              <Link style={{ textDecoration: 'underline' }} to="/">Privacy Policy</Link>
-              {' '}
-              applies to you.
-            </Text>
-          </Box>
+          <Container>
+            <Box justifyContent="center" display="flex">
+              <Text fontSize={12} textAlign="center" maxW="md" mt={[8, 10, 12, 14]} color="black">
+                Click “Login” to agree to Phinisi Center
+                {' '}
+                <Link style={{ textDecoration: 'underline' }} to="/">Terms of Service</Link>
+                {' '}
+                and acknowledge that Phinisi Center
+                {' '}
+                <Link style={{ textDecoration: 'underline' }} to="/">Privacy Policy</Link>
+                {' '}
+                applies to you.
+              </Text>
+            </Box>
+          </Container>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -9,16 +9,16 @@ import { callFunc, storage } from '../../../../../Configs/firebase';
 export default function Component({ onSuccess, givenData, vendor }) {
   const initialState = {
     name: '',
-    weight: '',
+    weight: 0,
     images: [],
     location: '',
     year: '',
     description: '',
-    width: '',
-    long: '',
+    width: 0,
+    long: 0,
     capacity: '',
     cabin: '',
-    speed: '',
+    speed: 0,
     progress: 0,
   };
   const [fields, setFields] = useState(() => givenData || initialState);
@@ -100,7 +100,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
           <Textarea rows={4} name="description" placeholder="Augustine Phinisi is a 30 meter wooden liveaboard vessel," value={fields.description} onChange={handleChangeField} />
         </Box>
         <Box>
-          <label>Tahun Pembuatan</label>
+          <label>Estimasi Selesai (tahun)</label>
           <Input required name="year" placeholder="2023" value={fields.year} onChange={handleChangeField} />
         </Box>
         <Box>

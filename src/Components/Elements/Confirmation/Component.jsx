@@ -20,7 +20,7 @@ export default function Component({
     setLoading(false);
   };
   return (
-    <Modal onClose={handleClose} size="md" isOpen={open}>
+    <Modal onClose={handleClose} size={['xs', 'md']} isOpen={open}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>

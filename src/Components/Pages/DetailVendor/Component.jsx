@@ -29,6 +29,9 @@ import {
 import ROUTES from '../../../Configs/routes';
 import { useQuery } from '../../../CustomHooks';
 import { ChatModalContext, OrderModalContext } from '../../../Context';
+import { callFunc } from '../../../Configs/firebase';
+import Elements from '../../Elements';
+import Images from '../../../Configs/images';
 
 export default function Component() {
   const query = useQuery();
@@ -37,13 +40,15 @@ export default function Component() {
   const { showChatModal } = useContext(ChatModalContext);
   const { showOrderModal } = useContext(OrderModalContext);
   const [activeTab, setActiveTab] = useState(0);
+  const [vendor, setVendor] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleInterested = () => {
     showChatModal({ vendor: { name: 'Hj Awang' } });
   };
 
   const handleFixOrder = () => {
-    showOrderModal({ vendor: { name: 'Hj Awang' } });
+    showOrderModal({ vendor });
   };
 
   useEffect(() => {
@@ -54,12 +59,31 @@ export default function Component() {
     }
   }, [query]);
 
+  const getVendor = async () => {
+    const callable = callFunc('getVendor');
+
+    setLoading(true);
+    await callable(id).then((res) => {
+      setVendor(res.data);
+    }).catch(() => {
+    }).finally(() => {
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (id) {
+      getVendor();
+    }
+  }, [id]);
+
   const { activeStep } = useSteps({
     initialStep: 3,
   });
 
   return (
     <Container maxW="7xl">
+      <Elements.Loading loading={loading} />
       <Box
         display="flex"
         justifyContent="space-between"
@@ -73,14 +97,14 @@ export default function Component() {
         <Box flex={1} p="4">
           <Box textAlign="center" display="flex" flexDir="column" alignItems="center" color="#1C51B5">
             <Image
-              src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+              src={vendor.cover || Images.Order1}
               w="128px"
               h="128px"
               objectFit="cover"
               borderRadius="full"
             />
-            <Heading size="md" mt={4}>Haji Awang</Heading>
-            <Text fontSize="md" mt={1}>Vendor Pembuat perahu phinisi tertua di bulukumba, Sulawesi selatan</Text>
+            <Heading size="md" mt={4}>{vendor.name}</Heading>
+            <Text fontSize="md" mt={1}>{vendor.tagline || '-'}</Text>
           </Box>
           <Box display="flex" gap="3" mt="6">
             <Button w="full" bg="#1C51B5" color="white" colorScheme="blue" onClick={handleInterested}>Tertarik</Button>
@@ -95,14 +119,14 @@ export default function Component() {
                 <LocationIcon />
                 <Text size="md">Lokasi</Text>
               </Flex>
-              <Heading size="sm">Tanaberu</Heading>
+              <Heading size="sm">{vendor.city || '-'}</Heading>
             </Flex>
             <Flex justify="space-between" alignItems="center">
               <Flex alignItems="center" gap="2">
                 <TimeIcon />
                 <Text size="md">Tahun Berdiri</Text>
               </Flex>
-              <Heading size="sm">1989</Heading>
+              <Heading size="sm">{vendor.year || '-'}</Heading>
             </Flex>
             <Flex justify="space-between" alignItems="center">
               <Flex alignItems="center" gap="2">
@@ -115,7 +139,7 @@ export default function Component() {
 
           <Box mt={['4', '6', '10']}>
             <Heading size="sm">Deskripsi</Heading>
-            <Text mt="4" size="md">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo assumenda rerum velit dolores, non ratione eligendi explicabo doloribus ipsa inventore facilis necessitatibus officia est cum? Dignissimos facilis tempore impedit perferendis!</Text>
+            <Text mt="4" size="md">{vendor.description || '-'}</Text>
           </Box>
 
           <Divider my="4" />

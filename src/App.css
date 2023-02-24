@@ -34,3 +34,13 @@
 div[role='progressbar']{
     background-color:  #2263DD !important;
 }
+
+.btn{
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
