@@ -115,6 +115,7 @@ export default function Component({ vendor, onClose }) {
 
   useEffect(() => {
     if (vendor && vendor.id) {
+      setOrders([]);
       getOrders();
     }
   }, [vendor?.id]);

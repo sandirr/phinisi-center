@@ -15,6 +15,7 @@ import ManageFilosofi from './tabs/Filosofi';
 import ManageArtikel from './tabs/Artikel';
 import ProsesPembuatan from './tabs/ProsesPembuatan';
 import ManageVendor from './tabs/Vendor';
+import ManagePesanan from './tabs/Pesanan';
 
 export default function Component() {
   const [menuList] = useState([
@@ -23,6 +24,7 @@ export default function Component() {
     { name: 'Artikel' },
     { name: 'Proses Pembuatan' },
     { name: 'Vendor' },
+    { name: 'Pesanan' },
     { name: 'Chat' },
   ]);
 
@@ -66,6 +68,9 @@ export default function Component() {
             </TabPanel>
             <TabPanel pb="6">
               <ManageVendor />
+            </TabPanel>
+            <TabPanel pb="6">
+              <ManagePesanan />
             </TabPanel>
             <TabPanel pb="6">
               <Heading size="lg">Chat Area</Heading>

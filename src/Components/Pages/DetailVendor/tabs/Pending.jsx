@@ -85,13 +85,14 @@ export default function Pending({ vendor }) {
         hasMore={hasMoreItems}
         next={handleLoadMore}
       >
-        <SimpleGrid columns={1} gap={[2, 4]} mt="4">
+        <SimpleGrid columns={1} mt="4">
           {orders.map((order, idx) => (
             <Box
               key={idx}
               borderRadius="16px"
               boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               p="4"
+              m={[2, 3, 4]}
             >
               <Image
                 src={order?.images[0] || Images.Order1}
@@ -154,7 +155,7 @@ export default function Pending({ vendor }) {
               boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               borderRadius="16"
               padding={[3, 4]}
-              m={[1, 2, 3]}
+              m={[2, 3, 4]}
             >
               <Skeleton height="80px" />
               <Skeleton height="20px" mt={[2, 4, 6, 8]} />
