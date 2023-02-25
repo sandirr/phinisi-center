@@ -101,6 +101,10 @@ export default function Component({ onSuccess, givenData, vendor }) {
           <Textarea rows={4} name="description" placeholder="Augustine Phinisi is a 30 meter wooden liveaboard vessel," value={fields.description} onChange={handleChangeField} />
         </Box>
         <Box>
+          <label>tahun Pembuatan</label>
+          <Input required name="created" placeholder="2023" value={fields.created} onChange={handleChangeField} />
+        </Box>
+        <Box>
           <label>Estimasi Selesai (tahun)</label>
           <Input required name="year" placeholder="2023" value={fields.year} onChange={handleChangeField} />
         </Box>
