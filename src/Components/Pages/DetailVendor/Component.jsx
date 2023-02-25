@@ -40,6 +40,7 @@ export default function Component() {
   const [activeTab, setActiveTab] = useState(0);
   const [vendor, setVendor] = useState({});
   const [loading, setLoading] = useState(false);
+  const [sort, setSort] = useState('desc');
 
   const handleInterested = () => {
     showChatModal({ vendor: { name: 'Hj Awang' } });
@@ -183,7 +184,7 @@ export default function Component() {
               <Text color="blackAlpha.600" fontSize="sm">Urutkan</Text>
               <Menu isLazy>
                 <MenuButton fontSize="sm" fontWeight="bold">
-                  Terbaru
+                  {sort === 'desc' ? 'Terbaru' : 'Terlama'}
                   {' '}
                   <ChevronDownIcon boxSize="6" />
                 </MenuButton>
@@ -196,6 +197,7 @@ export default function Component() {
                     _focus={{
                       bg: 'transparent',
                     }}
+                    onClick={() => setSort('desc')}
                   >
                     Terbaru
                   </MenuItem>
@@ -206,6 +208,7 @@ export default function Component() {
                     _focus={{
                       bg: 'transparent',
                     }}
+                    onClick={() => setSort('asc')}
                   >
                     Terlama
                   </MenuItem>
@@ -213,8 +216,8 @@ export default function Component() {
               </Menu>
             </Flex>
           </Flex>
-          {activeTab === 0 && (<Done vendor={vendor} />)}
-          {activeTab === 1 && (<Pending vendor={vendor} />)}
+          {activeTab === 0 && (<Done vendor={vendor} sort={sort} />)}
+          {activeTab === 1 && (<Pending vendor={vendor} sort={sort} />)}
         </Box>
       </Box>
     </Container>

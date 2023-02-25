@@ -19,7 +19,7 @@ import { callFunc } from '../../../../Configs/firebase';
 import Images from '../../../../Configs/images';
 import { progressLabel } from '../../../../Configs/constants';
 
-export default function Pending({ vendor }) {
+export default function Pending({ vendor, sort }) {
   const [orders, setOrders] = useState([]);
   const [meta, setMeta] = useState({
     activePage: 1,
@@ -38,6 +38,7 @@ export default function Pending({ vendor }) {
       limit: 10,
       page: meta.activePage,
       type: 'pending',
+      sort,
     }).then((res) => {
       const {
         data,
@@ -75,9 +76,10 @@ export default function Pending({ vendor }) {
 
   useEffect(() => {
     if (vendor && vendor.id) {
+      setOrders([]);
       getOrders();
     }
-  }, [vendor?.id]);
+  }, [vendor?.id, sort]);
   return (
     <>
       <InfiniteScroll

@@ -17,7 +17,7 @@ import {
 import { callFunc } from '../../../../Configs/firebase';
 import Images from '../../../../Configs/images';
 
-export default function Done({ vendor }) {
+export default function Done({ vendor, sort }) {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [meta, setMeta] = useState({
@@ -37,6 +37,7 @@ export default function Done({ vendor }) {
       limit: 10,
       page: meta.activePage,
       type: 'done',
+      sort,
     }).then((res) => {
       const {
         data,
@@ -74,9 +75,10 @@ export default function Done({ vendor }) {
 
   useEffect(() => {
     if (vendor && vendor.id) {
+      setOrders([]);
       getOrders();
     }
-  }, [vendor?.id]);
+  }, [vendor?.id, sort]);
 
   return (
     <>
