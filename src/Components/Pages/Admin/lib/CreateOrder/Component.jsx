@@ -20,6 +20,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
     cabin: '',
     speed: 0,
     progress: 0,
+    priority: '',
   };
   const [fields, setFields] = useState(() => givenData || initialState);
 
@@ -145,6 +146,12 @@ export default function Component({ onSuccess, givenData, vendor }) {
             <option value={8}>8</option>
             <option value={9}>9</option>
             <option value={10}>10 (Selesai)</option>
+          </Select>
+        </Box>
+        <Box>
+          <label>Prioritas (optional)</label>
+          <Select name="priority" placeholder="Prioritas" value={fields.priority} onChange={handleChangeField}>
+            <option value="recommended">RECOMMENDED</option>
           </Select>
         </Box>
       </Stack>
