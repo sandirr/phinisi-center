@@ -134,7 +134,7 @@ export default function Pending({ vendor, sort }) {
                 ))}
               </Steps>
               <Tooltip hasArrow label="Pemasangan Papan Penguat" bg="white" color="blue.600" placement="top">
-                <Progress hasStripe value={64} my="4" borderRadius="full" />
+                <Progress hasStripe value={order.progress * 10} my="4" borderRadius="full" />
               </Tooltip>
               <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']}>
                 <StatIcon height="24px" width="24px" />
