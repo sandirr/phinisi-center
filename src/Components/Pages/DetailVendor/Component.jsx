@@ -88,7 +88,7 @@ export default function Component() {
         py={[4, 8, 12, 16]}
         gap={{ base: '6', lg: '10' }}
       >
-        <Box flex={1} p="4">
+        <Box maxW="sm" p="4">
           <Box textAlign="center" display="flex" flexDir="column" alignItems="center" color="#1C51B5">
             <Image
               src={vendor.cover || Images.Order1}
@@ -146,7 +146,7 @@ export default function Component() {
           <Divider mt="4" /> */}
         </Box>
 
-        <Box w="3xl">
+        <Box flex={1} minW="sm">
           <Flex justify="space-between" wrap="wrap">
             <Flex
               overflowX="auto"
@@ -179,7 +179,7 @@ export default function Component() {
               </Tabs>
             </Flex>
 
-            <Flex align="center" gap="2" mt={[2, 0]}>
+            <Flex align="center" gap="2" mt={[2, 0]} ml={[4, 4, 0]}>
               <Text color="blackAlpha.600" fontSize="sm">Urutkan</Text>
               <Menu isLazy>
                 <MenuButton fontSize="sm" fontWeight="bold">

@@ -10,12 +10,14 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import { Step, Steps, useSteps } from 'chakra-ui-steps';
+import { Step, Steps } from 'chakra-ui-steps';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   CheckIcon, CircleIcon, StatIcon, TimeIcon,
 } from '../../../../Assets/icons/icons';
 import { callFunc } from '../../../../Configs/firebase';
+import Images from '../../../../Configs/images';
+import { progressLabel } from '../../../../Configs/constants';
 
 export default function Pending({ vendor }) {
   const [orders, setOrders] = useState([]);
@@ -35,6 +37,7 @@ export default function Pending({ vendor }) {
       vendorId: vendor?.id,
       limit: 10,
       page: meta.activePage,
+      type: 'pending',
     }).then((res) => {
       const {
         data,
@@ -75,10 +78,6 @@ export default function Pending({ vendor }) {
       getOrders();
     }
   }, [vendor?.id]);
-
-  const { activeStep } = useSteps({
-    initialStep: 3,
-  });
   return (
     <>
       <InfiniteScroll
@@ -87,7 +86,7 @@ export default function Pending({ vendor }) {
         next={handleLoadMore}
       >
         <SimpleGrid columns={1} gap={[2, 4]} mt="4">
-          {new Array(4).fill(0).map((e, idx) => (
+          {orders.map((order, idx) => (
             <Box
               key={idx}
               borderRadius="16px"
@@ -95,27 +94,37 @@ export default function Pending({ vendor }) {
               p="4"
             >
               <Image
-                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                src={order?.images[0] || Images.Order1}
                 w="full"
                 height={['180px', '240px']}
                 objectFit="cover"
                 borderRadius={8}
               />
               <Flex gap="1" mt="4">
-                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">45x10 m</Box>
-                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">500 TON</Box>
+                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                  {order.long}
+                  x
+                  {order.width}
+                  {' '}
+                  m
+                </Box>
+                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                  {order.weight}
+                  {' '}
+                  TON
+                </Box>
               </Flex>
               <Heading size={['xs', 'sm', 'md']} mt={2}>
-                Phinisi Nusantara Dunia Baru
+                {order.name}
               </Heading>
-              <Steps colorScheme="blue" activeStep={activeStep} mt={6} size="sm" orientation="horizontal" display={['none', 'none', 'inline-flex']}>
+              <Steps colorScheme="blue" activeStep={order.progress} mt={6} size="sm" orientation="horizontal" display={['none', 'none', 'inline-flex']}>
                 {new Array(10).fill(0).map((item, index) => (
                   <Step
                     label=""
                     key={index}
                     description=""
-                    icon={() => CircleIcon({ color: index === activeStep ? 'blue.600' : 'white', label: index === activeStep ? 'Pemasangan Papan Penguat' : '' })}
-                    checkIcon={() => CheckIcon({ color: 'white', label: 'Pemasangan Papan Penguat' })}
+                    icon={() => CircleIcon({ color: index === order.progress ? 'blue.600' : 'white', label: index === order.progress ? progressLabel[index] : '' })}
+                    checkIcon={() => CheckIcon({ color: 'white', label: progressLabel[index] })}
                   >
                     {null}
                   </Step>
@@ -127,12 +136,15 @@ export default function Pending({ vendor }) {
               <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']}>
                 <StatIcon height="24px" width="24px" />
                 <Text>Progres Pengerjaan</Text>
-                <Text fontWeight="bold">60%</Text>
+                <Text fontWeight="bold">
+                  {order.progress * 10}
+                  %
+                </Text>
               </Flex>
               <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']} mt="2">
                 <TimeIcon height="24px" width="24px" />
                 <Text>Estimasi Selesai</Text>
-                <Text fontWeight="bold">2024</Text>
+                <Text fontWeight="bold">{order.year}</Text>
               </Flex>
             </Box>
           ))}

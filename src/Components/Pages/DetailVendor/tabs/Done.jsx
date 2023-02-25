@@ -15,6 +15,7 @@ import {
   TimeIcon,
 } from '../../../../Assets/icons/icons';
 import { callFunc } from '../../../../Configs/firebase';
+import Images from '../../../../Configs/images';
 
 export default function Done({ vendor }) {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export default function Done({ vendor }) {
       vendorId: vendor?.id,
       limit: 10,
       page: meta.activePage,
+      type: 'done',
     }).then((res) => {
       const {
         data,
@@ -84,7 +86,7 @@ export default function Done({ vendor }) {
         next={handleLoadMore}
       >
         <SimpleGrid columns={[1, 2, 3]} py={['2', '4']}>
-          {orders.map((e, idx) => (
+          {orders.map((order, idx) => (
             <Box
               m={[1, 2, 3]}
               key={idx}
@@ -92,25 +94,42 @@ export default function Done({ vendor }) {
               boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
               p="4"
               cursor="pointer"
-              onClick={() => navigate('order/orderId')}
+              onClick={() => navigate(`order/${order.id}`)}
             >
               <Image
-                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                src={order?.images[0] || Images.Order1}
+                h={['140px', '160px']}
                 w="100%"
                 objectFit="cover"
                 borderRadius={8}
               />
               <Flex gap="1" mt="4">
-                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">45x10 m</Box>
-                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">500 TON</Box>
+                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                  {order.long}
+                  x
+                  {order.width}
+                  {' '}
+                  m
+                </Box>
+                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                  {order.weight}
+                  {' '}
+                  TON
+                </Box>
               </Flex>
               <Heading size={['xs', 'sm', 'md']} mt={1}>
-                Phinisi Nusantara Dunia Baru
+                {order.name}
               </Heading>
               <Divider my="4" />
               <Flex gap="2" align="center">
                 <TimeIcon height="24px" width="24px" />
-                <Text fontSize="lg">2017 - 2018</Text>
+                <Text fontSize="lg">
+                  {order.created || new Date().getFullYear()}
+                  {' '}
+                  -
+                  {' '}
+                  {order.year}
+                </Text>
               </Flex>
             </Box>
           ))}
