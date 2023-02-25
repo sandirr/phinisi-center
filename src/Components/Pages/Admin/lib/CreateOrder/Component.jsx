@@ -193,6 +193,14 @@ export default function Component({ onSuccess, givenData, vendor }) {
         {imgLoading && 'Uploading...'}
       </Flex>
 
+      {fields.invoice
+      && (
+      <Box mt={2}>
+        <label>Invoice/Bukti Pembayaran</label>
+        <Image src={fields.invoice} h="120px" />
+      </Box>
+      )}
+
       <Button mt={4} isLoading={isLoading} outline type="submit">Simpan</Button>
     </form>
   );

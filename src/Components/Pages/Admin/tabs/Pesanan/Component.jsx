@@ -122,7 +122,7 @@ export default function Component() {
                 <Flex justify="space-between">
                   <Heading size="md">{order.name}</Heading>
                   <Flex gap={2}>
-                    <Button size="xs" colorScheme="yellow" variant="outline" onClick={() => handleOpenCreateOrder('Edit', order)}>Edit</Button>
+                    <Button size="xs" colorScheme="yellow" variant="outline" onClick={() => handleOpenCreateOrder('Edit', order)}>Verifikasi dan lengkapi</Button>
                     <Button size="xs" colorScheme="red" variant="outline" onClick={() => prepareToDelete(order)}>Hapus</Button>
                   </Flex>
                 </Flex>
@@ -201,6 +201,7 @@ export default function Component() {
             <CreateOrder
               onSuccess={handleCloseCreateOrder}
               givenData={selectedOrder}
+              vendor={{ id: selectedOrder?.vendorId }}
             />
           </ModalBody>
         </ModalContent>
