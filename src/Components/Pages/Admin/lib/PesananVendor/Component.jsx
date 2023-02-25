@@ -108,10 +108,16 @@ export default function Component({ vendor, onClose }) {
 
   useEffect(() => {
     const firstLoad = meta.activePage === 1 && !orders.length;
-    if ((firstLoad || hasMoreItems) && vendor?.id) {
+    if ((firstLoad || hasMoreItems) && vendor && vendor.id) {
       getOrders();
     }
-  }, [meta.activePage, vendor]);
+  }, [meta.activePage]);
+
+  useEffect(() => {
+    if (vendor && vendor.id) {
+      getOrders();
+    }
+  }, [vendor?.id]);
 
   return (
     <>
