@@ -30,6 +30,10 @@ const dataFormat = [
     schema: 'title',
   },
   {
+    name: 'Index',
+    schema: 'i',
+  },
+  {
     name: 'Penulis',
     schema: 'author',
   },
@@ -96,6 +100,7 @@ export default function Component() {
         } = res.data;
         const normalizeData = data.map((item, index) => ({
           ...item,
+          i: item.index,
           index: index + 1 + (articlesList.length),
           createdAt: moment(item.createdAt).startOf('minute').fromNow(),
           generatedContent: `${generateArticleDesc(item.content, 50)}...`,

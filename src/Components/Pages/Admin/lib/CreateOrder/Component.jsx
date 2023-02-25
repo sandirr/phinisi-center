@@ -136,6 +136,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Progress</label>
           <Select name="progress" placeholder="Progress" value={fields.progress} onChange={handleChangeField}>
+            <option value={0}>0</option>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -151,6 +152,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Prioritas (optional)</label>
           <Select name="priority" placeholder="Prioritas" value={fields.priority} onChange={handleChangeField}>
+            <option value="">Don&apos;t set</option>
             <option value="recommended">RECOMMENDED</option>
           </Select>
         </Box>
