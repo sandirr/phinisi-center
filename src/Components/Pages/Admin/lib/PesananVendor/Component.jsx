@@ -161,6 +161,11 @@ export default function Component({ vendor, onClose }) {
                       {order.capacity}
                     </Text>
                     <Text>
+                      Kamar Mandi:
+                      {' '}
+                      {order.wc}
+                    </Text>
+                    <Text>
                       Dimensi:
                       {' '}
                       {order.long}

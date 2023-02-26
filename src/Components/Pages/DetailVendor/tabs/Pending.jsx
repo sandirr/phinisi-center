@@ -121,7 +121,7 @@ export default function Pending({ vendor, sort }) {
                 {order.name}
               </Heading>
               <Steps colorScheme="blue" activeStep={order.progress} mt={6} size="sm" orientation="horizontal" display={['none', 'none', 'inline-flex']}>
-                {new Array(10).fill(0).map((item, index) => (
+                {new Array(9).fill(0).map((item, index) => (
                   <Step
                     label=""
                     key={index}
@@ -133,7 +133,7 @@ export default function Pending({ vendor, sort }) {
                   </Step>
                 ))}
               </Steps>
-              <Tooltip hasArrow label="Pemasangan Papan Penguat" bg="white" color="blue.600" placement="top">
+              <Tooltip hasArrow label={progressLabel[order.progress]} bg="white" color="blue.600" placement="top">
                 <Progress hasStripe value={order.progress * 10} my="4" borderRadius="full" />
               </Tooltip>
               <Flex gap="2" align="center" fontSize={['xs', 'sm', 'md']}>

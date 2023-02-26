@@ -138,6 +138,11 @@ export default function Component() {
                     {order.capacity}
                   </Text>
                   <Text>
+                    Kamar Mandi:
+                    {' '}
+                    {order.wc}
+                  </Text>
+                  <Text>
                     Dimensi:
                     {' '}
                     {order.long}

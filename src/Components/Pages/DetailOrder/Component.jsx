@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Text,
   Box,
@@ -14,39 +14,51 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import Images from '../../../Configs/images';
 import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
 import { ChatModalContext } from '../../../Context';
 import Elements from '../../Elements';
-
-const images = [
-  Images.Order1,
-  Images.Order2,
-  Images.Order3,
-  Images.Order4,
-  Images.Order5,
-];
+import { callFunc } from '../../../Configs/firebase';
 
 export default function Component() {
   const { orderId } = useParams();
   const [fullImg, setFullImg] = useState('');
   const { showChatModal } = useContext(ChatModalContext);
 
+  const [loading, setLoading] = useState(false);
+  const [order, setOrder] = useState({ detailVendor: {}, images: [] });
+
+  const getArticle = async () => {
+    const callable = callFunc('getOrder');
+
+    setLoading(true);
+    await callable(orderId).then((res) => {
+      setOrder(res.data);
+    }).catch(() => {
+    }).finally(() => {
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (orderId) {
+      getArticle();
+    }
+  }, [orderId]);
+
   const handleInterested = () => {
     showChatModal({ vendor: { name: 'Hj Awang' } });
   };
-
   return (
     <Container maxW="7xl" py="5">
+      <Elements.Loading loading={loading} />
       <Heading size="xl">
-        Augustine Phinisi
-        {orderId}
+        {order.name}
       </Heading>
-      <Text size="xl" mt="2">Labuan Bajo, Nusa Tenggara Timur, Indonesia</Text>
-      <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6}>
-        {images.map((image, i) => (
+      <Text size="xl" mt="2">{order.location}</Text>
+      <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6} borderRadius={16} overflow="hidden">
+        {order.images?.slice(0, 5)?.map((image, i) => (
           <GridItem key={i} rowSpan={i === 0 ? 2 : 1} colSpan={i === 0 ? 2 : 1} height="auto">
-            <Image cursor="pointer" onClick={() => setFullImg(image)} src={image} width="full" height="full" />
+            <Image cursor="pointer" objectFit="cover" onClick={() => setFullImg(image)} src={image} w="full" h="full" />
           </GridItem>
         ))}
       </Grid>
@@ -55,32 +67,41 @@ export default function Component() {
         <Box flex={1} minW={{ base: 'xs', md: 'lg' }}>
           <Flex gap="2">
             <Heading size="lg" fontWeight="400">Project by</Heading>
-            <Heading size="lg">Haji Awang</Heading>
+            <Heading size="lg">{order.detailVendor.name}</Heading>
           </Flex>
           <Flex mt={2} gap={4}>
             <Flex gap={1} alignItems="center">
               <BedIcon />
               <Divider orientation="vertical" />
-              <Text size="lg">4 Kabin</Text>
+              <Text size="lg">
+                {order.cabin}
+                {' '}
+                Kabin
+              </Text>
             </Flex>
             <Flex gap={1} alignItems="center">
               <BathIcon />
               <Divider orientation="vertical" />
-              <Text size="lg">2 Kamar Mandi</Text>
+              <Text size="lg">
+                {order.wc}
+                {' '}
+                Kamar Mandi
+              </Text>
             </Flex>
             <Flex gap={1} alignItems="center">
               <PeopleIcon />
               <Divider orientation="vertical" />
-              <Text size="lg">12 Tamu</Text>
+              <Text size="lg" whiteSpace="pre-line">
+                {order.capacity}
+                {' '}
+                Tamu
+              </Text>
             </Flex>
           </Flex>
           <Divider my={6} w="full" />
           <Heading size="sm">Deskripsi</Heading>
           <Text size="md" mt="4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Nostrum accusantium qui reiciendis corrupti laborum facere eius quasi,
-            debitis pariatur iste magni inventore praesentium voluptatibus
-            explicabo dolorum totam hic dicta optio.
+            {order.description}
           </Text>
           <Divider my={6} w="full" />
           <Heading size="sm">Spesifikasi</Heading>
@@ -89,35 +110,55 @@ export default function Component() {
               <Stack direction="column">
                 <Box>
                   <Text fontSize="xs">Tahun Pembuatan</Text>
-                  <Text size="md">2016</Text>
+                  <Text size="md">{order.created}</Text>
                 </Box>
                 <Box>
                   <Text fontSize="xs">Bobot</Text>
-                  <Text size="md">200 Ton</Text>
+                  <Text size="md">
+                    {order.weight}
+                    {' '}
+                    Ton
+                  </Text>
                 </Box>
                 <Box>
                   <Text fontSize="xs">Ukuran</Text>
-                  <Text size="md">27 x 7 Meter</Text>
-                </Box>
-                <Box>
-                  <Text fontSize="xs">Kecepatan Max</Text>
-                  <Text size="md">9 - 10 Knot</Text>
+                  <Text size="md">
+                    {order.long}
+                    {' '}
+                    x
+                    {' '}
+                    {order.width}
+                    {' '}
+                    Meter
+                  </Text>
                 </Box>
               </Stack>
             </Box>
             <Box flex={1}>
               <Stack direction="column">
                 <Box>
-                  <Text fontSize="xs">Tipe Kapal</Text>
-                  <Text size="md">Phinisi</Text>
+                  <Text fontSize="xs">Kecepatan Max</Text>
+                  <Text size="md">
+                    {order.speed}
+                    {' '}
+                    Knot
+                  </Text>
                 </Box>
                 <Box>
                   <Text fontSize="xs">Kapasitas</Text>
-                  <Text size="md">14 Tamu</Text>
+                  <Text size="md">
+                    {order.capacity}
+                    {' '}
+                    Tamu
+                  </Text>
                 </Box>
                 <Box>
                   <Text fontSize="xs">Jumlah Kabin</Text>
-                  <Text size="md">7 Kamar</Text>
+                  <Text size="md">
+                    {order.cabin}
+                    {' '}
+                    Kamar
+                  </Text>
                 </Box>
                 {/* <Box>
                   <Text fontSize="xs">Jumlah Kru</Text>
@@ -153,7 +194,7 @@ export default function Component() {
         </Box>
       </Flex>
 
-      <Elements.ImagesModal defaultImg={fullImg} images={images} close={() => setFullImg('')} />
+      <Elements.ImagesModal defaultImg={fullImg} images={order.images || []} close={() => setFullImg('')} />
     </Container>
   );
 }

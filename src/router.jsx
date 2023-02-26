@@ -150,7 +150,7 @@ export default function Router() {
                   <Route path={ROUTES.penyewaan()}>
                     <Route index element={<Pages.Rental />} />
                     <Route path="trip/:id" element={<Pages.DetailTrip />} />
-                    <Route path="ship/:id" element={<Pages.DetailShip />} />
+                    <Route path="ship/:orderId" element={<Pages.DetailOrder />} />
                   </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}

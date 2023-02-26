@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import {
   Box, Heading, Image, Text, useMediaQuery,
 } from '@chakra-ui/react';
-import SwiperCore, {
-  Pagination, Autoplay,
+import {
+  Pagination,
 } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -16,7 +16,6 @@ import Images from '../../../Configs/images';
 import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
-  SwiperCore.use([Autoplay]);
   const navigate = useNavigate();
   const [isMobile] = useMediaQuery('(max-width: 768px)');
 

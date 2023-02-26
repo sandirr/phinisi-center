@@ -18,7 +18,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
     long: 0,
     capacity: '',
     cabin: '',
-    speed: 0,
+    speed: '',
     progress: 0,
     priority: '',
   };
@@ -62,6 +62,11 @@ export default function Component({ onSuccess, givenData, vendor }) {
     let callable = callFunc('createOrder');
     let body = {
       ...fields,
+      weight: Number(fields.weight),
+      width: Number(fields.width),
+      long: Number(fields.long),
+      speed: Number(fields.speed),
+      progress: Number(fields.progress),
       createdAt: new Date().toISOString(),
       vendorId: vendor.id,
     };
@@ -71,6 +76,10 @@ export default function Component({ onSuccess, givenData, vendor }) {
         id: fields.id,
         body: {
           ...fields,
+          weight: Number(fields.weight),
+          width: Number(fields.width),
+          long: Number(fields.long),
+          progress: Number(fields.progress),
           updatedAt: new Date().toISOString(),
         },
       };
@@ -132,6 +141,10 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Kabin (jumlah kamar)</label>
           <Input required name="cabin" type="number" placeholder="4" value={fields.cabin} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>WC (jumlah kamar mandi)</label>
+          <Input required name="wc" type="number" placeholder="2" value={fields.wc} onChange={handleChangeField} />
         </Box>
         <Box>
           <label>Max speed (knot)</label>

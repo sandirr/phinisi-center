@@ -37,7 +37,7 @@ const initialState = {
   long: 0,
   capacity: '',
   cabin: '',
-  speed: 0,
+  speed: '',
   progress: 0,
   invoice: '',
   uid: auth.currentUser?.uid,
@@ -126,6 +126,11 @@ export default function Component({
       ...fields,
       createdAt: new Date().toISOString(),
       vendorId: vendor.id,
+      weight: Number(fields.weight),
+      width: Number(fields.width),
+      long: Number(fields.long),
+      speed: Number(fields.speed),
+      progress: Number(fields.progress),
     };
     await callable(body).then(() => {
       setFields(() => initialState);
