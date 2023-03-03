@@ -194,13 +194,13 @@ export default function Component() {
           </Box>
         </Box>
 
-        <Box display={{ base: 'none', md: 'inherit' }} mx={['6', '8', '10']}>
+        <Box display={['none', 'none', 'inherit']} mx={['6', '8', '10']}>
           <Center height="full">
             <Divider orientation="vertical" />
           </Center>
         </Box>
 
-        <Box py="10" w={{ md: 'sm', base: 'xl' }}>
+        <Box py={['6', '8', '10']} maxW="md">
           <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
         </Box>

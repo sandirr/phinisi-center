@@ -46,7 +46,7 @@ export default function Component() {
             <Image width={460} borderRadius={16} src={article.cover || Images.Order1} />
           </Center>
           <Box mt={['3', '4', '5', '6']} dangerouslySetInnerHTML={{ __html: article.content }} />
-          <Box display="flex" gap={3} color="blackAlpha.600" mt="6">
+          <Box display="flex" gap={3} color="blackAlpha.600" mt={['2', '4', '6']}>
             <Text fontSize="xs">{moment(article.createdAt).startOf('minute').fromNow()}</Text>
             <Text fontSize="xs">
               {generateArticleDesc(article.content).length}
@@ -62,7 +62,7 @@ export default function Component() {
           </Center>
         </Box>
 
-        <Box py="10" w={{ md: 'sm', base: 'xl' }}>
+        <Box py={['6', '8', '10']} maxW="md">
           <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
           <Divider mt={6} />

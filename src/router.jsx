@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
 import {
   Box,
   Container, Heading, Text,
@@ -9,7 +11,10 @@ import {
 import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { admins } from './Configs/constants';
-import { auth } from './Configs/firebase';
+import {
+  auth, generateNotifToken,
+} from './Configs/firebase';
+import { requestPermission } from './Configs/helpers';
 import ROUTES from './Configs/routes';
 import {
   LoginContext, ConfirmationContext, ChatModalContext, OrderModalContext,
@@ -19,9 +24,17 @@ export default function Router() {
   const [loggedin, setLoggedin] = useState(null);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    // self.registration.showNotification('test', 'ok');
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
         setLoggedin(user);
+        const notifSupported = await requestPermission();
+        if (notifSupported) {
+          await generateNotifToken()
+            .then((token) => {
+              console.log(token);
+            });
+        }
       } else {
         setLoggedin(null);
       }

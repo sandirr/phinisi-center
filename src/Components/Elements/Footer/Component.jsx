@@ -19,7 +19,7 @@ export default function Component() {
         <SimpleGrid columns={[1, 1, 1, 2]} gap={6}>
           <Box>
             <Image cursor="pointer" onClick={() => navigate('/')} src={Images.LogoWhite} alt="phinisi center" w={['100px', '120px', '140px', '160px']} />
-            <Text maxWidth={314} fontSize={['xs', 'sm', 'md']} my={4}>
+            <Text maxWidth={314} fontSize={['sm', 'md']} my={4}>
               Exploring the oceans with pride and history,
               Phinisi Center inspires adventure
             </Text>
