@@ -19,10 +19,12 @@ import { useParams } from 'react-router-dom';
 import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
 import Elements from '../../Elements';
 import { callFunc } from '../../../Configs/firebase';
+import { normalizeRupiah } from '../../../Utils/text';
 
 export default function Component() {
   const { bookId } = useParams();
   const [fullImg, setFullImg] = useState('');
+  const [pax, setPax] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState({ detailVendor: {}, images: [] });
@@ -44,6 +46,14 @@ export default function Component() {
       getBook();
     }
   }, [bookId]);
+
+  const sendWAMessage = () => {
+    window.open(`https://wa.me/6282197493245?text=Halo, 
+    Mauka ikut ini trip sama teman2 ku adakah diskonnn\n
+     jumlah orang: ${pax}\n 
+     harga: ${order.price}\n 
+     total: ${normalizeRupiah(`${order.price * pax}`)}`, '_blank');
+  };
 
   return (
     <Container maxW="7xl" py="5">
@@ -175,17 +185,24 @@ export default function Component() {
             boxShadow="0px 20px 25px -5px rgba(0, 0, 0, 0.1), inset 0px 0px 2px rgba(0, 0, 0, 0.25)"
           >
             <Text size={['xs', 'sm', 'md']}>Mulai dari</Text>
-            <Heading fontSize={['lg', 'xl', '2xl']}>Rp 999.000 /Pax</Heading>
-            <Select placeholder="Jumlah Tamu" mt="6">
-              {new Array(12).fill(0).map((e, i) => (
-                <option key={i} value={i}>
-                  {i}
+            <Heading fontSize={['lg', 'xl', '2xl']}>
+              Rp
+              {' '}
+              {normalizeRupiah(`${order.price}`)}
+              {' '}
+              /Pax
+            </Heading>
+            <Select placeholder="Jumlah Tamu" mt="6" value={pax} onChange={({ target }) => setPax(target.value)}>
+              {new Array(order.maxPax).fill(0).map((e, i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
                   {' '}
                   Orang
                 </option>
               ))}
             </Select>
             <Button
+              disabled={!pax}
               w="full"
               mt={6}
               colorScheme="blue"
@@ -193,21 +210,46 @@ export default function Component() {
               _hover={{
                 bg: 'blue.500',
               }}
+              // _disabled={{
+              //   bg: 'blue.500',
+              // }}
+              onClick={sendWAMessage}
             >
               Join Sekarang
             </Button>
-            <Flex mt="6" justify="space-between" alignItems="center">
-              <Text textDecorationLine="underline">Rp 999.000 x 10</Text>
-              <Text>Rp 9.990.000</Text>
-            </Flex>
-            <Flex mt="2" justify="space-between" alignItems="center">
-              <Text textDecorationLine="underline">Biaya Layanan</Text>
-              <Badge colorScheme="green" textTransform="none">Gratis</Badge>
-            </Flex>
-            <Flex mt="6" justify="space-between" alignItems="center">
-              <Heading size="md">Estimasi Total Biaya</Heading>
-              <Heading size="md">Rp 9.990.000</Heading>
-            </Flex>
+            {!!pax
+            && (
+            <>
+              <Flex mt="6" justify="space-between" alignItems="center">
+                <Text textDecorationLine="underline">
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${order.price}`)}
+                  {' '}
+                  x
+                  {' '}
+                  {pax}
+                </Text>
+                <Text>
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${order.price * pax}`)}
+                </Text>
+              </Flex>
+              <Flex mt="2" justify="space-between" alignItems="center">
+                <Text textDecorationLine="underline">Biaya Layanan</Text>
+                <Badge colorScheme="green" textTransform="none">Gratis</Badge>
+              </Flex>
+              <Flex mt="6" justify="space-between" alignItems="center">
+                <Heading size="md">Estimasi Total Biaya</Heading>
+                <Heading size="md">
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${order.price * pax}`)}
+                </Heading>
+              </Flex>
+            </>
+            )}
           </Box>
         </GridItem>
       </Grid>
