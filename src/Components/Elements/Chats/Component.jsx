@@ -44,7 +44,15 @@ export default function Component() {
           {renderBadge(1)}
         </Box>
       </PopoverTrigger>
-      <PopoverContent alignItems="flex-start" w="sm" h="350px">
+      <PopoverContent
+        alignItems="flex-start"
+        w="sm"
+        h="350px"
+        _focusVisible={{
+          outline: 'none',
+          boxShadow: 'none',
+        }}
+      >
         <PopoverArrow />
         <PopoverHeader textAlign="left" width="full">
           <Flex color="blue.600" gap="2">

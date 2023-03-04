@@ -170,8 +170,11 @@ export default function Component() {
               <SwiperSlide key={idx}>
                 <Box
                   boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
-                  borderRadius="16"
-                  padding={[3, 4]}
+                  py={['2', '4']}
+                  px={['4', '6']}
+                  bg="#fff"
+                  mb="7"
+                  borderRadius={24}
                 >
                   <Skeleton height="80px" />
                   <Skeleton height="20px" mt={[2, 4, 6, 8]} />

@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 import {
   Box,
   Container, Heading, Text,
@@ -13,7 +11,7 @@ import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { admins } from './Configs/constants';
 import {
-  auth, generateNotifToken, receiverNotif,
+  auth, callFunc, generateNotifToken, receiverNotif,
 } from './Configs/firebase';
 import { requestPermission } from './Configs/helpers';
 import ROUTES from './Configs/routes';
@@ -24,6 +22,23 @@ import {
 export default function Router() {
   const [loggedin, setLoggedin] = useState(null);
   const [token, setToken] = useState('');
+
+  const createUser = async (data) => {
+    const callable = callFunc('createUser');
+    await callable(data).then(() => {
+      // eslint-disable-next-line no-console
+      console.log('user updated');
+    }).catch((err) => {
+      // eslint-disable-next-line no-console
+      console.log('user update failed', err);
+    });
+  };
+
+  useEffect(() => {
+    if (token) {
+      createUser({ token });
+    }
+  }, [token]);
 
   useEffect(() => {
     // self.registration.showNotification('test', 'ok');
