@@ -85,8 +85,8 @@ export default function Component() {
         ))}
       </Grid>
 
-      <Flex flexWrap="wrap" mt="6" gap="6" justify="space-between">
-        <Box flex={1} minW={{ base: 'xs', md: 'lg' }}>
+      <Grid templateRows="repeat(1, 1fr)" templateColumns="repeat(5, 1fr)" my={[2, 4, 6]} gap={[4, 5, 6]}>
+        <GridItem colSpan={[5, 2.5, 3]}>
           <Text size="lg">Bulukumba, Sulawesi Selatan</Text>
           <Heading size="lg">11 dan 18 Desember 2023</Heading>
           <Divider my={6} w="full" />
@@ -95,8 +95,8 @@ export default function Component() {
             {desc}
           </Text>
           <Divider my={6} w="full" />
-        </Box>
-        <Box minW={{ base: 'xs', sm: 'sm', md: 'lg' }}>
+        </GridItem>
+        <GridItem colSpan={[5, 2.5, 2]}>
           <Box
             borderRadius={24}
             px="6"
@@ -141,8 +141,8 @@ export default function Component() {
               <Heading size="md">Rp 9.990.000</Heading>
             </Flex>
           </Box>
-        </Box>
-      </Flex>
+        </GridItem>
+      </Grid>
 
       <Modal isOpen={!!fullImg} onClose={() => setFullImg('')} size="5xl">
         <ModalOverlay />

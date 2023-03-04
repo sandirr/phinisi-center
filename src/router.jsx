@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 import {
@@ -12,7 +13,7 @@ import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { admins } from './Configs/constants';
 import {
-  auth, generateNotifToken,
+  auth, generateNotifToken, receiverNotif,
 } from './Configs/firebase';
 import { requestPermission } from './Configs/helpers';
 import ROUTES from './Configs/routes';
@@ -22,6 +23,7 @@ import {
 
 export default function Router() {
   const [loggedin, setLoggedin] = useState(null);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     // self.registration.showNotification('test', 'ok');
@@ -31,9 +33,15 @@ export default function Router() {
         const notifSupported = await requestPermission();
         if (notifSupported) {
           await generateNotifToken()
-            .then((token) => {
-              console.log(token);
+            .then((t) => {
+              setToken(t);
+            })
+            .catch((err) => {
+              // eslint-disable-next-line no-console
+              console.log('fcm error', err);
             });
+
+          receiverNotif();
         }
       } else {
         setLoggedin(null);
@@ -55,7 +63,8 @@ export default function Router() {
     showPopUpLogin,
     closePopUpLogin,
     loggedin,
-  }), [loggedin]);
+    fcmToken: token,
+  }), [loggedin, token]);
 
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [confirmationProps, setConfirmationProps] = useState(null);
@@ -163,7 +172,7 @@ export default function Router() {
                   <Route path={ROUTES.penyewaan()}>
                     <Route index element={<Pages.Rental />} />
                     <Route path="trip/:id" element={<Pages.DetailTrip />} />
-                    <Route path="ship/:orderId" element={<Pages.DetailOrder />} />
+                    <Route path="ship/:bookId" element={<Pages.DetailShip />} />
                   </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}

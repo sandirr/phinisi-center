@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -20,23 +18,9 @@ import {
   Tabs,
   Image,
   Avatar,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverBody,
-  Flex,
-  Text,
-  Heading,
-  Divider,
-  Badge,
 } from '@chakra-ui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search2Icon } from '@chakra-ui/icons';
-import {
-  EmailOutlined, NotificationsOutlined,
-} from '@mui/icons-material';
 import {
   signOut,
 } from 'firebase/auth';
@@ -45,6 +29,8 @@ import { auth } from '../../../Configs/firebase';
 import ROUTES from '../../../Configs/routes';
 import { ConfirmationContext, LoginContext } from '../../../Context';
 import { admins } from '../../../Configs/constants';
+import Notifications from '../Notifications';
+import Chats from '../Chats';
 
 export default function Component() {
   const headerRef = useRef(null);
@@ -85,7 +71,7 @@ export default function Component() {
     let lastScroll = 0;
     let loaded;
 
-    window.onscroll = (e) => {
+    window.onscroll = () => {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const header = headerRef.current;
       const height = -header.clientHeight;
@@ -104,25 +90,6 @@ export default function Component() {
       loaded = true;
     };
   }, []);
-
-  const renderBadge = (val) => (
-    <Badge
-      bg="red.500"
-      position="absolute"
-      right="-2"
-      top="-1"
-      borderRadius="full"
-      width="5"
-      height="5"
-      color="white"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      size="14px"
-    >
-      {val}
-    </Badge>
-  );
 
   return (
     <Box bg="white" boxShadow="md" pt="6" position="sticky" top={0} zIndex="sticky" ref={headerRef}>
@@ -159,76 +126,8 @@ export default function Component() {
             {loggedin
               ? (
                 <Box display="flex" justifyContent="flex-end" alignItems="center" gap="5">
-                  <Popover isLazy>
-                    <PopoverTrigger>
-                      <Box cursor="pointer" bg="transparent" border="none" color="blue.600" position="relative" mt="3">
-                        <NotificationsOutlined color="inherit" />
-                        {renderBadge(1)}
-                      </Box>
-                    </PopoverTrigger>
-                    <PopoverContent alignItems="flex-start" w="sm" h="350px">
-                      <PopoverArrow />
-                      <PopoverHeader textAlign="left" width="full">
-                        <Flex color="blue.600" gap="2">
-                          <NotificationsOutlined color="inherit" />
-                          <Text size="sm" fontWeight="700">Notifikasi (0)</Text>
-                        </Flex>
-                      </PopoverHeader>
-                      <PopoverBody textAlign="left" w="full">
-                        <Flex gap="2" p="10px" justifyContent="flex-start">
-                          <Avatar h="8" w="8" />
-                          <Box textAlign="left">
-                            <Heading size="xs">Haji Awang</Heading>
-                            <Text fontSize="xs">Pesanan Phinisi anda sudah mencapai 90 % !</Text>
-                          </Box>
-                        </Flex>
-                        <Divider />
-                        <Flex gap="2" p="10px" justifyContent="flex-start">
-                          <Avatar h="8" w="8" />
-                          <Box textAlign="left">
-                            <Heading size="xs">Haji Awang</Heading>
-                            <Text fontSize="xs">Pesanan Phinisi anda sudah mencapai 90 % !</Text>
-                          </Box>
-                        </Flex>
-                        <Divider />
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Popover>
-                  <Popover isLazy>
-                    <PopoverTrigger>
-                      <Box cursor="pointer" bg="transparent" border="none" color="blue.600" position="relative" mt="3">
-                        <EmailOutlined color="inherit" />
-                        {renderBadge(1)}
-                      </Box>
-                    </PopoverTrigger>
-                    <PopoverContent alignItems="flex-start" w="sm" h="350px">
-                      <PopoverArrow />
-                      <PopoverHeader textAlign="left" width="full">
-                        <Flex color="blue.600" gap="2">
-                          <EmailOutlined color="inherit" />
-                          <Text size="sm" fontWeight="700">Pesan (0)</Text>
-                        </Flex>
-                      </PopoverHeader>
-                      <PopoverBody textAlign="left" w="full">
-                        <Flex gap="2" p="10px" justifyContent="flex-start">
-                          <Avatar h="8" w="8" />
-                          <Box textAlign="left">
-                            <Heading size="xs">Haji Awang</Heading>
-                            <Text fontSize="xs">Pesanan Phinisi anda sudah mencapai 90 % !</Text>
-                          </Box>
-                        </Flex>
-                        <Divider />
-                        <Flex gap="2" p="10px" justifyContent="flex-start">
-                          <Avatar h="8" w="8" />
-                          <Box textAlign="left">
-                            <Heading size="xs">Haji Awang</Heading>
-                            <Text fontSize="xs">Pesanan Phinisi anda sudah mencapai 90 % !</Text>
-                          </Box>
-                        </Flex>
-                        <Divider />
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Popover>
+                  <Notifications />
+                  <Chats />
                   <Menu>
                     <MenuButton>
                       {loggedin?.photoURL

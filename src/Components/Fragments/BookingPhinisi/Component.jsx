@@ -44,13 +44,13 @@ export default function Component() {
   const dimensions = useDimensions(containerRef, 'resize');
 
   const getOrders = async () => {
-    const callable = callFunc('getOrders');
+    const callable = callFunc('getBookings');
     setLoading(true);
 
     await callable({
       limit: 10,
       page: meta.activePage,
-      type: 'priority',
+      status: 'Open',
     }).then((res) => {
       const {
         data,

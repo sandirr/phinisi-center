@@ -73,7 +73,7 @@ export default function Component() {
         {listData.map((data, i) => (
           <SwiperSlide key={i}>
             <VideoContainer
-              swiperRef={swiperRef}
+              // swiperRef={swiperRef}
               data={data}
               index={i}
               stopAutoSwipe={stopAutoSwipe}

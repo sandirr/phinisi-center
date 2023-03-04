@@ -63,8 +63,8 @@ export default function Component() {
         ))}
       </Grid>
 
-      <Flex flexWrap="wrap" mt="6" gap="6" justify="space-between">
-        <Box flex={1} minW={{ base: 'xs', md: 'lg' }}>
+      <Grid templateRows="repeat(1, 1fr)" templateColumns="repeat(5, 1fr)" my={[2, 4, 6]} gap={[4, 5, 6]}>
+        <GridItem colSpan={[5, 5, 3]}>
           <Flex gap="2">
             <Heading size="lg" fontWeight="400">Project by</Heading>
             <Heading size="lg">{order.detailVendor.name}</Heading>
@@ -167,8 +167,8 @@ export default function Component() {
               </Stack>
             </Box>
           </Flex>
-        </Box>
-        <Box minW={{ base: 'xs', md: 'lg' }}>
+        </GridItem>
+        <GridItem colSpan={[5, 5, 2]}>
           <Box
             borderRadius={24}
             textAlign="center"
@@ -191,8 +191,8 @@ export default function Component() {
               Tertarik
             </Button>
           </Box>
-        </Box>
-      </Flex>
+        </GridItem>
+      </Grid>
 
       <Elements.ImagesModal defaultImg={fullImg} images={order.images || []} close={() => setFullImg('')} />
     </Container>
