@@ -17,10 +17,13 @@ import {
 } from '@chakra-ui/react';
 import { NotificationsOutlined } from '@mui/icons-material';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
 import { callFunc } from '../../../Configs/firebase';
 import { NotifOffIcon } from '../../../Assets/icons/icons';
+import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
+  const navigate = useNavigate();
   const [notifs, setNotifs] = useState([]);
   const [meta, setMeta] = useState({
     activePage: 1,
@@ -100,8 +103,6 @@ export default function Component() {
     </Badge>
   );
 
-  console.log(notifs);
-
   return (
     <Popover isLazy>
       <PopoverTrigger>
@@ -129,12 +130,34 @@ export default function Component() {
             next={handleLoadMore}
           >
             {notifs.map((notif, idx) => (
-              <Box key={notif.id || idx} w="full" cursor="pointer">
+              <Box
+                key={notif.id || idx}
+                w="full"
+                cursor="pointer"
+                onClick={() => {
+                  if (notif.detailOrder && notif.detailvendor) {
+                    navigate(
+                      `${ROUTES.pemesanan()}/vendor/${notif.detailvendor?.id}/order/${notif.detailOrder?.id}`,
+                      { state: notif.id },
+                    );
+                  }
+                }}
+              >
                 <Flex gap="2" p={[1.5, 2, 2.5]} justifyContent="flex-start">
-                  <Avatar h="8" w="8" />
+                  <Avatar h="8" w="8" src={notif.detailvendor?.cover || 'https://phinisicenter.id/logo64.png'} />
                   <Box textAlign="left">
-                    <Heading size="xs">Haji Awang</Heading>
-                    <Text fontSize="xs">Pesanan Phinisi anda sudah mencapai 90 % !</Text>
+                    <Heading size="xs">{notif.detailvendor?.name || 'Phinisi Center'}</Heading>
+                    <Text fontSize="xs">
+                      Pesanan
+                      {' '}
+                      {notif.detailOrder?.name || 'Phinisi'}
+                      {' '}
+                      Anda sudah mencapai
+                      {' '}
+                      {Number(notif.detailOrder?.progress || 1) * 10}
+                      {' '}
+                      % !
+                    </Text>
                   </Box>
                 </Flex>
                 <Divider />

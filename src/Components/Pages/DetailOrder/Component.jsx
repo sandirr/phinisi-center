@@ -13,7 +13,7 @@ import {
   Grid,
   GridItem,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
 import { ChatModalContext } from '../../../Context';
 import Elements from '../../Elements';
@@ -21,6 +21,8 @@ import { callFunc } from '../../../Configs/firebase';
 
 export default function Component() {
   const { orderId } = useParams();
+  const loc = useLocation();
+
   const [fullImg, setFullImg] = useState('');
   const { showChatModal } = useContext(ChatModalContext);
 
@@ -38,6 +40,17 @@ export default function Component() {
       setLoading(false);
     });
   };
+
+  const handleReadNotif = async (notifId) => {
+    const callable = callFunc('updateNotification');
+    await callable(notifId);
+  };
+
+  useEffect(() => {
+    if (loc.state) {
+      handleReadNotif(loc.state);
+    }
+  }, [loc]);
 
   useEffect(() => {
     if (orderId) {
