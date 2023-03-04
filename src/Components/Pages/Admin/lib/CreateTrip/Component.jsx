@@ -4,9 +4,11 @@ import {
 } from '@chakra-ui/react';
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import 'react-quill/dist/quill.snow.css';
+import moment from 'moment';
 import { callFunc, storage } from '../../../../../Configs/firebase';
+import { normalizeOnlyNumber, normalizeRupiah } from '../../../../../Utils/text';
 
-export default function Component({ onSuccess, givenData, vendor }) {
+export default function Component({ onSuccess, givenData }) {
   const initialState = {
     name: '',
     weight: 0,
@@ -19,10 +21,10 @@ export default function Component({ onSuccess, givenData, vendor }) {
     capacity: '',
     cabin: '',
     speed: '',
-    progress: 0,
-    priority: '',
+    date: moment().add('weeks', 2).format('YYYY-MM-DD'),
   };
-  const [fields, setFields] = useState(() => givenData || initialState);
+  const [fields, setFields] = useState(() => (givenData
+    ? { ...givenData, date: moment(givenData.date).format('YYYY-MM-DD') } : initialState));
 
   const [isLoading, setIsLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
@@ -31,12 +33,17 @@ export default function Component({ onSuccess, givenData, vendor }) {
     setFields({ ...fields, [target.name]: target.value });
   };
 
+  const handleChangePrice = ({ target }) => {
+    const val = normalizeOnlyNumber(target.value);
+    setFields({ ...fields, price: val });
+  };
+
   const handleChangeImg = async ({ target }) => {
     if (target.files) {
       const file = target.files[0];
       if (file) {
         setImgLoading(true);
-        const imageRef = storageRef(storage, `order/${Date.now().toString()}`);
+        const imageRef = storageRef(storage, `trip/${Date.now().toString()}`);
         await uploadBytes(imageRef, file)
           .then(async () => {
             const image = await getDownloadURL(imageRef);
@@ -59,19 +66,18 @@ export default function Component({ onSuccess, givenData, vendor }) {
   const pushData = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    let callable = callFunc('createOrder');
+    let callable = callFunc('createTrip');
     let body = {
       ...fields,
       weight: Number(fields.weight),
       width: Number(fields.width),
       long: Number(fields.long),
       speed: Number(fields.speed),
-      progress: Number(fields.progress),
       createdAt: new Date().toISOString(),
-      vendorId: vendor.id,
+      date: new Date(fields.date).toISOString(),
     };
     if (fields.id) {
-      callable = callFunc('updateOrder');
+      callable = callFunc('updateTrip');
       body = {
         id: fields.id,
         body: {
@@ -79,8 +85,8 @@ export default function Component({ onSuccess, givenData, vendor }) {
           weight: Number(fields.weight),
           width: Number(fields.width),
           long: Number(fields.long),
-          progress: Number(fields.progress),
           updatedAt: new Date().toISOString(),
+          date: new Date(fields.date).toISOString(),
         },
       };
     }
@@ -102,20 +108,12 @@ export default function Component({ onSuccess, givenData, vendor }) {
           <Input required name="name" placeholder="Augustine Phinisi" value={fields.name} onChange={handleChangeField} />
         </Box>
         <Box>
-          <label>Lokasi Pembuatan</label>
+          <label>Lokasi Trip</label>
           <Input required name="location" placeholder="Labuan Bajo, Nusa Tenggara Timur, Indonesia" value={fields.location} onChange={handleChangeField} />
         </Box>
         <Box>
           <label>Deskripsi</label>
           <Textarea rows={4} name="description" placeholder="Augustine Phinisi is a 30 meter wooden liveaboard vessel," value={fields.description} onChange={handleChangeField} />
-        </Box>
-        <Box>
-          <label>Tahun Pembuatan</label>
-          <Input required name="created" placeholder="2023" value={fields.created} onChange={handleChangeField} />
-        </Box>
-        <Box>
-          <label>Estimasi Selesai (tahun)</label>
-          <Input required name="year" placeholder="2023" value={fields.year} onChange={handleChangeField} />
         </Box>
         <Box>
           <label>Bobot (ton)</label>
@@ -139,6 +137,14 @@ export default function Component({ onSuccess, givenData, vendor }) {
           <Input required name="capacity" type="number" placeholder="14" value={fields.capacity} onChange={handleChangeField} />
         </Box>
         <Box>
+          <label>Max Pax (per booking)</label>
+          <Input required name="maxPax" type="number" placeholder="14" value={fields.maxPax} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Harga/Pax (rupiah)</label>
+          <Input required name="price" placeholder="200.000" value={normalizeRupiah(`${fields.price}`)} onChange={handleChangePrice} />
+        </Box>
+        <Box>
           <label>Kabin (jumlah kamar)</label>
           <Input required name="cabin" type="number" placeholder="4" value={fields.cabin} onChange={handleChangeField} />
         </Box>
@@ -151,26 +157,14 @@ export default function Component({ onSuccess, givenData, vendor }) {
           <Input required name="speed" placeholder="10" value={fields.speed} onChange={handleChangeField} />
         </Box>
         <Box>
-          <label>Progress</label>
-          <Select name="progress" placeholder="Progress" value={fields.progress} onChange={handleChangeField}>
-            <option value={0}>0</option>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-            <option value={9}>9</option>
-            <option value={10}>10 (Selesai)</option>
-          </Select>
+          <label>Tanggal Berangkat</label>
+          <Input required name="date" type="date" value={fields.date} onChange={handleChangeField} />
         </Box>
         <Box>
-          <label>Prioritas (optional)</label>
-          <Select name="priority" placeholder="Prioritas" value={fields.priority} onChange={handleChangeField}>
-            <option value="">Don&apos;t set</option>
-            <option value="recommended">RECOMMENDED</option>
+          <label>Status</label>
+          <Select name="status" placeholder="Status booking" value={fields.status} onChange={handleChangeField}>
+            <option value="Draft">Draft/Close</option>
+            <option value="Open">Open</option>
           </Select>
         </Box>
       </Stack>
