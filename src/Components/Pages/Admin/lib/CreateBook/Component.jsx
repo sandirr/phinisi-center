@@ -5,22 +5,25 @@ import {
 import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage';
 import 'react-quill/dist/quill.snow.css';
 import { callFunc, storage } from '../../../../../Configs/firebase';
+import { normalizeOnlyNumber, normalizeRupiah } from '../../../../../Utils/text';
 
 export default function Component({ onSuccess, givenData, vendor }) {
   const initialState = {
     name: '',
-    weight: 0,
+    weight: '',
     images: [],
     location: '',
     year: '',
     description: '',
-    width: 0,
-    long: 0,
+    width: '',
+    long: '',
     capacity: '',
     cabin: '',
     speed: '',
     status: '',
     priority: '',
+    maxPax: '',
+    price: '',
   };
   const [fields, setFields] = useState(() => givenData || initialState);
 
@@ -29,6 +32,11 @@ export default function Component({ onSuccess, givenData, vendor }) {
 
   const handleChangeField = ({ target }) => {
     setFields({ ...fields, [target.name]: target.value });
+  };
+
+  const handleChangePrice = ({ target }) => {
+    const val = normalizeOnlyNumber(target.value);
+    setFields({ ...fields, price: val });
   };
 
   const handleChangeImg = async ({ target }) => {
@@ -66,6 +74,8 @@ export default function Component({ onSuccess, givenData, vendor }) {
       width: Number(fields.width),
       long: Number(fields.long),
       speed: Number(fields.speed),
+      maxPax: Number(fields.maxPax),
+      price: Number(normalizeOnlyNumber(fields.price)),
       createdAt: new Date().toISOString(),
       vendorId: vendor.id,
     };
@@ -78,7 +88,9 @@ export default function Component({ onSuccess, givenData, vendor }) {
           weight: Number(fields.weight),
           width: Number(fields.width),
           long: Number(fields.long),
-
+          speed: Number(fields.speed),
+          maxPax: Number(fields.maxPax),
+          price: Number(normalizeOnlyNumber(fields.price)),
           updatedAt: new Date().toISOString(),
         },
       };
@@ -132,6 +144,14 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Kapasitas (jumlah tamu)</label>
           <Input required name="capacity" type="number" placeholder="14" value={fields.capacity} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Jumlah Pax (per booking)</label>
+          <Input required name="maxPax" type="number" placeholder="12" value={fields.maxPax} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Harga/Pax (rupiah)</label>
+          <Input required name="price" placeholder="200.000" value={normalizeRupiah(`${fields.price}`)} onChange={handleChangePrice} />
         </Box>
         <Box>
           <label>Kabin (jumlah kamar)</label>

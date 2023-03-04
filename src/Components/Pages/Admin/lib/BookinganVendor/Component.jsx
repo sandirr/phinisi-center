@@ -23,6 +23,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { callFunc } from '../../../../../Configs/firebase';
 import CreateBook from '../CreateBook';
 import { ConfirmationContext } from '../../../../../Context';
+import { normalizeRupiah } from '../../../../../Utils/text';
 
 export default function Component({ vendor, onClose }) {
   const [openCreateBooking, setOpenCreateBooking] = useState('');
@@ -197,6 +198,12 @@ export default function Component({ vendor, onClose }) {
                       Status:
                       {' '}
                       {book.status || 'Closed/Draft'}
+                    </Text>
+                    <Text>
+                      Harga:
+                      {' '}
+                      Rp
+                      {normalizeRupiah(`${book.price}`) || 0}
                     </Text>
                   </Flex>
                   <Text size="md">{book.description}</Text>

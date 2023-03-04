@@ -43,7 +43,7 @@ export default function Component({ open, handleClose }) {
   };
 
   return (
-    <Modal isOpen={open} onClose={() => null} size={['xs', 'sm', 'xl', '2xl']}>
+    <Modal isOpen={open} onClose={() => null} size={['xs', 'sm', 'xl', '2xl']} isCentered>
       <ModalOverlay />
       <ModalContent borderRadius="2xl">
         <ModalBody pb={[12, 16, 20]} px={0}>
@@ -55,7 +55,7 @@ export default function Component({ open, handleClose }) {
 
           <Container maxW="xs">
             <Flex justify="center">
-              <Image src={Images.Logo} width={['40%', '80%', '100%']} />
+              <Image src={Images.Logo} width={['60%', '80%', '100%']} />
             </Flex>
 
             <Stack direction="column" spacing={4} mt={['22px', '44px', '66px']} color="#2263DD">
