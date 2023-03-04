@@ -75,6 +75,7 @@ export default function Component({ onSuccess, givenData }) {
       speed: Number(fields.speed),
       createdAt: new Date().toISOString(),
       date: new Date(fields.date).toISOString(),
+      maxPax: Number(fields.maxPax),
     };
     if (fields.id) {
       callable = callFunc('updateTrip');
@@ -87,6 +88,7 @@ export default function Component({ onSuccess, givenData }) {
           long: Number(fields.long),
           updatedAt: new Date().toISOString(),
           date: new Date(fields.date).toISOString(),
+          maxPax: Number(fields.maxPax),
         },
       };
     }
