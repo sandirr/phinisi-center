@@ -131,6 +131,7 @@ export default function Component({
       long: Number(fields.long),
       speed: Number(fields.speed),
       progress: Number(fields.progress),
+      uid: auth.currentUser?.uid,
     };
     await callable(body).then(() => {
       setFields(() => initialState);
@@ -157,7 +158,14 @@ export default function Component({
           {' '}
           {vendor.name}
         </ModalHeader>
-        <ModalCloseButton color="blackAlpha.300" fontSize={['sm', 'md', 'lg']} />
+        <ModalCloseButton
+          _focusVisible={{
+            outline: 'none',
+            boxShadow: 'none',
+          }}
+          color="blackAlpha.300"
+          fontSize={['sm', 'md', 'lg']}
+        />
         <ModalBody>
           <Divider />
           <Stack direction="column" spacing={[2, 4]} mt="4">

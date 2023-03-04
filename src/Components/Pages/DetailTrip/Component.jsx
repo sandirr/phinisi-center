@@ -11,22 +11,12 @@ import {
   Divider,
   Grid,
   GridItem,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  CloseButton,
   Select,
   Badge,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import SwiperCore, {
-  Navigation,
-} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-coverflow';
 import Images from '../../../Configs/images';
+import Elements from '../../Elements';
 
 const images = [
   Images.Order1,
@@ -37,8 +27,7 @@ const images = [
 ];
 
 export default function Component() {
-  SwiperCore.use([Navigation]);
-  const { id } = useParams();
+  const { tripId } = useParams();
   const [fullImg, setFullImg] = useState('');
   const [desc] = useState(`Halo sahabat Pinisi ⛵️Persiapkan diri kamu untuk pengalaman berlayar
             dengan Kapal Pinisi mengelilingi destinasi wisata andalan Bulukumba
@@ -74,7 +63,7 @@ export default function Component() {
     <Container maxW="7xl" py="5">
       <Heading size="xl">
         Augustine Phinisi
-        {id}
+        {tripId}
       </Heading>
       <Text size="xl" mt="2">Labuan Bajo, Nusa Tenggara Timur, Indonesia</Text>
       <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6}>
@@ -144,31 +133,7 @@ export default function Component() {
         </GridItem>
       </Grid>
 
-      <Modal isOpen={!!fullImg} onClose={() => setFullImg('')} size="5xl">
-        <ModalOverlay />
-        <ModalContent bg="transparent" position="relative">
-          <CloseButton onClick={() => setFullImg('')} color="#fff" position="absolute" top={4} right={4} size="lg" zIndex={9999} />
-          <Swiper
-            slidesPerView={1}
-            initialSlide={images.indexOf(fullImg)}
-            modules={[Navigation]}
-            centeredSlides
-            autoplay={false}
-            style={{
-              width: '100%',
-              '--swiper-navigation-color': '#FFF',
-            }}
-            loop
-            navigation
-          >
-            {images.map((img) => (
-              <SwiperSlide key={img}>
-                <Image src={img} h="full" w="full" objectFit="cover" borderRadius={24} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </ModalContent>
-      </Modal>
+      <Elements.ImagesModal defaultImg={fullImg} images={images || []} close={() => setFullImg('')} />
     </Container>
   );
 }

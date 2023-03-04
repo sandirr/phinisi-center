@@ -31,8 +31,35 @@ export default function Component() {
     total: 1,
   });
   const [loading, setLoading] = useState(false);
+  const [loadingRead, setLoadingRead] = useState(false);
   const [unread, setUnread] = useState(0);
   const [hasMoreItems, setHasMoreItems] = useState(false);
+
+  const handleReadNotif = async (notif) => {
+    const callable = callFunc('updateNotification');
+    if (!notif.hasRead) {
+      setLoadingRead(true);
+      await callable(notif.id).then(() => {
+        setNotifs(notifs.map((n) => {
+          if (n.id === notif.id) {
+            return ({
+              ...n,
+              hasRead: true,
+            });
+          }
+
+          return n;
+        }));
+        setUnread(unread - 1);
+      }).finally(() => {
+        setLoadingRead(false);
+      });
+    }
+
+    navigate(
+      `${ROUTES.pemesanan()}/vendor/${notif.detailvendor?.id}/order/${notif.detailOrder?.id}`,
+    );
+  };
 
   const getNotifications = async () => {
     const callable = callFunc('getNotifications');
@@ -143,11 +170,8 @@ export default function Component() {
                 w="full"
                 cursor="pointer"
                 onClick={() => {
-                  if (notif.detailOrder && notif.detailvendor) {
-                    navigate(
-                      `${ROUTES.pemesanan()}/vendor/${notif.detailvendor?.id}/order/${notif.detailOrder?.id}`,
-                      { state: notif.id },
-                    );
+                  if (notif.detailOrder && notif.detailvendor && !loadingRead) {
+                    handleReadNotif(notif);
                   }
                 }}
               >

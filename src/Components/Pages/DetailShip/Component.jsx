@@ -48,10 +48,7 @@ export default function Component() {
   }, [bookId]);
 
   const sendWAMessage = () => {
-    window.open(`https://wa.me/6282197493245?text=Halo,%0aMauka ikut ini trip ${book.name} adakah diskonnn?%0a
-    jumlah orang: ${pax}%0a
-    harga: Rp${book.price}%0a
-    total: Rp${normalizeRupiah(`${book.price * pax}`)}`, '_blank');
+    window.open(`https://wa.me/6282197493245?text=Halo,%0aMauka ikut ini trip ${book.name} adakah diskonnn?%0ajumlah orang: ${pax}%0aharga: Rp${book.price}%0atotal: Rp${normalizeRupiah(`${book.price * pax}`)}`, '_blank');
   };
 
   return (

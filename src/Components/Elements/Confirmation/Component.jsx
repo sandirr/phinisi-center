@@ -24,7 +24,12 @@ export default function Component({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton
+          _focusVisible={{
+            outline: 'none',
+            boxShadow: 'none',
+          }}
+        />
         <ModalBody>
           {desc}
         </ModalBody>

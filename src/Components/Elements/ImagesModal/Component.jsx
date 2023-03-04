@@ -21,7 +21,20 @@ export default function Component({ defaultImg, images, close }) {
     <Modal isOpen={!!defaultImg} onClose={close} size="5xl" isCentered scrollBehavior="outside">
       <ModalOverlay />
       <ModalContent bg="transparent" position="relative">
-        <CloseButton onClick={close} color="#fff" bg="blackAlpha.300" position="absolute" top={4} right={4} size="lg" zIndex={9999} />
+        <CloseButton
+          _focusVisible={{
+            outline: 'none',
+            boxShadow: 'none',
+          }}
+          onClick={close}
+          color="#fff"
+          bg="blackAlpha.300"
+          position="absolute"
+          top={4}
+          right={4}
+          size="lg"
+          zIndex={9999}
+        />
         <Swiper
           initialSlide={images?.indexOf(defaultImg)}
           modules={[Navigation]}

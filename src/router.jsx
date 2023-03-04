@@ -186,7 +186,7 @@ export default function Router() {
                   </Route>
                   <Route path={ROUTES.penyewaan()}>
                     <Route index element={<Pages.Rental />} />
-                    <Route path="trip/:id" element={<Pages.DetailTrip />} />
+                    <Route path="trip/:tripId" element={<Pages.DetailTrip />} />
                     <Route path="ship/:bookId" element={<Pages.DetailShip />} />
                   </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
