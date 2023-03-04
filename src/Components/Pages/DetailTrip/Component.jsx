@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Box,
@@ -15,59 +15,50 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import Images from '../../../Configs/images';
+import moment from 'moment';
 import Elements from '../../Elements';
-
-const images = [
-  Images.Order1,
-  Images.Order2,
-  Images.Order3,
-  Images.Order4,
-  Images.Order5,
-];
+import { callFunc } from '../../../Configs/firebase';
+import { normalizeRupiah } from '../../../Utils/text';
 
 export default function Component() {
   const { tripId } = useParams();
   const [fullImg, setFullImg] = useState('');
-  const [desc] = useState(`Halo sahabat Pinisi ⛵️Persiapkan diri kamu untuk pengalaman berlayar
-            dengan Kapal Pinisi mengelilingi destinasi wisata andalan Bulukumba
-            dan melihat lebih dekat detail desain Kapal Pinisi, dan menikmati
-            makan malam serta hiburan lainnya.
+  const [pax, setPax] = useState(0);
 
-            ⛵️Jadwal Open Trip :🗓 11 dan 18 Desember 2021
-            Price rate :Rp. 400k/personJadwal
-            Meeting Point :📍Pelabuhan BiraTrip
+  const [loading, setLoading] = useState(false);
+  const [trip, setTrip] = useState({ detailVendor: {}, images: [] });
 
-            Included :
-            • Welcome drink
-            • Speed boat
-            • Bulukumba Traditional Snacks
-            • Infused water, Tea, and Coffee
-            • Intimate Dinner
-            • Tour guide
-            • Life Jacket
-            • Live Music
-            • Fireworks
-            • Exclusive Documentation
+  const getBook = async () => {
+    const callable = callFunc('getTrip');
 
-            Demi kenyamanan dan keselamatan kamu selama berlayar,
-            kuota seats kami batasi untuk 17 orang saja per sailing trip.
-            Jadi segera reservasi sebelum kehabisan seatsnya,
-            terima kasih Sahabat Pinisi.`);
+    setLoading(true);
+    await callable(tripId).then((res) => {
+      setTrip(res.data);
+    }).catch(() => {
+    }).finally(() => {
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (tripId) {
+      getBook();
+    }
+  }, [tripId]);
 
   const sendWAMessage = () => {
-    window.open('https://wa.me/6282197493245?text=Halo, Mauka ikut ini trip sama teman2 ku adakah diskonnn', '_blank');
+    window.open(`https://wa.me/6282197493245?text=Halo,%0aMauka ikut ini trip ${trip.name} adakah diskonnn?%0ajumlah orang: ${pax}%0aharga: Rp${trip.price}%0atotal: Rp${normalizeRupiah(`${trip.price * pax}`)}`, '_blank');
   };
 
   return (
     <Container maxW="7xl" py="5">
+      <Elements.Loading loading={loading} />
       <Heading size="xl">
-        Augustine Phinisi
-        {tripId}
+        {trip.name}
       </Heading>
-      <Text size="xl" mt="2">Labuan Bajo, Nusa Tenggara Timur, Indonesia</Text>
+      <Text size="xl" mt="2">{trip.location}</Text>
       <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6}>
-        {images.map((image, i) => (
+        {trip.images?.slice(0, 5)?.map((image, i) => (
           <GridItem key={i} rowSpan={i === 0 ? 2 : 1} colSpan={i === 0 ? 2 : 1} height="auto">
             <Image cursor="pointer" onClick={() => setFullImg(image)} src={image} width="full" height="full" />
           </GridItem>
@@ -76,12 +67,12 @@ export default function Component() {
 
       <Grid templateRows="repeat(1, 1fr)" templateColumns="repeat(5, 1fr)" my={[2, 4, 6]} gap={[4, 5, 6]}>
         <GridItem colSpan={[5, 2.5, 3]}>
-          <Text size="lg">Bulukumba, Sulawesi Selatan</Text>
-          <Heading size="lg">11 dan 18 Desember 2023</Heading>
+          <Text size="lg">{trip.from}</Text>
+          <Heading size="lg">{moment(trip.date).format('DD MMM YYYY')}</Heading>
           <Divider my={6} w="full" />
           <Heading size="sm">Deskripsi</Heading>
           <Text size="md" mt="4" whiteSpace="pre-line">
-            {desc}
+            {trip.description}
           </Text>
           <Divider my={6} w="full" />
         </GridItem>
@@ -95,17 +86,24 @@ export default function Component() {
             boxShadow="0px 20px 25px -5px rgba(0, 0, 0, 0.1), inset 0px 0px 2px rgba(0, 0, 0, 0.25)"
           >
             <Text size={['xs', 'sm', 'md']}>Mulai dari</Text>
-            <Heading fontSize={['lg', 'xl', '2xl']}>Rp 999.000 /Pax</Heading>
-            <Select placeholder="Jumlah Tamu" mt="6">
-              {new Array(12).fill(0).map((e, i) => (
-                <option key={i} value={i}>
-                  {i}
+            <Heading fontSize={['lg', 'xl', '2xl']}>
+              Rp
+              {' '}
+              {normalizeRupiah(`${trip.price}`)}
+              {' '}
+              /Pax
+            </Heading>
+            <Select placeholder="Jumlah Tamu" mt="6" value={pax} onChange={({ target }) => setPax(target.value)}>
+              {new Array(trip.maxPax).fill(0).map((e, i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
                   {' '}
                   Orang
                 </option>
               ))}
             </Select>
             <Button
+              disabled={!pax}
               w="full"
               mt={6}
               colorScheme="blue"
@@ -113,27 +111,51 @@ export default function Component() {
               _hover={{
                 bg: 'blue.500',
               }}
+              // _disabled={{
+              //   bg: 'blue.500',
+              // }}
               onClick={sendWAMessage}
             >
               Join Sekarang
             </Button>
-            <Flex mt="6" justify="space-between" alignItems="center">
-              <Text textDecorationLine="underline">Rp 999.000 x 10</Text>
-              <Text>Rp 9.990.000</Text>
-            </Flex>
-            <Flex mt="2" justify="space-between" alignItems="center">
-              <Text textDecorationLine="underline">Biaya Layanan</Text>
-              <Badge colorScheme="green" textTransform="none">Gratis</Badge>
-            </Flex>
-            <Flex mt="6" justify="space-between" alignItems="center">
-              <Heading size="md">Estimasi Total Biaya</Heading>
-              <Heading size="md">Rp 9.990.000</Heading>
-            </Flex>
+            {!!pax
+            && (
+            <>
+              <Flex mt="6" justify="space-between" alignItems="center">
+                <Text textDecorationLine="underline">
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${trip.price}`)}
+                  {' '}
+                  x
+                  {' '}
+                  {pax}
+                </Text>
+                <Text>
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${trip.price * pax}`)}
+                </Text>
+              </Flex>
+              <Flex mt="2" justify="space-between" alignItems="center">
+                <Text textDecorationLine="underline">Biaya Layanan</Text>
+                <Badge colorScheme="green" textTransform="none">Gratis</Badge>
+              </Flex>
+              <Flex mt="6" justify="space-between" alignItems="center">
+                <Heading size="md">Estimasi Total Biaya</Heading>
+                <Heading size="md">
+                  Rp
+                  {' '}
+                  {normalizeRupiah(`${trip.price * pax}`)}
+                </Heading>
+              </Flex>
+            </>
+            )}
           </Box>
         </GridItem>
       </Grid>
 
-      <Elements.ImagesModal defaultImg={fullImg} images={images || []} close={() => setFullImg('')} />
+      <Elements.ImagesModal defaultImg={fullImg} images={trip.images || []} close={() => setFullImg('')} />
     </Container>
   );
 }

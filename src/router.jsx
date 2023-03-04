@@ -11,7 +11,7 @@ import Elements from './Components/Elements';
 import Pages from './Components/Pages';
 import { admins } from './Configs/constants';
 import {
-  auth, callFunc, generateNotifToken, receiverNotif,
+  auth, callFunc, generateNotifToken,
 } from './Configs/firebase';
 import { requestPermission } from './Configs/helpers';
 import ROUTES from './Configs/routes';
@@ -56,7 +56,7 @@ export default function Router() {
               console.log('fcm error', err);
             });
 
-          receiverNotif();
+          // receiverNotif();
         }
       } else {
         setLoggedin(null);

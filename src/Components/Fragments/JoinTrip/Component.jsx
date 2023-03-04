@@ -149,7 +149,7 @@ export default function Component() {
               paddingRight: 16,
             }}
           >
-            {trips.map((data, i) => (
+            {trips.map((trip, i) => (
               <SwiperSlide key={i}>
                 <Box
                   backgroundSize="cover"
@@ -165,8 +165,8 @@ export default function Component() {
                   position="relative"
                   bg={`linear-gradient(136.31deg, rgba(0, 0, 0, 0.6) 15.57%, rgba(0, 0, 0, 0) 50.85%), url(${Images.Order1})`}
                 >
-                  <Heading color="white" size={['md', 'lg', 'xl']}>Sailing Trip 9 Spot</Heading>
-                  <Text size={['sm', 'md']} mt="1">Bulukumba, Sulawesi Selatan</Text>
+                  <Heading color="white" size={['md', 'lg', 'xl']}>{trip.name}</Heading>
+                  <Text size={['sm', 'md']} mt="1">{trip.location}</Text>
                   <Button
                     size={['xs', 'sm', 'md']}
                     mt="auto"
@@ -174,7 +174,7 @@ export default function Component() {
                     color="blue.600"
                     position="absolute"
                     bottom={['8', '12']}
-                    onClick={() => navigate('trip/id')}
+                    onClick={() => navigate(`trip/${trip.id}`)}
                   >
                     Selengkapnya
                   </Button>

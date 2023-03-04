@@ -108,7 +108,11 @@ export default function Component({ onSuccess, givenData }) {
           <Input required name="name" placeholder="Augustine Phinisi" value={fields.name} onChange={handleChangeField} />
         </Box>
         <Box>
-          <label>Lokasi Trip</label>
+          <label>Lokasi Kumpul</label>
+          <Input required name="from" placeholder="Bulukumba" value={fields.from} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Lokasi/Tujuan Trip</label>
           <Input required name="location" placeholder="Labuan Bajo, Nusa Tenggara Timur, Indonesia" value={fields.location} onChange={handleChangeField} />
         </Box>
         <Box>
