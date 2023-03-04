@@ -27,14 +27,14 @@ export default function Component() {
   const [pax, setPax] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [order, setOrder] = useState({ detailVendor: {}, images: [] });
+  const [book, setBook] = useState({ detailVendor: {}, images: [] });
 
   const getBook = async () => {
     const callable = callFunc('getBooking');
 
     setLoading(true);
     await callable(bookId).then((res) => {
-      setOrder(res.data);
+      setBook(res.data);
     }).catch(() => {
     }).finally(() => {
       setLoading(false);
@@ -51,19 +51,19 @@ export default function Component() {
     window.open(`https://wa.me/6282197493245?text=Halo, 
     Mauka ikut ini trip sama teman2 ku adakah diskonnn\n
      jumlah orang: ${pax}\n 
-     harga: ${order.price}\n 
-     total: ${normalizeRupiah(`${order.price * pax}`)}`, '_blank');
+     harga: ${book.price}\n 
+     total: ${normalizeRupiah(`${book.price * pax}`)}`, '_blank');
   };
 
   return (
     <Container maxW="7xl" py="5">
       <Elements.Loading loading={loading} />
       <Heading size="xl">
-        {order.name}
+        {book.name}
       </Heading>
-      <Text size="xl" mt="2">{order.location}</Text>
+      <Text size="xl" mt="2">{book.location}</Text>
       <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={2} mt={6} borderRadius={16} overflow="hidden">
-        {order.images?.slice(0, 5)?.map((image, i) => (
+        {book.images?.slice(0, 5)?.map((image, i) => (
           <GridItem key={i} rowSpan={i === 0 ? 2 : 1} colSpan={i === 0 ? 2 : 1} height="auto">
             <Image cursor="pointer" objectFit="cover" onClick={() => setFullImg(image)} src={image} w="full" h="full" />
           </GridItem>
@@ -74,14 +74,14 @@ export default function Component() {
         <GridItem colSpan={[5, 5, 3]}>
           <Flex gap="2">
             <Heading size="lg" fontWeight="400">Project by</Heading>
-            <Heading size="lg">{order.detailVendor.name}</Heading>
+            <Heading size="lg">{book.detailVendor.name}</Heading>
           </Flex>
           <Flex mt={2} gap={4}>
             <Flex gap={1} alignItems="center">
               <BedIcon />
               <Divider orientation="vertical" />
               <Text size="lg">
-                {order.cabin}
+                {book.cabin}
                 {' '}
                 Kabin
               </Text>
@@ -90,7 +90,7 @@ export default function Component() {
               <BathIcon />
               <Divider orientation="vertical" />
               <Text size="lg">
-                {order.wc}
+                {book.wc}
                 {' '}
                 Kamar Mandi
               </Text>
@@ -99,7 +99,7 @@ export default function Component() {
               <PeopleIcon />
               <Divider orientation="vertical" />
               <Text size="lg" whiteSpace="pre-line">
-                {order.capacity}
+                {book.capacity}
                 {' '}
                 Tamu
               </Text>
@@ -108,7 +108,7 @@ export default function Component() {
           <Divider my={6} w="full" />
           <Heading size="sm">Deskripsi</Heading>
           <Text size="md" mt="4">
-            {order.description}
+            {book.description}
           </Text>
           <Divider my={6} w="full" />
           <Heading size="sm">Spesifikasi</Heading>
@@ -117,12 +117,12 @@ export default function Component() {
               <Stack direction="column">
                 <Box>
                   <Text fontSize="xs">Tahun Pembuatan</Text>
-                  <Text size="md">{order.created}</Text>
+                  <Text size="md">{book.created}</Text>
                 </Box>
                 <Box>
                   <Text fontSize="xs">Bobot</Text>
                   <Text size="md">
-                    {order.weight}
+                    {book.weight}
                     {' '}
                     Ton
                   </Text>
@@ -130,11 +130,11 @@ export default function Component() {
                 <Box>
                   <Text fontSize="xs">Ukuran</Text>
                   <Text size="md">
-                    {order.long}
+                    {book.long}
                     {' '}
                     x
                     {' '}
-                    {order.width}
+                    {book.width}
                     {' '}
                     Meter
                   </Text>
@@ -146,7 +146,7 @@ export default function Component() {
                 <Box>
                   <Text fontSize="xs">Kecepatan Max</Text>
                   <Text size="md">
-                    {order.speed}
+                    {book.speed}
                     {' '}
                     Knot
                   </Text>
@@ -154,7 +154,7 @@ export default function Component() {
                 <Box>
                   <Text fontSize="xs">Kapasitas</Text>
                   <Text size="md">
-                    {order.capacity}
+                    {book.capacity}
                     {' '}
                     Tamu
                   </Text>
@@ -162,7 +162,7 @@ export default function Component() {
                 <Box>
                   <Text fontSize="xs">Jumlah Kabin</Text>
                   <Text size="md">
-                    {order.cabin}
+                    {book.cabin}
                     {' '}
                     Kamar
                   </Text>
@@ -188,12 +188,12 @@ export default function Component() {
             <Heading fontSize={['lg', 'xl', '2xl']}>
               Rp
               {' '}
-              {normalizeRupiah(`${order.price}`)}
+              {normalizeRupiah(`${book.price}`)}
               {' '}
               /Pax
             </Heading>
             <Select placeholder="Jumlah Tamu" mt="6" value={pax} onChange={({ target }) => setPax(target.value)}>
-              {new Array(order.maxPax).fill(0).map((e, i) => (
+              {new Array(book.maxPax).fill(0).map((e, i) => (
                 <option key={i} value={i + 1}>
                   {i + 1}
                   {' '}
@@ -215,7 +215,7 @@ export default function Component() {
               // }}
               onClick={sendWAMessage}
             >
-              Join Sekarang
+              Sewa Sekarang
             </Button>
             {!!pax
             && (
@@ -224,7 +224,7 @@ export default function Component() {
                 <Text textDecorationLine="underline">
                   Rp
                   {' '}
-                  {normalizeRupiah(`${order.price}`)}
+                  {normalizeRupiah(`${book.price}`)}
                   {' '}
                   x
                   {' '}
@@ -233,7 +233,7 @@ export default function Component() {
                 <Text>
                   Rp
                   {' '}
-                  {normalizeRupiah(`${order.price * pax}`)}
+                  {normalizeRupiah(`${book.price * pax}`)}
                 </Text>
               </Flex>
               <Flex mt="2" justify="space-between" alignItems="center">
@@ -245,7 +245,7 @@ export default function Component() {
                 <Heading size="md">
                   Rp
                   {' '}
-                  {normalizeRupiah(`${order.price * pax}`)}
+                  {normalizeRupiah(`${book.price * pax}`)}
                 </Heading>
               </Flex>
             </>
@@ -254,7 +254,7 @@ export default function Component() {
         </GridItem>
       </Grid>
 
-      <Elements.ImagesModal defaultImg={fullImg} images={order.images || []} close={() => setFullImg('')} />
+      <Elements.ImagesModal defaultImg={fullImg} images={book.images || []} close={() => setFullImg('')} />
     </Container>
   );
 }
