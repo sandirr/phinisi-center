@@ -148,7 +148,7 @@ export default function Component() {
   return (
     <Container maxW="7xl" h="max-content">
       <Elements.Loading loading={loading} />
-      <Flex gap="4" mt={['4', '5', '7', '9']} h="78vh">
+      <Flex gap="4" mt={['4', '5', '7', '9']} h="70vh">
         <Box
           h="full"
           boxShadow="0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
