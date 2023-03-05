@@ -43,7 +43,7 @@ export default function Component() {
   const [sort, setSort] = useState('desc');
 
   const handleInterested = () => {
-    showChatModal({ vendor: { name: 'Hj Awang' } });
+    showChatModal({ vendor });
   };
 
   const handleFixOrder = () => {

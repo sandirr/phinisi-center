@@ -16,8 +16,15 @@ import {
   Stack,
   Text,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
+import {
+  doc, getDoc, setDoc, updateDoc,
+} from 'firebase/firestore';
+import { push, ref } from 'firebase/database';
 import { SendIcon } from '../../../Assets/icons/icons';
+import { auth, database, firestore } from '../../../Configs/firebase';
+import Images from '../../../Configs/images';
 
 const initialMessages = [
   'Halo ! saya tertarik dengan vendor ini',
@@ -26,28 +33,79 @@ const initialMessages = [
 ];
 
 export default function Component({
-  handleClose, open, vendor = {},
+  handleClose, open, vendor = {}, order = {},
 }) {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const toast = useToast();
   const sendMessage = async () => {
+    const newOrder = { ...order };
+    delete newOrder.detailVendor;
+    if (message) {
+      setLoading(true);
+      const body = {
+        uid: auth.currentUser?.uid,
+        email: auth.currentUser?.email,
+        name: auth.currentUser?.displayName,
+        lastChatTime: new Date().toISOString(),
+        lastChatContent: message,
+        lastChatFrom: auth.currentUser?.displayName,
+        vendor: doc(firestore, `vendors/${vendor.id}`),
+        hasRead: false,
+        order: newOrder,
+      };
+
+      const chatId = `${auth.currentUser?.uid}-${vendor.id}`;
+      const chatRef = doc(firestore, `chats/${chatId}`);
+      const chatSnapshot = await getDoc(chatRef);
+      if (chatSnapshot.exists()) {
+        await updateDoc(chatRef, body).then(() => {
+          const dateChatRef = ref(database, `chats/${chatId}`);
+          push(dateChatRef, {
+            from: auth.currentUser?.displayName,
+            fromUid: auth.currentUser?.uid,
+            content: message,
+            time: new Date().toISOString(),
+          }).then(() => {
+            setMessage('');
+          });
+        }).finally(() => {
+          handleClose();
+          setLoading(false);
+          toast({
+            title: 'Pesan terkirim.',
+            description: 'Cek pesan secara berkala.',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+          });
+        });
+      } else {
+        await setDoc(chatRef, body).then(() => {
+          setMessage('');
+        }).finally(() => {
+          handleClose();
+          setLoading(false);
+        });
+      }
+    }
   };
   return (
     <Modal onClose={handleClose} size={['xs', 'xl']} isOpen={open}>
       <ModalOverlay />
       <ModalContent borderRadius={24}>
-        <ModalHeader px={[4, 6]}>
+        <ModalHeader px={[2, 4, 6]}>
           <Flex justify="space-between" alignItems="center" px={[2, 4, 6]} pt={4}>
             <Flex gap={['2', '4', '6']} alignItems="center">
               <Avatar
                 referrerPolicy="no-referrer"
-                src="https://images.unsplash.com/photo-1653404786584-2166b81a5b3c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                src={vendor.cover || Images.Order1}
               />
               <Box>
                 <Heading size={['sm', 'md']}>
                   {vendor.name}
                 </Heading>
-                <Text fontSize={['sm', 'md', 'lg']} fontWeight="400">Phinisi Center</Text>
+                <Text fontSize={['xs', 'sm', 'md']} fontWeight="400">{vendor.location}</Text>
               </Box>
             </Flex>
             <CloseButton color="blackAlpha.300" onClick={handleClose} />

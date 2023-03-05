@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getDatabase } from 'firebase/database';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
@@ -19,16 +21,20 @@ const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app, 'asia-southeast1');
 const callFunc = (funcName) => httpsCallable(functions, funcName);
 
-const storage = getStorage(app);
-
-const auth = getAuth(app);
-
 const messaging = getMessaging(app);
 const generateNotifToken = () => getToken(messaging, { vapidKey: 'BEx_Z6VV8Zn_FDWPq7-6rJNCBDVTKZObDhgBKFHksxc6XKQQ51j6nk021nYFFMGHPtd76PP7ycDypDxoz7h-JOs' });
 const receiverNotif = () => onMessage(messaging, (payload) => {
   // eslint-disable-next-line no-console
   console.log(payload);
 });
+
+const firestore = getFirestore(app);
+
+const database = getDatabase(app);
+
+const storage = getStorage(app);
+
+const auth = getAuth(app);
 
 export {
   callFunc,
@@ -38,4 +44,6 @@ export {
   messaging,
   generateNotifToken,
   receiverNotif,
+  firestore,
+  database,
 };

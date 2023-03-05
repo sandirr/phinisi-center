@@ -47,7 +47,7 @@ export default function Component() {
   }, [orderId]);
 
   const handleInterested = () => {
-    showChatModal({ vendor: { name: 'Hj Awang' } });
+    showChatModal({ vendor: order.detailVendor, order });
   };
   return (
     <Container maxW="7xl" py="5">

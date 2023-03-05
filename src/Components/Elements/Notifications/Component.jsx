@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { callFunc } from '../../../Configs/firebase';
 import { NotifOffIcon } from '../../../Assets/icons/icons';
 import ROUTES from '../../../Configs/routes';
+import Loading from '../Loading';
 
 export default function Component() {
   const navigate = useNavigate();
@@ -132,6 +133,7 @@ export default function Component() {
 
   return (
     <Popover isLazy>
+      <Loading loading={loadingRead} />
       <PopoverTrigger>
         <Box cursor="pointer" bg="transparent" border="none" color="blue.600" position="relative" mt="3">
           <NotificationsOutlined color="inherit" />
