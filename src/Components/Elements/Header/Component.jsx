@@ -188,7 +188,7 @@ export default function Component() {
             display="flex"
             flexWrap="wrap"
           >
-            <Tabs index={indexes[activeTab]} size={['sm', 'md', 'lg']}>
+            <Tabs index={indexes[activeTab] || undefined} size={['sm', 'md', 'lg']}>
               <TabList _selected={{ color: 'blue.600', borderColor: 'blue.600', outline: 'none' }} _focusVisible={{ boxShadow: 'none' }}>
                 <Tab _focusVisible={{ boxShadow: 'none' }} as={Link} to={ROUTES.home()} fontWeight="medium">Beranda</Tab>
                 <Tab

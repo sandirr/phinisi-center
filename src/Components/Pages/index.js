@@ -12,6 +12,10 @@ import Histories from './Histories';
 import Filosofi from './Filosofi';
 import Chat from './Chat';
 import ChatAdminArea from './ChatAdminArea';
+import FAQ from './FAQ';
+import PrivacyPolicy from './PrivacyPolicy';
+import AboutUs from './AboutUs';
+import Terms from './Terms&Condition';
 import Admin from './Admin';
 import Auth from './Auth';
 
@@ -30,6 +34,10 @@ export default {
   Filosofi,
   Chat,
   ChatAdminArea,
+  FAQ,
+  PrivacyPolicy,
+  AboutUs,
+  Terms,
   Admin,
   Auth,
 };
