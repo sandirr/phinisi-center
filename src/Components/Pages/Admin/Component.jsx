@@ -9,7 +9,9 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  Button,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import ManageSejarah from './tabs/Sejarah';
 import ManageFilosofi from './tabs/Filosofi';
 import ManageArtikel from './tabs/Artikel';
@@ -17,8 +19,10 @@ import ProsesPembuatan from './tabs/ProsesPembuatan';
 import ManageVendor from './tabs/Vendor';
 import ManagePesanan from './tabs/Pesanan';
 import ManageTrip from './tabs/Trip';
+import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
+  const navigate = useNavigate();
   const [menuList] = useState([
     { name: 'Sejarah' },
     { name: 'Filosofi' },
@@ -78,7 +82,7 @@ export default function Component() {
               <ManageTrip />
             </TabPanel>
             <TabPanel pb="6">
-              <Heading size="lg">Chat Area</Heading>
+              <Button onClick={() => navigate(`${ROUTES.chat()}-admin`)}>Chat Area</Button>
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -50,7 +50,7 @@ export default function Component({
         lastChatTime: new Date().toISOString(),
         lastChatContent: message,
         lastChatFrom: auth.currentUser?.displayName,
-        lastChatCover: auth.currentUser?.photoURL,
+        photoURL: auth.currentUser?.photoURL,
         vendor: doc(firestore, `vendors/${vendor.id}`),
         hasRead: true,
         hasReadAdmin: false,

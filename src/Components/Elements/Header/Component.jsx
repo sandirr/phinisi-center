@@ -47,6 +47,7 @@ export default function Component() {
     penyewaan: 3,
     artikel: 4,
     admin: 5,
+    'chat-admin': 5,
   });
   const activeTab = useLocation().pathname.split('/')[1];
 

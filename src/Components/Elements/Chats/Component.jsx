@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Avatar,
   Badge,
@@ -15,53 +15,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { EmailOutlined } from '@mui/icons-material';
-import {
-  collection, onSnapshot, query, orderBy, where, getDoc,
-} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { auth, firestore } from '../../../Configs/firebase';
 import { ChatOffIcon } from '../../../Assets/icons/icons';
 import ROUTES from '../../../Configs/routes';
-
-export function useChat() {
-  const [unread, setUnread] = useState(0);
-  const [allChats, setChats] = useState([]);
-
-  const getChat = () => {
-    const chatsref = query(collection(firestore, '/chats'), where('uid', '==', auth.currentUser?.uid), orderBy('lastChatTime', 'desc'));
-    onSnapshot(chatsref, async (querySnapshot) => {
-      const chats = [];
-      let neverRead = 0;
-      querySnapshot.forEach((snap) => {
-        const data = snap.data();
-        if (!data.hasRead) {
-          neverRead += 1;
-        }
-        chats.push({ ...data, id: snap.id });
-      });
-
-      const chatsWithVendor = await Promise.all(chats.map(async (chat) => {
-        if (chat.vendor) {
-          const detailVendorSnap = await getDoc(chat.vendor);
-          return {
-            ...chat,
-            detailVendor: detailVendorSnap.data(),
-          };
-        }
-        return chat;
-      }));
-
-      setUnread(neverRead);
-      setChats(chatsWithVendor);
-    });
-  };
-
-  useEffect(() => {
-    getChat();
-  }, []);
-
-  return { unread, allChats };
-}
+import { useChat } from '../../../CustomHooks';
 
 export default function Component() {
   const navigate = useNavigate();

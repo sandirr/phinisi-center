@@ -40,7 +40,7 @@ export function ChatContentSection({ contents }) {
       className="no-scrollbar"
     >
       {contents.map((content) => {
-        const myMssg = content.fromUid === auth.currentUser?.uid;
+        const myMssg = content.fromUid === '@dmin-phinisi-center';
         return (
           <Box
             key={content.time}
@@ -72,7 +72,7 @@ export function ChatContentSection({ contents }) {
 }
 
 export default function Component() {
-  const { unread, allChats } = useChat(false);
+  const { adminUnread, allChats } = useChat(true);
   const [param, setParam] = useSearchParams();
   const [selectedChat, setSelectedChat] = useState({});
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ export default function Component() {
   const getChats = () => {
     const chatRef = doc(firestore, `chats/${chatId}`);
     updateDoc(chatRef, {
-      hasRead: true,
+      hasReadAdmin: true,
     }).then(() => {
       // realtime DB here : start (GET)
       const realtimeChatRef = ref(database, `chats/${chatId}`);
@@ -122,7 +122,7 @@ export default function Component() {
       const body = {
         lastChatTime: new Date().toISOString(),
         lastChatContent: message,
-        lastChatFrom: auth.currentUser?.displayName,
+        lastChatFrom: '@dmin-phinisi-center',
         lastChatCover: auth.currentUser?.photoURL,
         hasRead: true,
         hasReadAdmin: false,
@@ -133,7 +133,7 @@ export default function Component() {
         const realtimeChatRef = ref(database, `chats/${chatId}`);
         push(realtimeChatRef, {
           from: auth.currentUser?.displayName,
-          fromUid: auth.currentUser?.uid,
+          fromUid: '@dmin-phinisi-center',
           content: message,
           time: new Date().toISOString(),
         }).then(() => {
@@ -163,7 +163,7 @@ export default function Component() {
           <Flex color="blue.600" gap="2">
             <Text size="sm" fontWeight="700">
               Semua Pesan (
-              {unread}
+              {adminUnread}
               )
             </Text>
           </Flex>
@@ -172,13 +172,13 @@ export default function Component() {
             {allChats.map((chat) => (
               <Box key={chat.id} cursor="pointer" onClick={() => setParam({ chatId: chat.id })}>
                 <Flex gap="2" p="10px" justifyContent="flex-start" borderRadius={4}>
-                  <Avatar h="8" w="8" src={chat.detailVendor?.cover} referrerPolicy="no-referrer" />
+                  <Avatar h="8" w="8" src={chat.photoURL} referrerPolicy="no-referrer" />
                   <Box textAlign="left">
-                    <Heading size="xs">{chat.detailVendor?.name}</Heading>
+                    <Heading size="xs">{chat.name}</Heading>
                     <Text fontSize="xs" noOfLines={1}>{chat.lastChatContent}</Text>
                   </Box>
 
-                  {!chat.hasRead
+                  {!chat.hasReadAdmin
                 && <Box ml="auto" bg="red.600" h="2" w="2" borderRadius="full" />}
                 </Flex>
                 <Divider />
@@ -210,10 +210,22 @@ export default function Component() {
               <Flex h="full" flexDirection="column">
                 <Box>
                   <Flex gap="2" justifyContent="flex-start" borderRadius={4}>
-                    <Avatar h="8" w="8" src={selectedChat.detailVendor?.cover} referrerPolicy="no-referrer" />
+                    <Avatar h="8" w="8" src={selectedChat.photoURL} referrerPolicy="no-referrer" />
                     <Box textAlign="left">
-                      <Heading size="xs">{selectedChat.detailVendor?.name}</Heading>
-                      <Text fontSize="xs" noOfLines={1}>Phinisi Center</Text>
+                      <Heading size="xs">{selectedChat.name}</Heading>
+                      <Text fontSize="xs" noOfLines={1}>
+                        Vendor:
+                        {' '}
+                        {selectedChat.detailVendor?.name}
+                      </Text>
+                      {!!selectedChat.order
+                      && (
+                      <Text fontSize="xs" noOfLines={1}>
+                        Tertarik dengan Phinisi:
+                        {' '}
+                        {selectedChat.order?.name}
+                      </Text>
+                      )}
                     </Box>
                   </Flex>
                   <Divider my="2.5" />
