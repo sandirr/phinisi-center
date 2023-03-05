@@ -51,6 +51,13 @@ export default function Component() {
   });
   const activeTab = useLocation().pathname.split('/')[1];
 
+  const [search, setSearch] = useState('');
+  const handleSearch = () => {
+    if (search) {
+      navigate(`${ROUTES.artikel()}?search=${search}`);
+    }
+  };
+
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -219,7 +226,7 @@ export default function Component() {
 
           <Box flex={{ base: 'auto', md: 'inherit' }} mb={{ base: 1, md: 0 }}>
             <InputGroup>
-              <Input placeholder="Search" size="md" borderRadius="3xl" />
+              <Input placeholder="Search" size="md" onChange={({ target }) => setSearch(target.value)} borderRadius="3xl" value={search} />
               <InputRightElement>
                 <IconButton
                   colorScheme="blue"
@@ -230,6 +237,7 @@ export default function Component() {
                   aria-label="Search database"
                   size="sm"
                   borderRadius="3xl"
+                  onClick={handleSearch}
                   icon={<Search2Icon />}
                 />
               </InputRightElement>

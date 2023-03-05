@@ -34,13 +34,14 @@ export default function Component() {
   const [loading, setLoading] = useState(false);
   const [hasMoreItems, setHasMoreItems] = useState(false);
   const activeTab = searchQuery.get('tab') || 'Semua';
+  const search = searchQuery.get('search') || '';
 
   const getArticles = async () => {
     const callable = callFunc('getArticles');
 
     setLoading(true);
     await callable({
-      page: meta.activePage, limit: 8, type: 'Artikel', category: activeTab === tabs[0] ? '' : activeTab,
+      page: meta.activePage, limit: 8, type: 'Artikel', category: activeTab === tabs[0] ? '' : activeTab, search,
     })
       .then((res) => {
         const {
@@ -92,7 +93,17 @@ export default function Component() {
     if (firstLoad || hasMoreItems) {
       getArticles();
     }
-  }, [meta.activePage, activeTab]);
+  }, [meta.activePage, activeTab, search]);
+
+  useEffect(() => {
+    if (search) {
+      setArticlesList([]);
+      setMeta((prev) => ({
+        ...prev,
+        activePage: 1,
+      }));
+    }
+  }, [search]);
 
   const renderLoading = () => [1, 2, 3].map((i) => (
     <Box mt={['3', '4', '6', '8']} pr={4} key={i}>
