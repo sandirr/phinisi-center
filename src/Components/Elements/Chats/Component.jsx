@@ -18,10 +18,12 @@ import { EmailOutlined } from '@mui/icons-material';
 import {
   collection, onSnapshot, query, orderBy, where, getDoc,
 } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../../../Configs/firebase';
 import { ChatOffIcon } from '../../../Assets/icons/icons';
+import ROUTES from '../../../Configs/routes';
 
-export default function Component() {
+export function useChat() {
   const [unread, setUnread] = useState(0);
   const [allChats, setChats] = useState([]);
 
@@ -31,12 +33,6 @@ export default function Component() {
       const chats = [];
       let neverRead = 0;
       querySnapshot.forEach((snap) => {
-        // const dateChatRef = ref(database, `chats/${snap.id}`);
-        // push(dateChatRef, {
-        //   from: 'test',
-        //   content: 'test',
-        //   time: new Date().toISOString(),
-        // });
         const data = snap.data();
         if (!data.hasRead) {
           neverRead += 1;
@@ -63,6 +59,13 @@ export default function Component() {
   useEffect(() => {
     getChat();
   }, []);
+
+  return { unread, allChats };
+}
+
+export default function Component() {
+  const navigate = useNavigate();
+  const { unread, allChats } = useChat();
 
   const renderBadge = () => (
     <Badge
@@ -113,12 +116,17 @@ export default function Component() {
         </PopoverHeader>
         <PopoverBody textAlign="left" w="full" overflow="auto">
           {allChats.map((chat) => (
-            <Box key={chat.id}>
+            <Box
+              w="full"
+              key={chat.id}
+              cursor="pointer"
+              onClick={() => navigate(`${ROUTES.chat()}?chatId=${chat.id}`)}
+            >
               <Flex gap="2" p="10px" justifyContent="flex-start" bgColor={chat.hasRead ? 'none' : 'blue.100'} borderRadius={4}>
-                <Avatar h="8" w="8" />
+                <Avatar h="8" w="8" referrerPolicy="no-referrer" src={chat.detailVendor?.cover} />
                 <Box textAlign="left">
                   <Heading size="xs">{chat.detailVendor?.name}</Heading>
-                  <Text fontSize="xs">{chat.lastChatContent}</Text>
+                  <Text fontSize="xs" noOfLines={1}>{chat.lastChatContent}</Text>
                 </Box>
               </Flex>
               <Divider />

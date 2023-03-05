@@ -50,8 +50,10 @@ export default function Component({
         lastChatTime: new Date().toISOString(),
         lastChatContent: message,
         lastChatFrom: auth.currentUser?.displayName,
+        lastChatCover: auth.currentUser?.photoURL,
         vendor: doc(firestore, `vendors/${vendor.id}`),
-        hasRead: false,
+        hasRead: true,
+        hasReadAdmin: false,
         order: newOrder,
       };
 
@@ -60,8 +62,8 @@ export default function Component({
       const chatSnapshot = await getDoc(chatRef);
       if (chatSnapshot.exists()) {
         await updateDoc(chatRef, body).then(() => {
-          const dateChatRef = ref(database, `chats/${chatId}`);
-          push(dateChatRef, {
+          const realtimeChatRef = ref(database, `chats/${chatId}`);
+          push(realtimeChatRef, {
             from: auth.currentUser?.displayName,
             fromUid: auth.currentUser?.uid,
             content: message,

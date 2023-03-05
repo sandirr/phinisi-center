@@ -10,6 +10,7 @@ import DetailShip from './DetailShip';
 import Rental from './Rental';
 import Histories from './Histories';
 import Filosofi from './Filosofi';
+import Chat from './Chat';
 import Admin from './Admin';
 import Auth from './Auth';
 
@@ -26,6 +27,7 @@ export default {
   Rental,
   Histories,
   Filosofi,
+  Chat,
   Admin,
   Auth,
 };

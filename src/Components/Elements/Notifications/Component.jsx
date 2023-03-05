@@ -178,7 +178,7 @@ export default function Component() {
                 }}
               >
                 <Flex gap="2" p={[1.5, 2, 2.5]} justifyContent="flex-start" bgColor={notif.hasRead ? 'none' : 'blue.100'} borderRadius={4}>
-                  <Avatar h="8" w="8" src={notif.detailvendor?.cover || 'https://phinisicenter.id/logo64.png'} />
+                  <Avatar h="8" w="8" src={notif.detailvendor?.cover || 'https://phinisicenter.id/logo64.png'} referrerPolicy="no-referrer" />
                   <Box textAlign="left">
                     <Heading size="xs">{notif.detailvendor?.name || 'Phinisi Center'}</Heading>
                     <Text fontSize="xs">

@@ -56,6 +56,8 @@ export default function Component() {
     setOpenSF(false);
   }, [pathname]);
 
+  const chatPage = pathname === ROUTES.chat();
+
   const handleLogout = () => {
     showConfirmation({
       handleAgree: async () => {
@@ -105,7 +107,7 @@ export default function Component() {
             <Image height="16px" src={Images.LPDP} alt="LPDP" />
           </a>
         </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box display="flex" alignItems="center" justifyContent="space-between" pb={['2', '4', '6']}>
           <Box display={{ base: 'none', md: 'flex' }} gap="2" flex={1}>
             <a href="https://www.kemdikbud.go.id/" target="_blank" rel="noreferrer">
               <Image height="26px" src={Images.Kemdikbud} alt="kemdikbud" />
@@ -168,12 +170,12 @@ export default function Component() {
           </Box>
         </Box>
         <Box
-          mt={['2', '4', '6']}
           display="flex"
           flexWrap="wrap"
           justifyContent="space-between"
           alignItems="center"
           gap={['2', '4']}
+          hidden={chatPage}
         >
           <Box
             overflowX="auto"

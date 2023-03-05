@@ -9,6 +9,7 @@ const ROUTES = {
   privacy: () => '/privacy-policy',
   about: () => '/about',
   faq: () => '/faq',
+  chat: () => '/chat',
   admin: () => '/admin',
 };
 

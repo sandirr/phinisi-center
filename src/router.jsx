@@ -191,6 +191,7 @@ export default function Router() {
                   </Route>
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}
+                  {!!loggedin && <Route path={ROUTES.chat()} element={<Pages.Chat />} />}
                   <Route
                     path="*"
                     element={(
