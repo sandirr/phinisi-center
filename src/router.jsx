@@ -32,6 +32,17 @@ export default function Router() {
       // eslint-disable-next-line no-console
       console.log('user update failed', err);
     });
+
+    if (admins.includes(loggedin.email.toLowerCase())) {
+      const createAdminCallable = callFunc('createAdmin');
+      await createAdminCallable(data).then(() => {
+        // eslint-disable-next-line no-console
+        console.log('admin updated');
+      }).catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log('admin update failed', err);
+      });
+    }
   };
 
   useEffect(() => {

@@ -19,6 +19,10 @@ import ProsesPembuatan from './tabs/ProsesPembuatan';
 import ManageVendor from './tabs/Vendor';
 import ManagePesanan from './tabs/Pesanan';
 import ManageTrip from './tabs/Trip';
+import FAQ from './tabs/FAQ';
+import Privacy from './tabs/Privacy';
+import Syarat from './tabs/Syarat';
+import Tentang from './tabs/Tentang';
 import ROUTES from '../../../Configs/routes';
 
 export default function Component() {
@@ -32,6 +36,10 @@ export default function Component() {
     { name: 'Pesanan' },
     { name: 'Trip' },
     { name: 'Chat' },
+    { name: 'FAQ' },
+    { name: 'Privasi' },
+    { name: 'Syarat' },
+    { name: 'Tentang' },
   ]);
 
   return (
@@ -83,6 +91,18 @@ export default function Component() {
             </TabPanel>
             <TabPanel pb="6">
               <Button onClick={() => navigate(`${ROUTES.chat()}-admin`)}>Chat Area</Button>
+            </TabPanel>
+            <TabPanel pb="6">
+              <FAQ />
+            </TabPanel>
+            <TabPanel pb="6">
+              <Privacy />
+            </TabPanel>
+            <TabPanel pb="6">
+              <Syarat />
+            </TabPanel>
+            <TabPanel pb="6">
+              <Tentang />
             </TabPanel>
           </TabPanels>
         </Tabs>

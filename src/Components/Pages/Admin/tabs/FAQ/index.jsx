@@ -16,30 +16,26 @@ import {
 import moment from 'moment';
 import { callFunc } from '../../../../../Configs/firebase';
 import { generateArticleDesc } from '../../../../../Utils/text';
-import CreateArticle from '../../lib/CreateArticle';
+import CreateFAQ from '../../lib/CreateFAQ';
 import Elements from '../../../../Elements';
 import { ConfirmationContext } from '../../../../../Context';
 
 const dataFormat = [
   {
     name: 'No.',
+    schema: 'i',
+  },
+  {
+    name: 'Pertanyaan',
+    schema: 'question',
+  },
+  {
+    name: 'Jawaban',
+    schema: 'answer',
+  },
+  {
+    name: 'Index',
     schema: 'index',
-  },
-  {
-    name: 'Judul',
-    schema: 'title',
-  },
-  {
-    name: 'Penulis',
-    schema: 'author',
-  },
-  {
-    name: 'Dibuat',
-    schema: 'createdAt',
-  },
-  {
-    name: 'Konten',
-    schema: 'generatedContent',
   },
   {
     name: 'Aksi',
@@ -51,7 +47,6 @@ export default function Component() {
   const [articlesList, setArticlesList] = useState([]);
   const [openModal, setOpenModal] = useState('');
   const [selectedArticle, setSelectedArticle] = useState({
-    type: 'Sejarah',
   });
   const [hasMoreItems, setHasMoreItems] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,10 +62,10 @@ export default function Component() {
   const prepareToDelete = (item) => {
     const confirmationProps = {
       handleAgree: async () => {
-        const callable = callFunc('deleteArticle');
+        const callable = callFunc('deleteFaq');
         await callable(item.id)
           .then(async () => {
-            await getArticles();
+            await getFaqs();
             closeConfirmation();
           });
       },
@@ -81,12 +76,12 @@ export default function Component() {
     showConfirmation(confirmationProps);
   };
 
-  const getArticles = async () => {
+  const getFaqs = async () => {
+    const callable = callFunc('getFaqs');
     setLoading(true);
-    const callable = callFunc('getArticles');
 
     await callable({
-      page: meta.activePage, limit: 10, type: 'Sejarah',
+      page: meta.activePage, limit: 10,
     })
       .then((res) => {
         const {
@@ -97,9 +92,8 @@ export default function Component() {
         } = res.data;
         const normalizeData = data.map((item, index) => ({
           ...item,
-          index: index + 1 + (articlesList.length),
-          createdAt: moment(item.createdAt).startOf('minute').fromNow(),
-          generatedContent: `${generateArticleDesc(item.content, 50)}...`,
+          i: index + 1 + (articlesList.length),
+          answer: `${generateArticleDesc(item.answer, 50)}...`,
           actions: (
             <Flex gap="2">
               <Button colorScheme="yellow" variant="outline" onClick={() => handleOpenModal('Edit', item)}>Edit</Button>
@@ -132,18 +126,17 @@ export default function Component() {
   useEffect(() => {
     const firstLoad = meta.activePage === 1 && !articlesList.length;
     if (firstLoad || hasMoreItems) {
-      getArticles();
+      getFaqs();
     }
   }, [meta.activePage]);
 
   const handleCloseOpenModal = (getAgain = false) => {
     setOpenModal(false);
     setSelectedArticle({
-      type: 'Sejarah',
     });
 
     if (getAgain) {
-      getArticles();
+      getFaqs();
     }
   };
 
@@ -155,15 +148,15 @@ export default function Component() {
   return (
     <Box>
       <Flex justify="space-between">
-        <Heading size="lg">Manajemen Sejarah</Heading>
-        <Button colorScheme="blue" onClick={() => handleOpenModal('Buat')}>Buat Sejarah</Button>
+        <Heading size="lg">Manajemen FAQ</Heading>
+        <Button colorScheme="blue" onClick={() => handleOpenModal('Buat')}>Buat Pertanyaan</Button>
       </Flex>
       <Elements.Table
-        isLoading={loading}
         hasMoreItems={hasMoreItems}
         handleLoadMore={handleLoadMore}
         listData={articlesList}
         dataFormat={dataFormat}
+        isLoading={loading}
       />
       <Modal isOpen={!!openModal} size="6xl" onClose={handleCloseOpenModal}>
         <ModalOverlay />
@@ -171,11 +164,11 @@ export default function Component() {
           <ModalHeader>
             {openModal}
             {' '}
-            Sejarah
+            Artikel
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CreateArticle givenData={selectedArticle} onSuccess={handleCloseOpenModal} />
+            <CreateFAQ givenData={selectedArticle} onSuccess={handleCloseOpenModal} />
           </ModalBody>
         </ModalContent>
       </Modal>
