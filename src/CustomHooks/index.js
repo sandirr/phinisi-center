@@ -17,7 +17,7 @@ export function useChat(admin = false) {
   const [allChats, setChats] = useState([]);
 
   const getChat = () => {
-    let chatsref = query(collection(firestore, '/chats'), where('uid', '==', auth.currentUser?.uid), orderBy('lastChatTime', 'desc'));
+    let chatsref = query(collection(firestore, '/chats'), where('uid', '==', auth.currentUser.uid), orderBy('lastChatTime', 'desc'));
     if (admin) {
       chatsref = query(collection(firestore, '/chats'), orderBy('lastChatTime', 'desc'));
     }

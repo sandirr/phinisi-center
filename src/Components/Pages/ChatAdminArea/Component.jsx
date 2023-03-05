@@ -15,6 +15,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useSearchParams } from 'react-router-dom';
 import { onValue, push, ref } from 'firebase/database';
 import moment from 'moment';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { ChatOffIcon, SendIcon } from '../../../Assets/icons/icons';
 import { auth, database, firestore } from '../../../Configs/firebase';
 import Elements from '../../Elements';
@@ -157,8 +158,8 @@ export default function Component() {
           pt="2.5"
           pb="12"
           px="2"
-          display={['none', 'none', 'block']}
           overflow="hidden"
+          display={chatId ? 'none' : 'block'}
         >
           <Flex color="blue.600" gap="2">
             <Text size="sm" fontWeight="700">
@@ -203,22 +204,25 @@ export default function Component() {
           py={['3', '4', '5']}
           px={['2', '3', '4']}
           overflow="hidden"
+          display={!chatId ? 'none' : 'block'}
         >
           {!chatId
             ? <Box flex={1}>Phinisi Center</Box>
             : (
               <Flex h="full" flexDirection="column">
                 <Box>
-                  <Flex gap="2" justifyContent="flex-start" borderRadius={4}>
-                    <Avatar h="8" w="8" src={selectedChat.photoURL} referrerPolicy="no-referrer" />
-                    <Box textAlign="left">
-                      <Heading size="xs">{selectedChat.name}</Heading>
-                      <Text fontSize="xs" noOfLines={1}>
-                        Vendor:
-                        {' '}
-                        {selectedChat.detailVendor?.name}
-                      </Text>
-                      {!!selectedChat.order
+                  <Flex gap={4} alignItems="center">
+                    <ArrowBackIcon w="6" h="6" cursor="pointer" onClick={() => setParam({ chatId: '' })} />
+                    <Flex gap="2" justifyContent="flex-start" borderRadius={4}>
+                      <Avatar h="8" w="8" src={selectedChat.photoURL} referrerPolicy="no-referrer" />
+                      <Box textAlign="left">
+                        <Heading size="xs">{selectedChat.name}</Heading>
+                        <Text fontSize="xs" noOfLines={1}>
+                          Vendor:
+                          {' '}
+                          {selectedChat.detailVendor?.name}
+                        </Text>
+                        {!!selectedChat.order
                       && (
                       <Text fontSize="xs" noOfLines={1}>
                         Tertarik dengan Phinisi:
@@ -226,7 +230,8 @@ export default function Component() {
                         {selectedChat.order?.name}
                       </Text>
                       )}
-                    </Box>
+                      </Box>
+                    </Flex>
                   </Flex>
                   <Divider my="2.5" />
                 </Box>

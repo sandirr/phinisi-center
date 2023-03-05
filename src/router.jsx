@@ -192,7 +192,7 @@ export default function Router() {
                   {!!loggedin && admins.includes(loggedin.email.toLowerCase())
                   && <Route path={ROUTES.admin()} element={<Pages.Admin />} />}
                   {!!loggedin && <Route path={ROUTES.chat()} element={<Pages.Chat />} />}
-                  {!!loggedin && <Route path={`${ROUTES.chat()}-admin`} element={<Pages.ChatAdminArea />} />}
+                  {!!loggedin && admins.includes(loggedin.email.toLowerCase()) && <Route path={`${ROUTES.chat()}-admin`} element={<Pages.ChatAdminArea />} />}
                   <Route
                     path="*"
                     element={(
