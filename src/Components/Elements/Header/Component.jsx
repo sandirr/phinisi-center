@@ -53,9 +53,7 @@ export default function Component() {
 
   const [search, setSearch] = useState('');
   const handleSearch = () => {
-    if (search) {
-      navigate(`${ROUTES.artikel()}?search=${search}`);
-    }
+    navigate(`${ROUTES.artikel()}?search=${search}`);
   };
 
   const { pathname } = useLocation();

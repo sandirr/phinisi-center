@@ -61,9 +61,9 @@ export default function Component({
       const chatRef = doc(firestore, `chats/${chatId}`);
       const chatSnapshot = await getDoc(chatRef);
       if (chatSnapshot.exists()) {
-        await updateDoc(chatRef, body).then(() => {
+        await updateDoc(chatRef, body).then(async () => {
           const realtimeChatRef = ref(database, `chats/${chatId}`);
-          push(realtimeChatRef, {
+          await push(realtimeChatRef, {
             from: auth.currentUser?.displayName,
             fromUid: auth.currentUser?.uid,
             content: message,
