@@ -125,8 +125,8 @@ export default function Component() {
         lastChatContent: message,
         lastChatFrom: '@dmin-phinisi-center',
         lastChatCover: auth.currentUser?.photoURL,
-        hasRead: true,
-        hasReadAdmin: false,
+        hasRead: false,
+        hasReadAdmin: true,
       };
 
       const chatRef = doc(firestore, `chats/${chatId}`);
