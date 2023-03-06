@@ -37,6 +37,9 @@ messaging.onBackgroundMessage((payload = {}) => {
     body: notification.body || '',
     icon: notification.image || 'https://phinisicenter.id/logo64.png',
     vibrate: [300, 100, 300],
+    data: {
+      url: 'https://phinisicenter.id',
+    },
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
