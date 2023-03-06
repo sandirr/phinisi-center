@@ -222,7 +222,7 @@ export default function Component() {
                           {' '}
                           {selectedChat.detailVendor?.name}
                         </Text>
-                        {!!selectedChat.order
+                        {!!selectedChat.order?.name
                       && (
                       <Text fontSize="xs" noOfLines={1}>
                         Tertarik dengan Phinisi:
