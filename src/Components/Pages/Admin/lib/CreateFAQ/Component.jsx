@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Button, Stack, Input,
+  Button, Stack, Input, Textarea,
 } from '@chakra-ui/react';
 import { callFunc } from '../../../../../Configs/firebase';
 
@@ -50,7 +50,7 @@ export default function Component({ onSuccess, givenData }) {
     <form onSubmit={pushData}>
       <Stack gap={2}>
         <Input name="question" placeholder="Pertanyaan" value={fields.question} onChange={handleChangeField} />
-        <Input name="answer" placeholder="Jawaban" value={fields.answer} onChange={handleChangeField} />
+        <Textarea rows={3} name="answer" placeholder="Jawaban" value={fields.answer} onChange={handleChangeField} />
         <Input name="index" placeholder="Index" type="number" value={fields.index} onChange={handleChangeField} />
       </Stack>
 

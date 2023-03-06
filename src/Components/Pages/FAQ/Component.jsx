@@ -60,7 +60,7 @@ export default function Component() {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Text fontSize={['md', 'lg', 'xl', '2xl', '3xl']}>
+                <Text fontSize={['md', 'lg', 'xl', '2xl', '3xl']} textAlign="justify">
                   {faq.answer}
                 </Text>
               </AccordionPanel>
