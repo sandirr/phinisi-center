@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { initializeApp } from 'firebase/app';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
@@ -23,10 +24,10 @@ const callFunc = (funcName) => httpsCallable(functions, funcName);
 
 const messaging = getMessaging(app);
 const generateNotifToken = () => getToken(messaging, { vapidKey: 'BEx_Z6VV8Zn_FDWPq7-6rJNCBDVTKZObDhgBKFHksxc6XKQQ51j6nk021nYFFMGHPtd76PP7ycDypDxoz7h-JOs' });
-const receiverNotif = () => onMessage(messaging, (payload) => {
-  // eslint-disable-next-line no-console
-  console.log(payload);
-});
+// const receiverNotif = () => onMessage(messaging, (payload) => {
+//   // eslint-disable-next-line no-console
+//   console.log(payload);
+// });
 
 const firestore = getFirestore(app);
 
@@ -43,7 +44,7 @@ export {
   auth,
   messaging,
   generateNotifToken,
-  receiverNotif,
+  // receiverNotif,
   firestore,
   database,
 };

@@ -35,7 +35,8 @@ messaging.onBackgroundMessage((payload = {}) => {
   const notificationTitle = notification.title || 'Phinisi Center';
   const notificationOptions = {
     body: notification.body || '',
-    icon: notification.image || '',
+    icon: notification.image || 'https://phinisicenter.id/logo64.png',
+    vibrate: [300, 100, 300],
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
