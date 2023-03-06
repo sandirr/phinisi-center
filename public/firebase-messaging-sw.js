@@ -47,6 +47,7 @@ messaging.onBackgroundMessage((payload = {}) => {
   self.registration.showNotification(notificationTitle, notificationOptions);
 
   self.addEventListener('notificationclick', (event) => {
+    // eslint-disable-next-line no-console
     console.log('On notification click: ', event.notification.tag);
     // Android doesn't close the notification when you click on it
     // See: http://crbug.com/463146

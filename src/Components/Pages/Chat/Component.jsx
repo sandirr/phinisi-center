@@ -44,10 +44,10 @@ export function ChatContentSection({ contents }) {
         return (
           <Box
             key={content.time}
-            pt={3}
-            pb={4}
-            px={4}
-            borderRadius={16}
+            pt={[1, 2, 3]}
+            pb={[2, 3, 4]}
+            px={[2, 3, 4]}
+            borderRadius={[8, 12, 16]}
             border="1px solid"
             mb="1"
             alignSelf={myMssg ? 'flex-end' : 'flex-start'}
