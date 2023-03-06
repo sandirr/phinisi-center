@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import {
   Button, Stack, Input, Box, Textarea, Flex, Image, CloseButton, Select,
@@ -24,6 +26,17 @@ export default function Component({ onSuccess, givenData, vendor }) {
     priority: '',
     maxPax: '',
     price: '',
+
+    sunset: false,
+    sunrise: false,
+    wifi: false,
+    breakfast: false,
+    lunch: false,
+    tv: false,
+    ac: false,
+    hairDryer: false,
+    kitchen: false,
+    pool: false,
   };
   const [fields, setFields] = useState(() => givenData || initialState);
 
@@ -34,8 +47,12 @@ export default function Component({ onSuccess, givenData, vendor }) {
     setFields({ ...fields, [target.name]: target.value });
   };
 
+  const handleChangeFasility = ({ target }) => {
+    setFields({ ...fields, [target.name]: target.checked });
+  };
+
   const handleChangePrice = ({ target }) => {
-    const val = normalizeOnlyNumber(target.value);
+    const val = normalizeOnlyNumber(target.value || '');
     setFields({ ...fields, price: val });
   };
 
@@ -75,7 +92,6 @@ export default function Component({ onSuccess, givenData, vendor }) {
       long: Number(fields.long),
       speed: Number(fields.speed),
       maxPax: Number(fields.maxPax),
-      price: Number(normalizeOnlyNumber(fields.price)),
       createdAt: new Date().toISOString(),
       vendorId: vendor.id,
     };
@@ -90,7 +106,6 @@ export default function Component({ onSuccess, givenData, vendor }) {
           long: Number(fields.long),
           speed: Number(fields.speed),
           maxPax: Number(fields.maxPax),
-          price: Number(normalizeOnlyNumber(fields.price)),
           updatedAt: new Date().toISOString(),
         },
       };
@@ -164,6 +179,49 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Max speed (knot)</label>
           <Input required name="speed" placeholder="10" value={fields.speed} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Fasilitas</label>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="sunset" checked={fields.sunset} onChange={handleChangeFasility} />
+            <label>Pemandangan Sunset</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="sunrise" checked={fields.sunrise} onChange={handleChangeFasility} />
+            <label>Pemandangan Sunrise</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="wifi" checked={fields.wifi} onChange={handleChangeFasility} />
+            <label>Free Wifi</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="breakfast" checked={fields.breakfast} onChange={handleChangeFasility} />
+            <label>Free Breakfast</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="lunch" checked={fields.lunch} onChange={handleChangeFasility} />
+            <label>Free Lunch</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="tv" checked={fields.tv} onChange={handleChangeFasility} />
+            <label>TV</label>
+          </Flex>
+          <Flex alignItems="center" name="ac" checked={fields.ac} onChange={handleChangeFasility} gap="2">
+            <input type="checkbox" />
+            <label>AC</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="hairDryer" checked={fields.hairDryer} onChange={handleChangeFasility} />
+            <label>Hair Dryer</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="kitchen" checked={fields.kitchen} onChange={handleChangeFasility} />
+            <label>Dapur</label>
+          </Flex>
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="pool" checked={fields.pool} onChange={handleChangeFasility} />
+            <label>Kolam Renang</label>
+          </Flex>
         </Box>
         <Box>
           <label>Status</label>

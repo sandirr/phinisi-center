@@ -10,12 +10,12 @@ export const normalizeRupiah = (v) => {
   if (cleanedInput) {
     const _cleanedInput = Number(cleanedInput);
     const convertedInput = new Intl.NumberFormat().format(_cleanedInput);
-    return `${convertedInput}`.replace(/,/g, '.');
+    return `${convertedInput}`?.replace(/,/g, '.');
   } return '';
 };
 
-export const normalizeOnlyNumber = (v) => {
+export const normalizeOnlyNumber = (v = '') => {
   if (!v) return '';
-  const cleanedInput = v.replace(/[^\d]/g, '');
+  const cleanedInput = v?.replace(/[^\d]/g, '');
   return cleanedInput || '';
 };
