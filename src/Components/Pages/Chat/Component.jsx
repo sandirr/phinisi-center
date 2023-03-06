@@ -45,7 +45,7 @@ export function ChatContentSection({ contents }) {
           <Box
             key={content.time}
             pt={[1, 2, 3]}
-            pb={[2, 3, 4]}
+            pb={[4]}
             px={[2, 3, 4]}
             borderRadius={[8, 12, 16]}
             border="1px solid"
