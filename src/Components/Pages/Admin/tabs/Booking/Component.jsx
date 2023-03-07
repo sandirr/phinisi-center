@@ -14,35 +14,34 @@ import {
   Text,
 } from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import moment from 'moment';
 import { callFunc } from '../../../../../Configs/firebase';
-import CreateTrip from '../../lib/CreateTrip';
+import CreateBooking from '../../lib/CreateBook';
 import { ConfirmationContext } from '../../../../../Context';
 import { normalizeRupiah } from '../../../../../Utils/text';
 
 export default function Component() {
-  const [openCreateTrip, setOpenCreateTrip] = useState('');
-  const [trips, setTrips] = useState([]);
+  const [openCreateBooking, setOpenCreateBooking] = useState('');
+  const [trips, setBookings] = useState([]);
   const [meta, setMeta] = useState({
     activePage: 1,
     totalPage: 1,
     total: 1,
   });
   const [hasMoreItems, setHasMoreItems] = useState(false);
-  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [selectedBooking, setSelectedBooking] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const { showConfirmation, closeConfirmation } = useContext(ConfirmationContext);
 
-  const handleOpenCreateTrip = (type, data = null) => {
+  const handleOpenCreateBooking = (type, data = null) => {
     if (data) {
-      setSelectedTrip(data);
+      setSelectedBooking(data);
     }
-    setOpenCreateTrip(type);
+    setOpenCreateBooking(type);
   };
 
-  const getTrips = async () => {
-    const callable = callFunc('getTrips');
+  const getBookings = async () => {
+    const callable = callFunc('getBookings');
     setLoading(true);
 
     await callable({
@@ -56,7 +55,7 @@ export default function Component() {
         totalPage,
       } = res.data;
 
-      setTrips(data);
+      setBookings(data);
       setMeta({
         activePage,
         total,
@@ -72,10 +71,10 @@ export default function Component() {
   const prepareToDelete = (item) => {
     const confirmationProps = {
       handleAgree: async () => {
-        const callable = callFunc('deleteTrip');
+        const callable = callFunc('deleteBooking');
         await callable(item.id)
           .then(async () => {
-            await getTrips();
+            await getBookings();
             closeConfirmation();
           });
       },
@@ -86,11 +85,11 @@ export default function Component() {
     showConfirmation(confirmationProps);
   };
 
-  const handleCloseCreateTrip = (newData) => {
-    setOpenCreateTrip('');
-    setSelectedTrip(null);
+  const handleCloseCreateBooking = (newData) => {
+    setOpenCreateBooking('');
+    setSelectedBooking(null);
     if (newData) {
-      getTrips();
+      getBookings();
     }
   };
 
@@ -104,7 +103,7 @@ export default function Component() {
   useEffect(() => {
     const firstLoad = meta.activePage === 1 && !trips.length;
     if (firstLoad || hasMoreItems) {
-      getTrips();
+      getBookings();
     }
   }, [meta.activePage]);
 
@@ -112,8 +111,8 @@ export default function Component() {
     <>
       <Box>
         <Flex justify="space-between">
-          <Heading size="lg">Manajemen Trip</Heading>
-          <Button colorScheme="blue" onClick={() => handleOpenCreateTrip('Buat')}>Buat Trip</Button>
+          <Heading size="lg">Manajemen Booking</Heading>
+          <Button colorScheme="blue" onClick={() => handleOpenCreateBooking('Buat')}>Buat Booking</Button>
         </Flex>
         <Box mt="2">
           <InfiniteScroll
@@ -126,7 +125,7 @@ export default function Component() {
                 <Flex justify="space-between">
                   <Heading size="md">{trip.name}</Heading>
                   <Flex gap={2}>
-                    <Button size="xs" colorScheme="yellow" variant="outline" onClick={() => handleOpenCreateTrip('Edit', trip)}>Edit</Button>
+                    <Button size="xs" colorScheme="yellow" variant="outline" onClick={() => handleOpenCreateBooking('Edit', trip)}>Edit</Button>
                     <Button size="xs" colorScheme="red" variant="outline" onClick={() => prepareToDelete(trip)}>Hapus</Button>
                   </Flex>
                 </Flex>
@@ -176,11 +175,6 @@ export default function Component() {
                     {normalizeRupiah(`${trip.price}`) || 0}
                   </Text>
                   <Text>
-                    Berangkat:
-                    {' '}
-                    {moment(trip.date).format('DD-MM-YYYY')}
-                  </Text>
-                  <Text>
                     Status:
                     {' '}
                     {trip.status}
@@ -202,19 +196,19 @@ export default function Component() {
         </Box>
 
       </Box>
-      <Modal isOpen={!!openCreateTrip} size="6xl" onClose={handleCloseCreateTrip} scrollBehavior="outside">
+      <Modal isOpen={!!openCreateBooking} size="6xl" onClose={handleCloseCreateBooking} scrollBehavior="outside">
         <ModalOverlay />
         <ModalContent pb="4">
           <ModalHeader>
-            {openCreateTrip}
+            {openCreateBooking}
             {' '}
-            Trip
+            Booking
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CreateTrip
-              onSuccess={handleCloseCreateTrip}
-              givenData={selectedTrip}
+            <CreateBooking
+              onSuccess={handleCloseCreateBooking}
+              givenData={selectedBooking}
             />
           </ModalBody>
         </ModalContent>

@@ -9,7 +9,7 @@ import 'react-quill/dist/quill.snow.css';
 import { callFunc, storage } from '../../../../../Configs/firebase';
 import { normalizeOnlyNumber, normalizeRupiah } from '../../../../../Utils/text';
 
-export default function Component({ onSuccess, givenData, vendor }) {
+export default function Component({ onSuccess, givenData }) {
   const initialState = {
     name: '',
     weight: '',
@@ -26,6 +26,7 @@ export default function Component({ onSuccess, givenData, vendor }) {
     priority: '',
     maxPax: '',
     price: '',
+    projectBy: '',
 
     sunset: false,
     sunrise: false,
@@ -93,7 +94,6 @@ export default function Component({ onSuccess, givenData, vendor }) {
       speed: Number(fields.speed),
       maxPax: Number(fields.maxPax),
       createdAt: new Date().toISOString(),
-      vendorId: vendor.id,
     };
     if (fields.id) {
       callable = callFunc('updateBooking');
@@ -126,6 +126,10 @@ export default function Component({ onSuccess, givenData, vendor }) {
         <Box>
           <label>Nama Phinisi</label>
           <Input required name="name" placeholder="Augustine Phinisi" value={fields.name} onChange={handleChangeField} />
+        </Box>
+        <Box>
+          <label>Project By</label>
+          <Input required name="projectBy" placeholder="Hj Ulli" value={fields.projectBy} onChange={handleChangeField} />
         </Box>
         <Box>
           <label>Lokasi Pembuatan</label>

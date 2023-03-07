@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
@@ -18,7 +17,6 @@ import { callFunc } from '../../../../../Configs/firebase';
 import { generateArticleDesc } from '../../../../../Utils/text';
 import CreateVendor from '../../lib/CreateVendor';
 import PesananVendor from '../../lib/PesananVendor';
-import BookinganVendor from '../../lib/BookinganVendor';
 import Elements from '../../../../Elements';
 import { ConfirmationContext } from '../../../../../Context';
 
@@ -58,7 +56,6 @@ export default function Component() {
   const [articlesList, setArticlesList] = useState([]);
   const [openModal, setOpenModal] = useState('');
   const [openPesanan, setOpenPesanan] = useState(null);
-  const [openBookingan, setOpenBookingan] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [hasMoreItems, setHasMoreItems] = useState(false);
 
@@ -109,7 +106,6 @@ export default function Component() {
           actions: (
             <Flex gap="2">
               <Button colorScheme="messenger" variant="outline" onClick={() => setOpenPesanan(item)}>Pesanan</Button>
-              <Button colorScheme="messenger" variant="outline" onClick={() => setOpenBookingan(item)}>Bookingan</Button>
               <Button colorScheme="yellow" variant="outline" onClick={() => handleOpenModal('Edit', item)}>Edit</Button>
               <Button colorScheme="red" variant="outline" onClick={() => prepareToDelete(item)}>Hapus</Button>
             </Flex>
@@ -123,7 +119,7 @@ export default function Component() {
           total,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         // console.log('anjing', err);
       }).finally(() => {
         setLoading(false);
@@ -162,10 +158,6 @@ export default function Component() {
     setOpenPesanan(null);
   };
 
-  const handleCloseBookingan = () => {
-    setOpenBookingan(null);
-  };
-
   return (
     <Box>
       <Flex justify="space-between">
@@ -195,7 +187,6 @@ export default function Component() {
       </Modal>
 
       <PesananVendor vendor={openPesanan} onClose={handleClosePesanan} />
-      <BookinganVendor vendor={openBookingan} onClose={handleCloseBookingan} />
     </Box>
   );
 }

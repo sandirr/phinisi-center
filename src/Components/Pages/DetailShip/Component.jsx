@@ -27,7 +27,7 @@ export default function Component() {
   const [pax, setPax] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [book, setBook] = useState({ detailVendor: {}, images: [] });
+  const [book, setBook] = useState({ images: [] });
 
   const getBook = async () => {
     const callable = callFunc('getBooking');
@@ -70,7 +70,7 @@ export default function Component() {
         <GridItem colSpan={[5, 5, 3]}>
           <Flex gap="2">
             <Heading size="lg" fontWeight="400">Project by</Heading>
-            <Heading size="lg">{book.detailVendor.name}</Heading>
+            <Heading size="lg">{book.projectBy}</Heading>
           </Flex>
           <Flex mt={2} gap={4}>
             <Flex gap={1} alignItems="center">
