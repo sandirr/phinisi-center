@@ -15,7 +15,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { EmailOutlined } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChatOffIcon } from '../../../Assets/icons/icons';
 import ROUTES from '../../../Configs/routes';
 import { useChat } from '../../../CustomHooks';
@@ -55,6 +55,7 @@ export default function Component() {
         alignItems="flex-start"
         w="sm"
         h="350px"
+        position="relative"
         _focusVisible={{
           outline: 'none',
           boxShadow: 'none',
@@ -99,6 +100,27 @@ export default function Component() {
             </Box>
           </Flex>
           )}
+
+          <Box
+            position="absolute"
+            bottom={0}
+            right={1}
+            left={1}
+            textAlign="right"
+            px={2}
+            py={1}
+            borderTop="1px solid #f5f5f5"
+          >
+            <Text
+              as={Link}
+              to={ROUTES.chat()}
+              fontSize={['xs']}
+              fontWeight="700"
+              color="blue.600"
+            >
+              Lihat semua pesan
+            </Text>
+          </Box>
         </PopoverBody>
       </PopoverContent>
     </Popover>

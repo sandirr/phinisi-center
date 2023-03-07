@@ -15,6 +15,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useSearchParams } from 'react-router-dom';
 import { onValue, push, ref } from 'firebase/database';
 import moment from 'moment';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { ChatOffIcon, SendIcon } from '../../../Assets/icons/icons';
 import { auth, database, firestore } from '../../../Configs/firebase';
 import Elements from '../../Elements';
@@ -157,7 +158,7 @@ export default function Component() {
           pt="2.5"
           pb="12"
           px="2"
-          display={['none', 'none', 'block']}
+          display={{ base: chatId ? 'none' : 'block', md: 'block' }}
           overflow="hidden"
         >
           <Flex color="blue.600" gap="2">
@@ -203,18 +204,22 @@ export default function Component() {
           py={['3', '4', '5']}
           px={['2', '3', '4']}
           overflow="hidden"
+          display={{ base: chatId ? 'block' : 'none', md: 'block' }}
         >
           {!chatId
             ? <Box flex={1}>Phinisi Center</Box>
             : (
               <Flex h="full" flexDirection="column">
                 <Box>
-                  <Flex gap="2" justifyContent="flex-start" borderRadius={4}>
-                    <Avatar h="8" w="8" src={selectedChat.detailVendor?.cover} referrerPolicy="no-referrer" />
-                    <Box textAlign="left">
-                      <Heading size="xs">{selectedChat.detailVendor?.name}</Heading>
-                      <Text fontSize="xs" noOfLines={1}>Phinisi Center</Text>
-                    </Box>
+                  <Flex alignItems="center" gap={2}>
+                    <ArrowBackIcon display={{ base: chatId ? 'block' : 'none', md: 'none' }} w="6" h="6" cursor="pointer" onClick={() => setParam({ chatId: '' })} />
+                    <Flex gap="2" justifyContent="flex-start" borderRadius={4}>
+                      <Avatar h="8" w="8" src={selectedChat.detailVendor?.cover} referrerPolicy="no-referrer" />
+                      <Box textAlign="left">
+                        <Heading size="xs">{selectedChat.detailVendor?.name}</Heading>
+                        <Text fontSize="xs" noOfLines={1}>Phinisi Center</Text>
+                      </Box>
+                    </Flex>
                   </Flex>
                   <Divider my="2.5" />
                 </Box>
