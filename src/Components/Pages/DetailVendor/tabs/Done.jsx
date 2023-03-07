@@ -87,14 +87,14 @@ export default function Done({ vendor, sort }) {
         hasMore={hasMoreItems}
         next={handleLoadMore}
       >
-        <SimpleGrid columns={[1, 2, 3]} py={['2', '4']}>
+        <SimpleGrid columns={[1, 2, 2, 3]} py={['2', '4']}>
           {orders.map((order, idx) => (
             <Box
               m={[1, 2, 3]}
               key={idx}
               borderRadius="16px"
               boxShadow="0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)"
-              p="4"
+              padding={[3, 4]}
               cursor="pointer"
               onClick={() => navigate(`order/${order.id}`)}
             >

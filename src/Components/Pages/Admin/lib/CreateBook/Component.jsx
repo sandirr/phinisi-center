@@ -39,7 +39,7 @@ export default function Component({ onSuccess, givenData }) {
     kitchen: false,
     pool: false,
   };
-  const [fields, setFields] = useState(() => givenData || initialState);
+  const [fields, setFields] = useState(() => (givenData ? { ...initialState, ...givenData } : initialState));
 
   const [isLoading, setIsLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
@@ -210,8 +210,8 @@ export default function Component({ onSuccess, givenData }) {
             <input type="checkbox" name="tv" checked={fields.tv} onChange={handleChangeFasility} />
             <label>TV</label>
           </Flex>
-          <Flex alignItems="center" name="ac" checked={fields.ac} onChange={handleChangeFasility} gap="2">
-            <input type="checkbox" />
+          <Flex alignItems="center" gap="2">
+            <input type="checkbox" name="ac" checked={fields.ac} onChange={handleChangeFasility} />
             <label>AC</label>
           </Flex>
           <Flex alignItems="center" gap="2">

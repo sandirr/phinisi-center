@@ -14,9 +14,19 @@ import {
   GridItem,
   Select,
   Badge,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { BathIcon, BedIcon, PeopleIcon } from '../../../Assets/icons/icons';
+import {
+  AcIcon,
+  BathIcon,
+  BedIcon,
+  BreakfastIcon,
+  HairDryerIcon,
+  KitchenIcon,
+  LunchIcon,
+  PeopleIcon, PoolIcon, SunriseIcon, SunsetIcon, TvIcon, WifiIcon,
+} from '../../../Assets/icons/icons';
 import Elements from '../../Elements';
 import { callFunc } from '../../../Configs/firebase';
 import { normalizeRupiah } from '../../../Utils/text';
@@ -170,6 +180,101 @@ export default function Component() {
               </Stack>
             </Box>
           </Flex>
+
+          <Divider my={6} w="full" />
+          <Heading size="sm">Fasilitas</Heading>
+          <SimpleGrid columns={2} mt="4" spacing={1}>
+            {!!book.sunset
+            && (
+            <Flex alignItems="center" gap={2}>
+              <SunsetIcon />
+              <Text size="md">
+                Pemandangan Sunset
+              </Text>
+            </Flex>
+            )}
+            {!!book.tv
+            && (
+            <Flex alignItems="center" gap={2}>
+              <TvIcon />
+              <Text size="md">
+                TV
+              </Text>
+            </Flex>
+            )}
+            {!!book.sunrise
+            && (
+            <Flex alignItems="center" gap={2}>
+              <SunriseIcon />
+              <Text size="md">
+                Pemandangan Sunrise
+              </Text>
+            </Flex>
+            )}
+            {!!book.ac
+            && (
+            <Flex alignItems="center" gap={2}>
+              <AcIcon />
+              <Text size="md">
+                AC
+              </Text>
+            </Flex>
+            )}
+            {!!book.wifi
+            && (
+            <Flex alignItems="center" gap={2}>
+              <WifiIcon />
+              <Text size="md">
+                Free Wifi
+              </Text>
+            </Flex>
+            )}
+            {!!book.hairDryer
+            && (
+            <Flex alignItems="center" gap={2}>
+              <HairDryerIcon />
+              <Text size="md">
+                Hair Dryer
+              </Text>
+            </Flex>
+            )}
+            {!!book.breakfast
+            && (
+            <Flex alignItems="center" gap={2}>
+              <BreakfastIcon />
+              <Text size="md">
+                Free Breakfast
+              </Text>
+            </Flex>
+            )}
+            {!!book.kitchen
+            && (
+            <Flex alignItems="center" gap={2}>
+              <KitchenIcon />
+              <Text size="md">
+                Dapur
+              </Text>
+            </Flex>
+            )}
+            {!!book.lunch
+            && (
+            <Flex alignItems="center" gap={2}>
+              <LunchIcon />
+              <Text size="md">
+                Free Lunch
+              </Text>
+            </Flex>
+            )}
+            {!!book.pool
+            && (
+            <Flex alignItems="center" gap={2}>
+              <PoolIcon />
+              <Text size="md">
+                Kolam Renang
+              </Text>
+            </Flex>
+            )}
+          </SimpleGrid>
         </GridItem>
         <GridItem colSpan={[5, 5, 2]}>
           <Box
