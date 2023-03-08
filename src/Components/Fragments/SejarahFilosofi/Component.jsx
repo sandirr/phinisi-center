@@ -63,6 +63,7 @@ export default function Component() {
               <Image
                 src={item.img}
                 w="full"
+                alt={item.title}
                 height={[150, 200, 250, 290]}
                 objectFit="cover"
               />

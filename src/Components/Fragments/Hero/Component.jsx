@@ -127,6 +127,7 @@ export function VideoContainer({ swiperRef, data, index }) {
         src={data.imgLink}
         backgroundSize="cover"
         minW="full"
+        alt="Hero Phinisi Center"
         minH={['240px', '280px', 'full']}
         display="flex"
         flexDirection="column"

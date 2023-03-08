@@ -69,7 +69,7 @@ export default function Component() {
                 justifyContent="flex-end"
                 overflow="hidden"
               >
-                <Image src={article.cover || Images.Order1} position="absolute" top={0} left={0} h="full" w="full" objectFit="cover" />
+                <Image alt={article.title} src={article.cover || Images.Order1} position="absolute" top={0} left={0} h="full" w="full" objectFit="cover" />
                 <Box
                   px={{ base: '6', md: '8', lg: '12' }}
                   py="12"
