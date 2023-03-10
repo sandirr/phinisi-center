@@ -60,9 +60,9 @@ export default function Component({
       const chatId = `${auth.currentUser?.uid}-${vendor.id}`;
       const chatRef = doc(firestore, `chats/${chatId}`);
       const chatSnapshot = await getDoc(chatRef);
+      const realtimeChatRef = ref(database, `chats/${chatId}`);
       if (chatSnapshot.exists()) {
         await updateDoc(chatRef, body).then(async () => {
-          const realtimeChatRef = ref(database, `chats/${chatId}`);
           await push(realtimeChatRef, {
             from: auth.currentUser?.displayName,
             fromUid: auth.currentUser?.uid,
@@ -83,8 +83,15 @@ export default function Component({
           });
         });
       } else {
-        await setDoc(chatRef, body).then(() => {
-          setMessage('');
+        await setDoc(chatRef, body).then(async () => {
+          await push(realtimeChatRef, {
+            from: auth.currentUser?.displayName,
+            fromUid: auth.currentUser?.uid,
+            content: message,
+            time: new Date().toISOString(),
+          }).then(() => {
+            setMessage('');
+          });
         }).finally(() => {
           handleClose();
           setLoading(false);
