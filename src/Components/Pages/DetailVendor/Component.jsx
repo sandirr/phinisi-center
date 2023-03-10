@@ -128,7 +128,7 @@ export default function Component() {
                 <BoatIcon />
                 <Text size="md">Kapal Terjual</Text>
               </Flex>
-              <Heading size="sm">41</Heading>
+              <Heading size="sm">{vendor.sold || 0}</Heading>
             </Flex>
           </Stack>
 

@@ -230,7 +230,11 @@ export default function Component() {
                   </Box>
                   <Box display="flex" alignItems="center" gap="2" mt={[1, 2]}>
                     <PhinisiIcon fontSize={['xs', 'sm', 'md']} />
-                    <Text fontSize={['xs', 'sm', 'md']}>14 Phinisi</Text>
+                    <Text fontSize={['xs', 'sm', 'md']}>
+                      {vendor.sold || 0}
+                      {' '}
+                      Phinisi
+                    </Text>
                   </Box>
                 </Box>
               </Box>
