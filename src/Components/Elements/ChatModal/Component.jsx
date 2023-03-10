@@ -61,40 +61,38 @@ export default function Component({
       const chatRef = doc(firestore, `chats/${chatId}`);
       const chatSnapshot = await getDoc(chatRef);
       const realtimeChatRef = ref(database, `chats/${chatId}`);
+      const chatBody = {
+        from: auth.currentUser?.displayName,
+        fromUid: auth.currentUser?.uid,
+        content: message,
+        time: new Date().toISOString(),
+      };
+      const toastMessage = {
+        title: 'Pesan terkirim.',
+        description: 'Cek pesan secara berkala.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      };
       if (chatSnapshot.exists()) {
         await updateDoc(chatRef, body).then(async () => {
-          await push(realtimeChatRef, {
-            from: auth.currentUser?.displayName,
-            fromUid: auth.currentUser?.uid,
-            content: message,
-            time: new Date().toISOString(),
-          }).then(() => {
+          await push(realtimeChatRef, chatBody).then(() => {
             setMessage('');
           });
         }).finally(() => {
           handleClose();
           setLoading(false);
-          toast({
-            title: 'Pesan terkirim.',
-            description: 'Cek pesan secara berkala.',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          });
+          toast(toastMessage);
         });
       } else {
         await setDoc(chatRef, body).then(async () => {
-          await push(realtimeChatRef, {
-            from: auth.currentUser?.displayName,
-            fromUid: auth.currentUser?.uid,
-            content: message,
-            time: new Date().toISOString(),
-          }).then(() => {
+          await push(realtimeChatRef, chatBody).then(() => {
             setMessage('');
           });
         }).finally(() => {
           handleClose();
           setLoading(false);
+          toast(toastMessage);
         });
       }
     }
