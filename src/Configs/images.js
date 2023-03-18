@@ -1,4 +1,5 @@
 import Logo from '../Assets/Logo.svg';
+import LogoPNG from '../Assets/Logo.png';
 import LogoWhite from '../Assets/LogoWhite.svg';
 import Instagram from '../Assets/Instagram.svg';
 import InstagramWhite from '../Assets/InstagramWhite.svg';
@@ -26,6 +27,7 @@ import LabuanBajo from '../Assets/LabuanBajo.jpg';
 
 const Images = {
   Logo,
+  LogoPNG,
   LogoWhite,
   Instagram,
   InstagramWhite,

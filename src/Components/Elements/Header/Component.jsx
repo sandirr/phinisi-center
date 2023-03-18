@@ -127,7 +127,7 @@ export default function Component() {
           </Box>
           <Box cursor="pointer">
             <h1 onClick={() => navigate('/')}>
-              <Image src={Images.Logo} alt="Phinisi Center" width={[20, 100, 120]} />
+              <Image src={Images.LogoPNG} alt="Phinisi Center" width={[20, 100, 120]} />
             </h1>
           </Box>
           <Box flex={1} textAlign="right">
