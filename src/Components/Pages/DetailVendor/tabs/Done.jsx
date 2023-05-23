@@ -46,7 +46,7 @@ export default function Done({ vendor, sort }) {
         totalPage,
       } = res.data;
 
-      setOrders(data);
+      setOrders([...orders, ...data]);
       setMeta({
         activePage,
         total,
