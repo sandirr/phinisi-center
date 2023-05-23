@@ -37,8 +37,8 @@ export default function Component() {
   return (
     <Container maxW="7xl">
       <Elements.Loading loading={loading} />
-      <Box display="flex" justifyContent="space-between" flexWrap="wrap">
-        <Box flex={1} py={['4', '6', '8', '10']}>
+      <Box display="flex" justifyContent="space-between" flexDirection={['column', 'column', 'row']}>
+        <Box flex={2} py={['4', '6', '8', '10']}>
           {!!article.category
           && <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>}
           <Heading size={['md', 'lg', 'xl']} mb={['3', '4', '5', '6']}>{article.title}</Heading>
@@ -62,7 +62,7 @@ export default function Component() {
           </Center>
         </Box>
 
-        <Box py={['6', '8', '10']} maxW="md">
+        <Box py={['6', '8', '10']} flex={1}>
           <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
           <Divider mt={6} />
