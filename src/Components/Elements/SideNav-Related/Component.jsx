@@ -3,6 +3,7 @@ import {
   Box, Heading, Image, Text,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import ROUTES from '../../../Configs/routes';
 import { callFunc } from '../../../Configs/firebase';
 
 export default function Component({ category }) {
@@ -41,7 +42,7 @@ export default function Component({ category }) {
           key={article.id}
           mt={['2', '3', '4']}
           as={Link}
-          to="/"
+          to={`${ROUTES.artikel()}/baca/${article.id}`}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
