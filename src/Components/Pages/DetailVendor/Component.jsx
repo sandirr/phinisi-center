@@ -88,8 +88,9 @@ export default function Component() {
         }}
         py={[4, 8, 12, 16]}
         gap={{ base: '6', lg: '10' }}
+        flexDirection={['column', 'column', 'row']}
       >
-        <Box maxW="sm" p="4">
+        <Box p="4" flex={1}>
           <Box textAlign="center" display="flex" flexDir="column" alignItems="center" color="#1C51B5">
             <Image
               src={vendor.cover || Images.Order1}
@@ -147,7 +148,7 @@ export default function Component() {
           <Divider mt="4" /> */}
         </Box>
 
-        <Box flex={1} minW="sm">
+        <Box flex={2}>
           <Flex justify="space-between" wrap="wrap">
             <Flex
               overflowX="auto"

@@ -169,8 +169,8 @@ export default function Component() {
 
   return (
     <Container maxW="7xl">
-      <Box display="flex" justifyContent="space-between" flexWrap="wrap">
-        <Box flex={1} py={['4', '6', '8', '10']}>
+      <Box display="flex" justifyContent="space-between" flexDirection={['column', 'column', 'row']}>
+        <Box flex={2} py={['4', '6', '8', '10']}>
           <Tabs variant="soft-rounded" index={tabs.indexOf(activeTab)} onChange={handleChangeTab}>
             <TabList whiteSpace="nowrap" lineHeight="20px">
               {tabs.map((tab, index) => (
@@ -205,13 +205,13 @@ export default function Component() {
           </Box>
         </Box>
 
-        <Box display={['none', 'none', 'inherit']} mx={['6', '8', '10']}>
+        <Box display={{ base: 'none', md: 'inherit' }} mx={['6', '8', '10']}>
           <Center height="full">
             <Divider orientation="vertical" />
           </Center>
         </Box>
 
-        <Box py={['6', '8', '10']} maxW="md">
+        <Box py={['6', '8', '10']} flex={1}>
           <Heading size={['md', 'lg']}>Hi, temukan Artikel Menarik disini !</Heading>
           <Elements.SideNavPopular />
         </Box>
