@@ -21,7 +21,6 @@ import 'swiper/css';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Images from '../../../Configs/images';
-import Elements from '../../Elements';
 import { callFunc } from '../../../Configs/firebase';
 
 export default function Component() {
@@ -204,9 +203,19 @@ export default function Component() {
             ))}
           </Swiper>
         </InfiniteScroll>
+
+        {!trips.length && !loading && (
+        <Box style={{
+          paddingLeft: (dimensions?.borderBox?.left || 0)
+            + (dimensions?.padding?.left || 0),
+          paddingRight: 16,
+        }}
+        >
+          Belum ada trip tersedia
+        </Box>
+        )}
       </Box>
       )}
-      <Elements.Loading loading={false} />
     </Box>
   );
 }

@@ -184,6 +184,16 @@ export default function Component() {
             ))}
           </Swiper>
         </InfiniteScroll>
+        {!orders.length && !loading && (
+        <Box style={{
+          paddingLeft: (dimensions?.borderBox?.left || 0)
+            + (dimensions?.padding?.left || 0),
+          paddingRight: 16,
+        }}
+        >
+          Belum ada kapal bookingan yang tersedia
+        </Box>
+        )}
       </Box>
       )}
     </Box>
