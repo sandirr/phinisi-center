@@ -43,7 +43,7 @@ export default function Component() {
           && <Text size="lg" onClick={() => navigate(`${ROUTES.artikel()}?tab=${article.category}`)} cursor="pointer">{article.category}</Text>}
           <Heading size={['md', 'lg', 'xl']} mb={['3', '4', '5', '6']}>{article.title}</Heading>
           <Center>
-            <Image width={460} borderRadius={16} src={article.cover || Images.Order1} />
+            <Image width={['100%', '100%', '90%', '80%']} borderRadius={4} src={article.cover || Images.Order1} />
           </Center>
           <Box mt={['3', '4', '5', '6']} dangerouslySetInnerHTML={{ __html: article.content }} />
           <Box display="flex" gap={3} color="blackAlpha.600" mt={['2', '4', '6']}>
