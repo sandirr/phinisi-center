@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -122,8 +123,8 @@ export default function Done({ vendor, sort }) {
               <Heading size={['xs', 'sm', 'md']} mt={1}>
                 {order.name}
               </Heading>
-              <Divider my="4" />
-              <Flex gap="2" align="center">
+              {/* <Divider my="4" /> */}
+              {/* <Flex gap="2" align="center">
                 <TimeIcon height="24px" width="24px" />
                 <Text fontSize="lg">
                   {order.created || new Date().getFullYear()}
@@ -132,7 +133,7 @@ export default function Done({ vendor, sort }) {
                   {' '}
                   {order.year}
                 </Text>
-              </Flex>
+              </Flex> */}
             </Box>
           ))}
           {loading && new Array(6).fill(0).map((item, idx) => (
