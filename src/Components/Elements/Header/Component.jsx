@@ -169,7 +169,7 @@ export default function Component() {
                 </Box>
               )
               : (
-                <Button colorScheme="blue" color="blue.600" variant="outline" onClick={() => showPopUpLogin()}>
+                <Button colorScheme="blue" color="blue.600" size={['sm', 'md']} variant="outline" onClick={() => showPopUpLogin()}>
                   Login
                 </Button>
               )}

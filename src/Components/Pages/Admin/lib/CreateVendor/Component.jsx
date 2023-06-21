@@ -47,15 +47,22 @@ export default function Component({ onSuccess, givenData }) {
   };
 
   const handleChangeImg = async ({ target }) => {
-    if (target.files) {
-      const file = target.files[0];
-      // setImg(URL.createObjectURL(file));
-      const coverRef = storageRef(storage, `vendor/${Date.now().toString()}`);
-      await uploadBytes(coverRef, file)
-        .then(async () => {
-          const cover = await getDownloadURL(coverRef);
-          setFields({ ...fields, cover });
-        });
+    setIsLoading(true);
+    try {
+      if (target.files) {
+        const file = target.files[0];
+        // setImg(URL.createObjectURL(file));
+        const coverRef = storageRef(storage, `vendor/${Date.now().toString()}`);
+        await uploadBytes(coverRef, file)
+          .then(async () => {
+            const cover = await getDownloadURL(coverRef);
+            setFields({ ...fields, cover });
+          });
+      }
+    } catch (err) {
+      // console.log(err)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -141,7 +148,7 @@ export default function Component({ onSuccess, givenData }) {
         </Box>
       </Box>
 
-      <Button isLoading={isLoading} outline type="submit">Simpan</Button>
+      <Button isLoading={isLoading} outline disabled={isLoading} type="submit">Simpan</Button>
     </form>
   );
 }
