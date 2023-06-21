@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
@@ -107,7 +108,7 @@ export default function Done({ vendor, sort }) {
                 borderRadius={8}
               />
               <Flex gap="1" mt="4">
-                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                {/* <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
                   {order.long}
                   x
                   {order.width}
@@ -118,6 +119,9 @@ export default function Done({ vendor, sort }) {
                   {order.weight}
                   {' '}
                   TON
+                </Box> */}
+                <Box bg="blue.50" color="blackAlpha.900" fontSize="12px" px={1} borderRadius="2px" fontWeight="bold">
+                  {vendor.location}
                 </Box>
               </Flex>
               <Heading size={['xs', 'sm', 'md']} mt={1}>

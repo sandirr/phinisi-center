@@ -219,6 +219,7 @@ export default function Component() {
                 <Image
                   src={vendor.cover || Images.Order1}
                   w="100%"
+                  h={['160px', '200px', '240px']}
                   objectFit="cover"
                   borderRadius={8}
                 />
